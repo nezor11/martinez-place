@@ -105,8 +105,6 @@ export const ContentSlider: FC<ContentSliderProps> = ({
     backgroundColor ||
     (videoUrl ? "#000" : images.length > 0 ? "#fff" : "#f5f5f5");
 
-  // Log para verificar si las imágenes están pasando correctamente
-  console.log("Imágenes recibidas en ContentSlider:", images);
 
   return (
     <section className="intro overflow-y-scroll p-6 lg:p-0">
