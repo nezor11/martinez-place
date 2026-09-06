@@ -568,7 +568,7 @@ strong {
   text-decoration: underline;
 }
 
-.theme-dark {
+html.dark {
   .text a {
     color: var(--textColor);
     &:hover {
@@ -1350,6 +1350,7 @@ strong {
 
 :root {
   --background: rgba(255, 255, 255, 1);
+  --copy-primary: rgba(0, 0, 0, 0.87);
   --textColor: rgba(0, 0, 0, 0.87);
   --bgColor: rgba(248, 248, 247, 1);
 }
@@ -1361,13 +1362,6 @@ body {
   }
 }
 
-body.theme-dark.modal-open .modal-wapper {
-  .text,
-  .text-workdone {
-    color: rgba(0, 0, 0, 1);
-  }
-}
-
 .container {
   overflow-x: hidden;
   @media (min-width: 1024px) {
@@ -1375,62 +1369,36 @@ body.theme-dark.modal-open .modal-wapper {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: rgba(0, 0, 0, 0.87);
-    --copy-primary: rgba(255, 255, 255, 1);
-    --textColor: rgb(206, 207, 212);
-  }
+/*
+ * Dark theme. The app toggles the `dark` class on <html> (App.tsx) and
+ * `theme-dark` on <body> (ThemeContext); Storybook only toggles `dark` on
+ * <html>. Everything is keyed on those classes, never on the OS preference,
+ * so the manual toggle works regardless of the system setting.
+ */
 
-  .theme-dark {
-    --textColor: rgb(206, 207, 212);
-    --bgColor: rgb(2, 6, 23);
-  }
+html.dark,
+.theme-dark {
+  --background: rgba(0, 0, 0, 0.87);
+  --copy-primary: rgba(255, 255, 255, 1);
+  --textColor: rgb(206, 207, 212);
+  --bgColor: rgb(2, 6, 23);
+}
 
-  body.theme-dark {
+html.dark {
+  body,
+  .card-slide,
+  .card-slide .card-meta h4 {
     background-color: var(--bgColor);
     color: var(--textColor);
-    .portfolio__slider .swiper-slide .portfolio__slide-content {
-      background-color: var(--bgColor);
-    }
-    .card-slide h4 {
-      background-color: var(--bgColor);
-      color: var(--textColor);
-    }
-    .dark\:bg-slate-950 {
-      background-color: rgb(2, 6, 23);
-    }
-    .intro ul.list-arrows li::before {
-      border-color: var(--copy-primary);
-    }
   }
-
-  html.dark {
-    body,
-    .card-slide,
-    .card-slide .card-meta h4 {
-      background-color: rgb(2, 6, 23);
-      color: rgb(206, 207, 212);
-    }
-    .modal-wapper {
-      background-color: var(--background);
-    }
-    .modal-wapper .text,
-    .modal-wapper a {
-      color: var(--bgColor) !important;
-    }
-    .docs-story {
-      background-color: rgb(2, 6, 23);
-    }
-    .dark\:text-white {
-      color: @apply text-white;
-    }
-    .dark\:bg-slate-950 {
-      background-color: rgb(2, 6, 23);
-    }
-    .intro ul.list-arrows li::before {
-      border-color: var(--copy-primary);
-    }
+  .portfolio__slider .swiper-slide .portfolio__slide-content {
+    background-color: var(--bgColor);
+  }
+  .docs-story {
+    background-color: var(--bgColor);
+  }
+  .intro ul.list-arrows li::before {
+    border-color: var(--copy-primary);
   }
 }
 
@@ -1444,7 +1412,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway ExtraLight Italic"),
@@ -1462,7 +1429,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway ExtraLight"),
     local("Raleway-ExtraLight"),
@@ -1478,7 +1444,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway Black Italic"),
@@ -1496,7 +1461,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Light"),
     local("Raleway-Light"),
@@ -1512,7 +1476,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway Bold"),
@@ -1530,7 +1493,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway ExtraBold Italic"),
     local("Raleway-ExtraBoldItalic"),
@@ -1546,7 +1508,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway Light Italic"),
@@ -1564,7 +1525,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Bold Italic"),
     local("Raleway-BoldItalic"),
@@ -1580,7 +1540,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway ExtraBold"),
@@ -1598,7 +1557,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Medium"),
     local("Raleway-Medium"),
@@ -1614,7 +1572,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway Italic"),
@@ -1632,7 +1589,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Black"),
     local("Raleway-Black"),
@@ -1648,7 +1604,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway Medium Italic"),
@@ -1666,7 +1621,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Thin"),
     local("Raleway-Thin"),
@@ -1683,7 +1637,6 @@ body.theme-dark.modal-open .modal-wapper {
 @font-face {
   font-family: "Raleway";
 
-
   src:
     local("Raleway Thin Italic"),
     local("Raleway-ThinItalic"),
@@ -1699,7 +1652,6 @@ body.theme-dark.modal-open .modal-wapper {
 
 @font-face {
   font-family: "Raleway";
-
 
   src:
     local("Raleway"),
@@ -1775,36 +1727,36 @@ body.theme-dark.modal-open .modal-wapper {
   cursor: not-allowed;
 }
 
-.dark\:bg-slate-950:is([data-mode="dark"] *) {
+.dark\:bg-slate-950:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(2 6 23 / var(--tw-bg-opacity, 1));
 }
 
-.dark\:bg-transparent:is([data-mode="dark"] *) {
+.dark\:bg-transparent:is(.dark *) {
   background-color: transparent;
 }
 
-.dark\:text-gray-400:is([data-mode="dark"] *) {
+.dark\:text-gray-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity, 1));
 }
 
-.dark\:text-white:is([data-mode="dark"] *) {
+.dark\:text-white:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.dark\:hover\:text-primary-500:hover:is([data-mode="dark"] *) {
+.dark\:hover\:text-primary-500:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(244 63 94 / var(--tw-text-opacity, 1));
 }
 
-.dark\:focus\:text-primary-500:focus:is([data-mode="dark"] *) {
+.dark\:focus\:text-primary-500:focus:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(244 63 94 / var(--tw-text-opacity, 1));
 }
 
-.dark\:active\:text-primary-500:active:is([data-mode="dark"] *) {
+.dark\:active\:text-primary-500:active:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(244 63 94 / var(--tw-text-opacity, 1));
 }

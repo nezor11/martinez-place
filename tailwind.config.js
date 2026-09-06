@@ -2,7 +2,7 @@ import colors from "tailwindcss/colors";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ["class", '[data-mode="dark"]', "selector"],
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     fontFamily: {

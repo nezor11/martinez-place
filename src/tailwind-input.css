@@ -4,6 +4,7 @@
 
 :root {
   --background: rgba(255, 255, 255, 1);
+  --copy-primary: rgba(0, 0, 0, 0.87);
   --textColor: rgba(0, 0, 0, 0.87);
   --bgColor: rgba(248, 248, 247, 1);
 }
@@ -16,13 +17,6 @@ body {
   }
 }
 
-body.theme-dark.modal-open .modal-wapper {
-  .text,
-  .text-workdone {
-    color: rgba(0, 0, 0, 1);
-  }
-}
-
 .container {
   overflow-x: hidden;
   @screen lg {
@@ -30,72 +24,38 @@ body.theme-dark.modal-open .modal-wapper {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: rgba(0, 0, 0, 0.87);
-    --copy-primary: rgba(255, 255, 255, 1);
-    --textColor: rgb(206, 207, 212);
-  }
+/*
+ * Dark theme. The app toggles the `dark` class on <html> (App.tsx) and
+ * `theme-dark` on <body> (ThemeContext); Storybook only toggles `dark` on
+ * <html>. Everything is keyed on those classes, never on the OS preference,
+ * so the manual toggle works regardless of the system setting.
+ */
+html.dark,
+.theme-dark {
+  --background: rgba(0, 0, 0, 0.87);
+  --copy-primary: rgba(255, 255, 255, 1);
+  --textColor: rgb(206, 207, 212);
+  --bgColor: rgb(2, 6, 23);
+}
 
-  .theme-dark {
-    --textColor: rgb(206, 207, 212);
-    --bgColor: rgb(2, 6, 23);
-  }
-
-  body.theme-dark {
+html.dark {
+  body,
+  .card-slide,
+  .card-slide .card-meta h4 {
     background-color: var(--bgColor);
     color: var(--textColor);
-
-    .portfolio__slider .swiper-slide .portfolio__slide-content {
-      background-color: var(--bgColor);
-    }
-
-    .card-slide h4 {
-      background-color: var(--bgColor);
-      color: var(--textColor);
-    }
-
-    .dark\:bg-slate-950 {
-      background-color: rgb(2, 6, 23);
-    }
-
-    .intro ul.list-arrows li::before {
-      border-color: var(--copy-primary);
-    }
   }
 
-  html.dark {
-    body,
-    .card-slide,
-    .card-slide .card-meta h4 {
-      background-color: rgb(2, 6, 23);
-      color: rgb(206, 207, 212);
-    }
+  .portfolio__slider .swiper-slide .portfolio__slide-content {
+    background-color: var(--bgColor);
+  }
 
-    .modal-wapper {
-      background-color: var(--background);
-    }
+  .docs-story {
+    background-color: var(--bgColor);
+  }
 
-    .modal-wapper .text,
-    .modal-wapper a {
-      color: var(--bgColor) !important;
-    }
-
-    .docs-story {
-      background-color: rgb(2, 6, 23);
-    }
-
-    .dark\:text-white {
-      color: @apply text-white;
-    }
-
-    .dark\:bg-slate-950 {
-      background-color: rgb(2, 6, 23);
-    }
-
-    .intro ul.list-arrows li::before {
-      border-color: var(--copy-primary);
-    }
+  .intro ul.list-arrows li::before {
+    border-color: var(--copy-primary);
   }
 }
 
@@ -313,7 +273,7 @@ body.theme-dark.modal-open .modal-wapper {
     text-decoration: underline;
   }
 
-  .theme-dark {
+  html.dark {
     .text a {
       color: var(--textColor);
 
