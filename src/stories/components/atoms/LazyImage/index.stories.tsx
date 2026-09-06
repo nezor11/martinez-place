@@ -1,6 +1,6 @@
 import { Code } from "@/stories/components/system/Code";
 import type { Meta } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { LazyImage } from ".";
 
 const meta: Meta<typeof LazyImage> = {
@@ -87,7 +87,7 @@ export const Default = () => {
         const imgSrc = await fetchMountainImage();
         setImageSrc(imgSrc);
       } catch (error) {
-        console.error("Error al cargar la imagen de Unsplash:", error.message);
+        console.error("Error al cargar la imagen de Unsplash:", error instanceof Error ? error.message : error);
         setImageSrc("https://placehold.co/600x400?text=Image"); // Imagen de reemplazo
       }
     };

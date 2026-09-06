@@ -1,6 +1,6 @@
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Page } from ".";
 
 const meta: Meta<typeof Page> = {
@@ -27,7 +27,7 @@ const fetchRandomFaceImage = async () => {
       height: 300,
     };
   } catch (error) {
-    console.error("Error fetching image from Unsplash:", error.message);
+    console.error("Error fetching image from Unsplash:", error instanceof Error ? error.message : error);
     return {
       image: "https://placehold.co/300x300",
       alt: "Placeholder image",
@@ -162,9 +162,8 @@ export const Default: Story = {
     },
   },
   render: (args) => {
-    const [imageDetail, setImageDetail] = useState(
-      args.dataHeaderObject[0].imageDetail
-    );
+    const header = args.dataHeaderObject?.[0];
+    const [imageDetail, setImageDetail] = useState(header?.imageDetail);
 
     useEffect(() => {
       const fetchImage = async () => {
@@ -177,12 +176,9 @@ export const Default: Story = {
     return (
       <Page
         {...args}
-        dataHeaderObject={[
-          {
-            ...args.dataHeaderObject[0],
-            imageDetail, // Actualizamos imageDetail con la imagen obtenida dinámicamente
-          },
-        ]}
+        dataHeaderObject={
+          header ? [{ ...header, imageDetail }] : null // imageDetail se actualiza con la imagen obtenida dinámicamente
+        }
       />
     );
   },

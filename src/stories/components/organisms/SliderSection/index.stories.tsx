@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import type { FC } from "react";
-import React, { useEffect, useState } from "react";
-import { SliderSection } from ".";
+import { useEffect, useState } from "react";
+import { type SlideData, SliderSection } from ".";
 
 const meta: Meta<typeof SliderSection> = {
   title: "Design System/Organisms/Slider Section",
@@ -18,8 +18,6 @@ const meta: Meta<typeof SliderSection> = {
 };
 
 export default meta;
-
-type Story = StoryObj<typeof meta>;
 
 // Función para obtener una altura aleatoria para las imágenes de las cards
 const getRandomHeight = () => {
@@ -86,7 +84,7 @@ const fetchImagesFromUnsplash = async (query: string, count = 3) => {
 };
 
 export const Default: FC = () => {
-  const [slidesData, setSlidesData] = useState([]);
+  const [slidesData, setSlidesData] = useState<SlideData[]>([]);
 
   useEffect(() => {
     const fetchImagesForSlides = async () => {
@@ -129,7 +127,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "red",
           imageUrl: slide1Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide1Image.height, // Altura dinámica
+          cardImageHeight: slide1Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Frontend",
         },
@@ -150,7 +148,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "blue",
           imageUrl: slide2Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide2Image.height, // Altura dinámica
+          cardImageHeight: slide2Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Full Stack",
         },
@@ -172,7 +170,7 @@ export const Default: FC = () => {
           backgroundColor: "yellow",
           videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
           imageUrl: slide3Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide3Image.height, // Altura dinámica
+          cardImageHeight: slide3Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Mobile",
         },
@@ -193,7 +191,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "green",
           imageUrl: slide4Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide4Image.height, // Altura dinámica
+          cardImageHeight: slide4Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "AI",
         },
@@ -214,7 +212,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "purple",
           imageUrl: slide5Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide5Image.height, // Altura dinámica
+          cardImageHeight: slide5Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Blockchain",
         },
@@ -235,7 +233,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "blue",
           imageUrl: slide6Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide6Image.height, // Altura dinámica
+          cardImageHeight: slide6Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "E-commerce",
         },
@@ -256,7 +254,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "orange",
           imageUrl: slide7Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide7Image.height, // Altura dinámica
+          cardImageHeight: slide7Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "IoT",
         },
@@ -277,7 +275,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "red",
           imageUrl: slide8Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide8Image.height, // Altura dinámica
+          cardImageHeight: slide8Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Cybersecurity",
         },
@@ -298,7 +296,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "purple",
           imageUrl: slide9Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide9Image.height, // Altura dinámica
+          cardImageHeight: slide9Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Analytics",
         },
@@ -319,7 +317,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "green",
           imageUrl: slide10Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide10Image.height, // Altura dinámica
+          cardImageHeight: slide10Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Blockchain",
         },
@@ -336,7 +334,7 @@ export const Default: FC = () => {
           workDone: ["3D modeling", "AR integration", "User experience design"],
           backgroundColor: "yellow",
           imageUrl: slide11Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide11Image.height, // Altura dinámica
+          cardImageHeight: slide11Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Augmented Reality",
         },
@@ -357,7 +355,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "orange",
           imageUrl: slide12Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide12Image.height, // Altura dinámica
+          cardImageHeight: slide12Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "AI",
         },
@@ -378,7 +376,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "pink",
           imageUrl: slide13Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide13Image.height, // Altura dinámica
+          cardImageHeight: slide13Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Virtual Reality",
         },
@@ -399,7 +397,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "cyan",
           imageUrl: slide14Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide14Image.height, // Altura dinámica
+          cardImageHeight: slide14Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "IoT",
         },
@@ -421,7 +419,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "teal",
           imageUrl: slide15Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide15Image.height, // Altura dinámica
+          cardImageHeight: slide15Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "Healthcare",
         },
@@ -442,7 +440,7 @@ export const Default: FC = () => {
           ],
           backgroundColor: "purple",
           imageUrl: slide16Image.src, // Imagen obtenida de Unsplash
-          cardHeight: slide16Image.height, // Altura dinámica
+          cardImageHeight: slide16Image.height, // Altura dinámica
           images: imagesFetched, // Array de imágenes para el popup
           workType: "E-learning",
         },

@@ -1,5 +1,5 @@
 import type { Meta } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ImageSlider } from ".";
 
 const meta: Meta<typeof ImageSlider> = {
@@ -61,18 +61,22 @@ const fetchMountainImages = async () => {
   if (data.results && data.results.length > 0) {
     // Mapea los resultados de la búsqueda a un array de imágenes con src, width, height, y alt
     // Forzamos las imágenes a tener el tamaño de 1200x800 usando `urls.raw`
-    return data.results.map((image) => ({
+    return data.results.map(
+      (image: { urls: { raw: string }; alt_description?: string }) => ({
       src: `${image.urls.raw}&w=1200&h=800&fit=crop`, // Forzamos el tamaño de la imagen
       width: 1200,
       height: 800,
-      alt: image.alt_description || "Mountain image",
-    }));
+        alt: image.alt_description || "Mountain image",
+      })
+    );
   }
   throw new Error("No se encontraron imágenes de montañas.");
 };
 
 export const Default = () => {
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState<
+    { src: string; width: number; height: number; alt: string }[]
+  >([]);
 
   useEffect(() => {
     const loadImages = async () => {
@@ -82,7 +86,7 @@ export const Default = () => {
       } catch (error) {
         console.error(
           "Error al cargar las imágenes de Unsplash:",
-          error.message
+          error instanceof Error ? error.message : error
         );
         // Puedes agregar imágenes por defecto si ocurre un error
         setImages([
