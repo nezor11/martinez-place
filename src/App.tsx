@@ -37,6 +37,7 @@ import type { ThemeContextInterface } from "./utils/types/theme";
 
 const useLatestResume = () => {
   const [latestResume, setLatestResume] = useState<Resume | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     sanityAPI
@@ -114,11 +115,20 @@ const useLatestResume = () => {
           slug
         }`
       )
-      .then((data: Resume) => setLatestResume(data))
-      .catch(console.error);
+      .then((data: Resume) => {
+        if (!data) {
+          setError("No published resume was found.");
+          return;
+        }
+        setLatestResume(data);
+      })
+      .catch((err: unknown) => {
+        console.error(err);
+        setError("The resume could not be loaded. Please try again later.");
+      });
   }, []);
 
-  return latestResume;
+  return { latestResume, error };
 };
 
 const useTheme = () => {
@@ -152,7 +162,7 @@ const ResumeContent = ({ latestResume }: { latestResume: Resume }) => {
             link_text: "Download PDF Resume",
             href: latestResume.pdfResumeUrl,
             target: "_blank",
-            rel: "canonical",
+            rel: "noopener noreferrer",
           }}
         />
       )}
@@ -161,7 +171,7 @@ const ResumeContent = ({ latestResume }: { latestResume: Resume }) => {
 };
 
 function App() {
-  const latestResume = useLatestResume();
+  const { latestResume, error } = useLatestResume();
   const { darkTheme, toggleTheme } = useTheme();
 
   // Memoriza el contenido de Helmet para evitar renderizados innecesarios
@@ -212,6 +222,17 @@ function App() {
       ),
     [latestResume]
   );
+
+  if (error) {
+    return (
+      <div
+        role="alert"
+        className="container mx-auto px-4 py-10 max-w-5xl text-center"
+      >
+        <p className="text-lg">{error}</p>
+      </div>
+    );
+  }
 
   if (!latestResume) {
     return (

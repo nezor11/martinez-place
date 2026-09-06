@@ -1,91 +1,74 @@
-<p align="center">
-  <a href="https://www.chromatic.com/">
-    <img alt="Chromatic" src="https://avatars2.githubusercontent.com/u/24584319?s=200&v=4" width="60" />
-  </a>
-</p>
+# martinez.place
 
-<h1 align="center">
-  Chromatic's Intro to Storybook React template
-</h1>
+Personal resume site of Jorge Martínez Ortiz, live at [martinez.place](https://martinez.place/).
 
-This template ships with the main React and Storybook configuration files you'll need to get up and running fast.
+The page content (header, info sections, project slider, PDF resume) is
+managed in [Sanity](https://www.sanity.io/) and fetched at runtime. The UI is
+built from a small component library organised by atomic design and documented
+with Storybook.
 
-## 🚅 Quick start
+## Stack
 
-1.  **Create the application.**
+- React 18 + TypeScript, bundled with Vite
+- Tailwind CSS with light/dark theme (system preference, persisted in `localStorage`)
+- Sanity as headless CMS (`@sanity/client`, `@sanity/image-url`)
+- Swiper and react-player for the project slider
+- Storybook 8 for the component library
+- Biome for linting and formatting
+- Deployed on Vercel
 
-    Use [degit](https://github.com/Rich-Harris/degit) to get this template.
+## Getting started
 
-    ```shell
-    # Clone the template
-    npx degit chromaui/intro-storybook-react-template taskbox
-    ```
+Requires Node 20+ and Yarn 4 (the version is pinned in `package.json`; enable
+Corepack with `corepack enable` if `yarn --version` does not print 4.x).
 
-1.  **Install the dependencies.**
+```shell
+yarn            # install dependencies
+yarn dev        # app at http://localhost:5173
+yarn storybook  # Storybook at http://localhost:6006 (also watches Tailwind)
+```
 
-    Navigate into your new site’s directory and install the necessary dependencies.
+## Scripts
 
-    ```shell
-    # Navigate to the directory
-    cd taskbox/
+| Script | What it does |
+| --- | --- |
+| `yarn dev` | Vite dev server for the site |
+| `yarn build` | Production build into `dist/` |
+| `yarn preview` | Serve the production build locally |
+| `yarn storybook` | Storybook dev server plus Tailwind watcher |
+| `yarn build-storybook` | Static Storybook into `storybook-static/` |
+| `yarn build-storybook-and-copy-readme` | Static Storybook with docs and the per-component README files |
+| `yarn lint` | Biome lint over `src/` |
+| `yarn format` | Biome format over `src/` |
 
-    # Install the dependencies
-    yarn
-    ```
+## Project layout
 
-1.  **Open the source code and start editing!**
+```
+.
+├── .storybook/          Storybook config, theme and viewports
+├── public/              Static assets served as-is (fonts, favicons)
+├── src/
+│   ├── App.tsx          Fetches the resume from Sanity and renders it
+│   ├── *Section.tsx     Map Sanity sections to UI components
+│   ├── contexts/        ThemeContext and ThemeProvider
+│   ├── stories/         Component library (atoms, molecules, organisms, templates, pages)
+│   ├── styles/          Generated Tailwind CSS (do not edit; see tailwind-input.css)
+│   └── utils/           Sanity client, shared types, helpers
+├── index.html           Vite entry with SEO / Open Graph metadata
+├── vercel.json          Cache headers for hashed assets and fonts
+└── vite.config.js       Vite config (image optimizer, asset naming)
+```
 
-    Open the `taskbox` directory in your code editor of choice and building your first component!
+Tailwind is compiled from `src/tailwind-input.css` into `src/styles/tailwind.css`
+by the `watch:tailwind` script; the generated file is committed so the app can
+import it directly.
 
-1.  **Browse your stories!**
+## Content model
 
-    Run `yarn storybook` to see your component's stories at `http://localhost:6006`
+The app queries the latest published `resume` document. Its `pageBuilder`
+array holds sections of type `header`, `infoSection` and `sliderSection`, each
+rendered by the matching component in `src/SectionRenderer.tsx`.
 
-## 🔎 What's inside?
+## License
 
-A quick look at the top-level files and directories included with this template.
-
-    .
-    ├── .storybook
-    ├── node_modules
-    ├── public
-    ├── src
-    ├── .gitignore
-    ├── .index.html
-    ├── LICENSE
-    ├── package.json
-    ├── yarn.lock
-    ├── vite.config.js
-    └── README.md
-
-1.  **`.storybook`**: This directory contains Storybook's [configuration](https://storybook.js.org/docs/react/configure/overview) files.
-
-2.  **`node_modules`**: This directory contains all of the modules of code that your project depends on (npm packages).
-
-3.  **`public`**: This directory will contain the development and production build of the site.
-
-4.  **`src`**: This directory will contain all of the code related to what you will see on your application.
-
-5.  **`.gitignore`**: This file tells git which files it should not track or maintain during the development process of your project.
-
-6.  **`.index.html`**: This is the HTML page that is served when generating a development or production build.
-
-7.  **`LICENSE`**: The template is licensed under the MIT licence.
-
-8.  **`package.json`**: Standard manifest file for Node.js projects, which typically includes project specific metadata (such as the project's name, the author among other information). It's based on this file that npm will know which packages are necessary to the project.
-
-9.  **`yarn.lock`**: This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(Do not change it manually).**
-
-10. **`vite.config.js`**: This is the configuration file for [Vite](https://vitejs.dev/), a build tool that aims to provide a faster and leaner development experience for modern web projects.
-
-11. **`README.md`**: A text file containing useful reference information about the project.
-
-## Contribute
-
-If you encounter an issue with the template, we encourage you to open an issue in this template's repository.
-
-## Learning Storybook
-
-1. Read our introductory tutorial at [Learn Storybook](https://storybook.js.org/tutorials/intro-to-storybook/react/en/get-started/).
-2. Learn how to transform your component libraries into design systems in our [Design Systems for Developers](https://storybook.js.org/tutorials/design-systems-for-developers/) tutorial.
-3. See our official documentation at [Storybook](https://storybook.js.org/).
+MIT

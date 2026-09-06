@@ -58,7 +58,7 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
           config={{
             youtube: {
               playerVars: {
-                origin: "https://www.youtube.com",
+                origin: window.location.origin,
                 showinfo: 0,
                 controls: 1,
               },
