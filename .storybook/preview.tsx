@@ -2,7 +2,7 @@
 import { Preview } from "@storybook/react-vite";
 import React from "react";
 import { useDarkMode } from "storybook-dark-mode";
-import "../src/styles/tailwind.css";
+import "../src/styles/index.css";
 
 const withDarkMode = (StoryFn) => {
   const darkMode = useDarkMode();

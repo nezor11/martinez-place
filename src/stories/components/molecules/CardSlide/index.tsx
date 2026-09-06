@@ -140,7 +140,7 @@ export const CardSlide: FC<CardSlideProps> = ({
                 tag="span"
                 text={year}
                 size="sm"
-                mods="relative bg-gray-50 text-gray-950 px-2 py-1 rounded z-10 opacity-50 date-wrapper"
+                mods="relative bg-gray-50 text-gray-950 px-2 py-1 rounded-sm z-10 opacity-50 date-wrapper"
               />
             </div>
             <TitleCopy

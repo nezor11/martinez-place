@@ -132,7 +132,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
               <BodyCopy
                 text={description ?? ""}
                 tag="div"
-                mods="max-w-screen-xl dark:text-white"
+                mods="max-w-(--breakpoint-xl) dark:text-white"
               />
               {link?.href && (
                 <div className="mt-4 w-full link-text [&_a]:text-primary-500 [&_a]:underline">

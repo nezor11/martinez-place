@@ -1,8 +1,10 @@
+@reference "../../../../styles/index.css";
+
 .triple-slider {
   @apply w-full relative overflow-hidden py-10 max-w-[740px] mx-auto;
   perspective: 1200px;
 
-  @screen 2xl {
+  @media (width >= theme(--breakpoint-2xl)) {
     @apply max-w-[1710px];
   }
 }
@@ -24,18 +26,18 @@
 .triple-slider .swiper {
   @apply w-[90%] max-w-[640px] rounded-[8px];
 
-  @screen 2xl {
+  @media (width >= theme(--breakpoint-2xl)) {
     @apply max-w-[1200px];
   }
 
   &.triple-slider-prev {
-    @screen xl {
+    @media (width >= theme(--breakpoint-xl)) {
       @apply right-1/3;
     }
   }
 
   &.triple-slider-next {
-    @screen xl {
+    @media (width >= theme(--breakpoint-xl)) {
       @apply left-1/3;
     }
   }

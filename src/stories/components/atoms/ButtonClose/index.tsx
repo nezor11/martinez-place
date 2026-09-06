@@ -20,7 +20,7 @@ const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): JSX.Element => {
       type="button"
       onClick={onClick}
       aria-label="Close"
-      className="absolute top-2 right-2 bg-white text-gray-500 dark:text-white hover:text-gray-700 z-50 dark:bg-transparent rounded"
+      className="absolute top-2 right-2 bg-white text-gray-500 dark:text-white hover:text-gray-700 z-50 dark:bg-transparent rounded-sm"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

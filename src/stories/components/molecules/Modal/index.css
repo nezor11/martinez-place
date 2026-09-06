@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .meta-data-wrapper {
   .text-description {
     img {
@@ -39,7 +41,7 @@
 
 .absolute-element {
   @apply transition-all duration-300 ease-in-out opacity-15 transform scale-[0.75];
-  @screen lg {
+  @media (width >= theme(--breakpoint-lg)) {
     @apply transform scale-[1];
   }
 

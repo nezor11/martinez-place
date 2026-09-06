@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 body.modal-open {
   overflow: hidden;
 }
