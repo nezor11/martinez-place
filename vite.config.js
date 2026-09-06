@@ -2,7 +2,6 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
-import vitePluginRequire from "vite-plugin-require";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -20,7 +19,6 @@ export default defineConfig({
   ],
   plugins: [
     react(),
-    vitePluginRequire.default(),
     ViteImageOptimizer({
       test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
       exclude: undefined,
@@ -101,16 +99,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          if (/\.woff2?$/.test(assetInfo.name)) {
+          const name = assetInfo.names?.[0] ?? assetInfo.name ?? "";
+          if (/\.woff2?$/.test(name)) {
             return "fonts/[name][extname]";
           }
-          if (/\.eot$/.test(assetInfo.name)) {
+          if (/\.ttf$/.test(name)) {
             return "fonts/[name][extname]";
           }
-          if (/\.ttf$/.test(assetInfo.name)) {
-            return "fonts/[name][extname]";
-          }
-          if (/\.svg$/.test(assetInfo.name)) {
+          if (/\.svg$/.test(name)) {
             return "images/[name][extname]";
           }
           return "[name][extname]";
