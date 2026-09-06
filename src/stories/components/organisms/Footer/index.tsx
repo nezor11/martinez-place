@@ -45,13 +45,16 @@ export const Footer: FC<FooterProps> = ({
   const currentYear = new Date().getFullYear();
 
   const formatDate = (dateString: string): string => {
+    // Fixed locale and time zone: the site is in English and the value must
+    // not depend on where it is rendered (build server vs. visitor).
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
       month: "long",
       year: "numeric",
+      timeZone: "UTC",
     };
     const formattedDate = new Date(dateString).toLocaleDateString(
-      undefined,
+      "en-US",
       options
     );
     return formattedDate;

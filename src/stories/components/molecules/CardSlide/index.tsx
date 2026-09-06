@@ -36,11 +36,22 @@ export interface CardSlideProps {
   infoUrl?: string;
 }
 
-const getRandomColor = () => {
-  const colors = ["#569CD6", "#9D415D", "#9D9D9D", "#C19C00", "#69C33B"];
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex];
+/**
+ * Picks an item from a list based on a string seed. The result is stable for
+ * a given title, so the prerendered HTML and the client render agree.
+ */
+const pickBySeed = <T,>(seed: string, items: T[]): T => {
+  let hash = 0;
+  for (const char of seed) {
+    hash = (hash * 31 + char.charCodeAt(0)) | 0;
+  }
+  return items[Math.abs(hash) % items.length];
 };
+
+const getColorFor = (seed: string) =>
+  pickBySeed(seed, ["#569CD6", "#9D415D", "#9D9D9D", "#C19C00", "#69C33B"]);
+
+const getHeightFor = (seed: string) => pickBySeed(seed, [200, 250, 300, 350]);
 
 export const CardSlide: FC<CardSlideProps> = ({
   year,
@@ -63,15 +74,9 @@ export const CardSlide: FC<CardSlideProps> = ({
   const figcaptionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [containerHeight, setContainerHeight] = useState(cardImageHeight);
-  const [borderColor] = useState(getRandomColor());
+  const borderColor = getColorFor(title);
 
-  const getRandomHeight = () => {
-    const heights = [200, 250, 300, 350];
-    const randomIndex = Math.floor(Math.random() * heights.length);
-    return heights[randomIndex];
-  };
-
-  cardImageHeight = getRandomHeight();
+  cardImageHeight = getHeightFor(title);
 
   useEffect(() => {
     if (showModal) {

@@ -77,13 +77,13 @@ export const mapInfoSection = (section: Section) => {
 
       const startDateObj = new Date(startDate);
       const finishDateObj = finishDate ? new Date(finishDate) : null;
-      const startYear = startDateObj.getFullYear();
-      const finishYear = finishDateObj ? finishDateObj.getFullYear() : null;
+      const startYear = startDateObj.getUTCFullYear();
+      const finishYear = finishDateObj ? finishDateObj.getUTCFullYear() : null;
 
       let dateText = `${startYear} > Current`;
 
       if (finishDateObj) {
-        const finishYear = finishDateObj.getFullYear();
+        const finishYear = finishDateObj.getUTCFullYear();
         dateText =
           startYear !== finishYear ? `${startYear} > ${finishYear}` : dateText;
       }

@@ -628,6 +628,10 @@ html.dark {
   border-width: 0;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .invisible {
   visibility: hidden;
 }
@@ -664,10 +668,6 @@ html.dark {
   left: 0px;
 }
 
-.left-1\/2 {
-  left: 50%;
-}
-
 .left-14 {
   left: 3.5rem;
 }
@@ -694,10 +694,6 @@ html.dark {
 
 .top-1 {
   top: 0.25rem;
-}
-
-.top-1\/2 {
-  top: 50%;
 }
 
 .top-14 {
@@ -811,6 +807,10 @@ html.dark {
   display: block;
 }
 
+.inline {
+  display: inline;
+}
+
 .flex {
   display: flex;
 }
@@ -827,16 +827,8 @@ html.dark {
   display: none;
 }
 
-.h-6 {
-  height: 1.5rem;
-}
-
 .h-8 {
   height: 2rem;
-}
-
-.h-\[200px\] {
-  height: 200px;
 }
 
 .h-full {
@@ -860,20 +852,12 @@ html.dark {
   width: 8rem;
 }
 
-.w-6 {
-  width: 1.5rem;
-}
-
 .w-8 {
   width: 2rem;
 }
 
 .w-80 {
   width: 20rem;
-}
-
-.w-\[200px\] {
-  width: 200px;
 }
 
 .w-full {
@@ -906,16 +890,6 @@ html.dark {
 
 .basis-2\/3 {
   flex-basis: 66.666667%;
-}
-
-.-translate-x-1\/2 {
-  --tw-translate-x: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-.-translate-y-1\/2 {
-  --tw-translate-y: -50%;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .transform {
@@ -1038,11 +1012,6 @@ html.dark {
 .border-primary-500 {
   --tw-border-opacity: 1;
   border-color: rgb(244 63 94 / var(--tw-border-opacity, 1));
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity, 1));
 }
 
 .bg-gray-50 {
@@ -1306,6 +1275,14 @@ html.dark {
 
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 .transition-colors {
@@ -1666,17 +1643,13 @@ html.dark {
   font-display: swap;
 }
 
-.dark,
-.theme-dark {
-  .GitBranch {
-    path {
-      fill: var(--textColor);
-    }
-  }
-  .NextJS {
-    path {
-      fill: var(--textColor);
-    }
+/* Monochrome icons follow the text colour in both themes. GitBranch has
+   fill="none" on its root, so without this rule it is invisible in light mode. */
+
+.GitBranch,
+.NextJS {
+  path {
+    fill: var(--textColor);
   }
 }
 

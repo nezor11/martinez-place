@@ -66,7 +66,9 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
       imageWidth: slide.slideDetails.slideImage?.width || undefined,
       imageHeight: slide.slideDetails.slideImage?.height || undefined,
       imageAltText: slide.slideDetails.slideImage?.alt || "",
-      year: new Date(slide.slideDetails.workDate).getFullYear().toString(),
+      year: new Date(slide.slideDetails.workDate)
+        .getUTCFullYear()
+        .toString(),
       title: slide.slideDetails.slideTitle || "",
       name: slide.slideDetails.name || "",
       iconsData: slide.slideDetails.icons

@@ -3,7 +3,7 @@
 Personal resume site of Jorge Martínez Ortiz, live at [martinez.place](https://martinez.place/). The component library is published at [storybook.martinez.place](https://storybook.martinez.place/).
 
 The page content (header, info sections, project slider, PDF resume) is
-managed in [Sanity](https://www.sanity.io/) (schema in [nezor11/martinez-place-sanity](https://github.com/nezor11/martinez-place-sanity)) and fetched **at build time**: `scripts/fetch-resume.mjs` writes `src/data/resume.json`, which the site bundles. The browser never talks to Sanity, so the page renders without a loader. The UI is
+managed in [Sanity](https://www.sanity.io/) (schema in [nezor11/martinez-place-sanity](https://github.com/nezor11/martinez-place-sanity)) and fetched **at build time**: `scripts/fetch-resume.mjs` writes `src/data/resume.json`, which the site bundles. The HTML is then **prerendered** by `scripts/prerender.mjs`, so `index.html` ships with the full page and React only hydrates it. The browser never talks to Sanity and the content is visible before any JavaScript runs. The UI is
 built from a small component library organised by atomic design and documented
 with Storybook.
 
@@ -44,7 +44,8 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | --- | --- |
 | `yarn fetch-resume` | Pull the published resume from Sanity into `src/data/resume.json` (`--strict` fails instead of keeping a stale file) |
 | `yarn dev` | Fetch the resume, then start the Vite dev server |
-| `yarn build` | Fetch the resume (strict), then build into `dist/` |
+| `yarn build` | Fetch the resume (strict), build the client and server bundles, prerender `dist/index.html` |
+| `yarn build:client` / `yarn build:ssr` / `yarn prerender` | The three build steps, individually |
 | `yarn preview` | Serve the production build locally |
 | `yarn storybook` | Storybook dev server plus Tailwind watcher |
 | `yarn build-storybook` | Static Storybook into `storybook-static/` |
@@ -57,9 +58,12 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 ```
 .
 ├── .storybook/          Storybook config, theme and viewports
+├── scripts/             fetch-resume.mjs (Sanity → JSON) and prerender.mjs (HTML)
 ├── public/              Static assets served as-is (fonts, favicons)
 ├── src/
-│   ├── App.tsx          Fetches the resume from Sanity and renders it
+│   ├── App.tsx          Renders the resume sections
+│   ├── main.tsx         Client entry: hydrates the prerendered HTML
+│   ├── entry-server.tsx Server entry used by the prerender step
 │   ├── *Section.tsx     Map Sanity sections to UI components
 │   ├── contexts/        ThemeContext and ThemeProvider
 │   ├── data/            resume.json (generated, ignored) and its typed export
@@ -70,6 +74,10 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 ├── vercel.json          Cache headers for hashed assets and fonts
 └── vite.config.js       Vite config (image optimizer, asset naming)
 ```
+
+### Prerender rules
+
+Everything rendered on the first pass must be identical on the build server and in the browser: no `Math.random`, no `window`/`localStorage` reads during render (use effects or `import.meta.env.SSR`), and dates formatted with a fixed locale and time zone. The theme starts light and is applied after mount; an inline script in `index.html` (allowed by its hash in the CSP) adds the `dark` class before paint so there is no flash.
 
 Tailwind is compiled from `src/tailwind-input.css` into `src/styles/tailwind.css`
 by the `watch:tailwind` script; the generated file is committed so the app can

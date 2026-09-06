@@ -313,17 +313,11 @@ html.dark {
   }
 }
 
-.dark,
-.theme-dark {
-  .GitBranch {
-    path {
-      fill: var(--textColor);
-    }
-  }
-
-  .NextJS {
-    path {
-      fill: var(--textColor);
-    }
+/* Monochrome icons follow the text colour in both themes. GitBranch has
+   fill="none" on its root, so without this rule it is invisible in light mode. */
+.GitBranch,
+.NextJS {
+  path {
+    fill: var(--textColor);
   }
 }

@@ -13,19 +13,31 @@ const ThemeContext = createContext<ThemeContextInterface | null>(null);
 export { ThemeContext };
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [darkTheme, setDarkTheme] = useState<boolean>(() => {
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme) {
-      return currentTheme === "dark";
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+  // The first render must match the prerendered HTML, so it always starts in
+  // light mode; the real preference is applied right after mount. An inline
+  // script in index.html already sets the `dark` class before paint, so there
+  // is no visible flash.
+  const [darkTheme, setDarkTheme] = useState<boolean>(false);
 
   const toggleTheme = () => {
     startTransition(() => {
-      setDarkTheme((curr) => !curr);
+      setDarkTheme((curr) => {
+        const next = !curr;
+        localStorage.setItem("theme", next ? "dark" : "light");
+        return next;
+      });
     });
   };
+
+  useEffect(() => {
+    if (import.meta.env.SSR) return;
+    const savedTheme = localStorage.getItem("theme");
+    const preferred = savedTheme
+      ? savedTheme === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // A transition keeps this from interrupting hydration.
+    startTransition(() => setDarkTheme(preferred));
+  }, []);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -41,7 +53,6 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     document.body.className = darkTheme ? "theme-dark" : "theme-light";
-    localStorage.setItem("theme", darkTheme ? "dark" : "light");
   }, [darkTheme]);
   return (
     <ThemeContext.Provider value={{ darkTheme, toggleTheme, setDarkTheme }}>
