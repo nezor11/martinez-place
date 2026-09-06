@@ -24,14 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src",
-    "globals.d.ts",
-    "declarations.d.ts",
-    "vite.config.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["src", "globals.d.ts", "declarations.d.ts", ".storybook"],
   "exclude": [
     "**/dist",
     "**/test.*",
@@ -41,6 +34,5 @@
     "**/__tests__",
     "**/*.test.ts",
     "**/*.stories.*"
-  ],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  ]
 }
