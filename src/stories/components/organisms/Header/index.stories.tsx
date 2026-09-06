@@ -1,6 +1,6 @@
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Header } from ".";
 
 const meta: Meta<typeof Header> = {
@@ -42,7 +42,7 @@ const fetchFaceImage = async () => {
       height: 300,
     };
   } catch (error) {
-    console.error("Error al obtener la imagen de Unsplash:", error.message);
+    console.error("Error al obtener la imagen de Unsplash:", error instanceof Error ? error.message : error);
     // Retornamos una imagen por defecto en caso de error
     return {
       image: "https://placehold.co/300x300",

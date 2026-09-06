@@ -1,6 +1,6 @@
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { CardSlide } from ".";
 
 const meta: Meta<typeof CardSlide> = {
@@ -93,18 +93,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Función para obtener imágenes de Unsplash con un tema específico
-const fetchImageByTheme = async (theme: string) => {
-  const response = await fetch(
-    `https://api.unsplash.com/photos/random?query=${theme}&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc`
-  );
-  const data = await response.json();
-  return {
-    src: `${data.urls.raw}&w=800&h=1200&fit=crop`,
-    width: 1200,
-    height: 800,
-  };
-};
-
 const fetchCardImage = async () => {
   try {
     const response = await fetch(

@@ -1,6 +1,5 @@
 import { Code } from "@/stories/components/system/Code";
 import type { Meta } from "@storybook/react";
-import React from "react";
 import Play from ".";
 
 const meta: Meta<typeof Play> = {

@@ -1,6 +1,7 @@
+import type { SlideData } from "@/stories/components/organisms/SliderSection";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Resume } from ".";
 
 const meta: Meta<typeof Resume> = {
@@ -74,7 +75,7 @@ const fetchImagesFromUnsplash = async (query: string, count = 3) => {
 };
 
 export const Default = () => {
-  const [slidesData, setSlidesData] = useState([]);
+  const [slidesData, setSlidesData] = useState<SlideData[]>([]);
 
   useEffect(() => {
     const fetchImagesForSlides = async () => {
@@ -88,7 +89,7 @@ export const Default = () => {
             description: "Dynamic project description",
             company: `Company ${index + 1}`,
             imageUrl: slideImage.src,
-            cardHeight: slideImage.height,
+            cardImageHeight: slideImage.height,
             images: imagesFetched,
             workType: "Frontend",
             iconsData: [

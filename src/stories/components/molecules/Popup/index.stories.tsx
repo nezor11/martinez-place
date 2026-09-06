@@ -1,7 +1,7 @@
 import ButtonClose from "@/stories/components/atoms/ButtonClose";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Popup } from ".";
 
 const meta: Meta<typeof Popup> = {
