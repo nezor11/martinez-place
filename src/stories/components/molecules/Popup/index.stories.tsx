@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import ButtonClose from "@/stories/components/atoms/ButtonClose";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -95,7 +96,7 @@ type Story = StoryObj<typeof meta>;
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?query=${query}&count=${count}&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc`
+      unsplashUrl("photos/random", { query, count })
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 

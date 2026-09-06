@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import type { Meta } from "@storybook/react";
 import { useEffect, useState } from "react";
 import { ImageSlider } from ".";
@@ -54,7 +55,7 @@ export default meta;
 // Función para buscar un array de imágenes de montañas utilizando el endpoint de búsqueda
 const fetchMountainImages = async () => {
   const response = await fetch(
-    "https://api.unsplash.com/search/photos?query=mountain&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc&per_page=5"
+    unsplashUrl("search/photos", { query: "mountain", per_page: 5 })
   );
   const data = await response.json();
 
