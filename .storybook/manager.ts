@@ -4,7 +4,7 @@ import { create, themes } from "@storybook/theming";
 addons.setConfig({
   theme: create({
     base: "light",
-    brandTitle: "Martinez Storybook",
+    brandTitle: "martinez.place",
     brandUrl: "/",
     brandImage: "./nezor.svg",
     brandTarget: "_self",
