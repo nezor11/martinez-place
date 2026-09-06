@@ -1,9 +1,9 @@
 # martinez.place
 
-Personal resume site of Jorge Martínez Ortiz, live at [martinez.place](https://martinez.place/).
+Personal resume site of Jorge Martínez Ortiz, live at [martinez.place](https://martinez.place/). The component library is published at [storybook.martinez.place](https://storybook.martinez.place/).
 
 The page content (header, info sections, project slider, PDF resume) is
-managed in [Sanity](https://www.sanity.io/) and fetched at runtime. The UI is
+managed in [Sanity](https://www.sanity.io/) (schema in [nezor11/martinez-place-sanity](https://github.com/nezor11/martinez-place-sanity)) and fetched at runtime. The UI is
 built from a small component library organised by atomic design and documented
 with Storybook.
 
@@ -15,7 +15,7 @@ with Storybook.
 - Swiper and react-player for the project slider
 - Storybook 8 for the component library
 - Biome for linting and formatting
-- Deployed on Vercel
+- Deployed on Vercel as two projects from this repo: `martinez-place` (site) and `martinez-place-storybook` (Storybook)
 
 ## Getting started
 
