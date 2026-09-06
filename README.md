@@ -3,7 +3,7 @@
 Personal resume site of Jorge Martínez Ortiz, live at [martinez.place](https://martinez.place/). The component library is published at [storybook.martinez.place](https://storybook.martinez.place/).
 
 The page content (header, info sections, project slider, PDF resume) is
-managed in [Sanity](https://www.sanity.io/) (schema in [nezor11/martinez-place-sanity](https://github.com/nezor11/martinez-place-sanity)) and fetched at runtime. The UI is
+managed in [Sanity](https://www.sanity.io/) (schema in [nezor11/martinez-place-sanity](https://github.com/nezor11/martinez-place-sanity)) and fetched **at build time**: `scripts/fetch-resume.mjs` writes `src/data/resume.json`, which the site bundles. The browser never talks to Sanity, so the page renders without a loader. The UI is
 built from a small component library organised by atomic design and documented
 with Storybook.
 
@@ -42,8 +42,9 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 
 | Script | What it does |
 | --- | --- |
-| `yarn dev` | Vite dev server for the site |
-| `yarn build` | Production build into `dist/` |
+| `yarn fetch-resume` | Pull the published resume from Sanity into `src/data/resume.json` (`--strict` fails instead of keeping a stale file) |
+| `yarn dev` | Fetch the resume, then start the Vite dev server |
+| `yarn build` | Fetch the resume (strict), then build into `dist/` |
 | `yarn preview` | Serve the production build locally |
 | `yarn storybook` | Storybook dev server plus Tailwind watcher |
 | `yarn build-storybook` | Static Storybook into `storybook-static/` |
@@ -61,6 +62,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 │   ├── App.tsx          Fetches the resume from Sanity and renders it
 │   ├── *Section.tsx     Map Sanity sections to UI components
 │   ├── contexts/        ThemeContext and ThemeProvider
+│   ├── data/            resume.json (generated, ignored) and its typed export
 │   ├── stories/         Component library (atoms, molecules, organisms, templates, pages)
 │   ├── styles/          Generated Tailwind CSS (do not edit; see tailwind-input.css)
 │   └── utils/           Sanity client, shared types, helpers
@@ -75,7 +77,9 @@ import it directly.
 
 ## Content model
 
-The app queries the latest published `resume` document. Its `pageBuilder`
+The build queries the latest published `resume` document. Publishing in Sanity does not update the live site by itself: a Sanity webhook must call the Vercel deploy hook of the `martinez-place` project so it rebuilds with fresh content.
+
+The app renders the latest published `resume` document. Its `pageBuilder`
 array holds sections of type `header`, `infoSection` and `sliderSection`, each
 rendered by the matching component in `src/SectionRenderer.tsx`.
 

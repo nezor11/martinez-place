@@ -7,6 +7,10 @@ import vitePluginRequire from "vite-plugin-require";
 // https://vitejs.dev/config/
 export default defineConfig({
   publicDir: "public",
+  json: {
+    // resume.json is large; JSON.parse is faster than an object literal
+    stringify: true,
+  },
   assetsInclude: [
     "**/*.woff",
     "**/*.woff2",
