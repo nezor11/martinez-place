@@ -85,8 +85,8 @@ export const Modal: FC<ModalProps> = ({
   const dragOffset = useRef({ x: 0, y: 0 });
   const [dragging, setDragging] = useState(false);
   const [isLgScreen, setIsLgScreen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [, setIsHovered] = useState(false);
+  const [, setLoading] = useState(true);
   const [highlightedElements, setHighlightedElements] = useState<Set<Element>>(
     new Set()
   );
@@ -181,19 +181,6 @@ export const Modal: FC<ModalProps> = ({
     setDragging(true);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (dragging && dragItemRef.current) {
-      dragItemRef.current.style.position = "absolute";
-      dragItemRef.current.style.left = `${e.clientX - dragOffset.current.x}px`;
-      dragItemRef.current.style.top = `${e.clientY - dragOffset.current.y}px`;
-    }
-  };
-
-  const handleMouseUp = () => {
-    setDragging(false);
-    dragItemRef.current = null;
-  };
-
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (dragging && dragItemRef.current) {
@@ -223,11 +210,6 @@ export const Modal: FC<ModalProps> = ({
   }, [dragging]);
 
   const formatCompanyName = (name: string) => name.replace(/_/g, " ");
-
-  const randomizedImages = useMemo(
-    () => images.sort(() => Math.random() - 0.5),
-    [images]
-  );
 
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);

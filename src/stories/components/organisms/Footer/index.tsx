@@ -25,10 +25,9 @@ import {
   type ContactDetailTexts,
 } from "@/stories/components/molecules/ContactDetails";
 import type { FC } from "react";
-import React from "react";
 
 export interface FooterProps {
-  copy_right_text: string;
+  copy_right_text?: string;
   mods?: string;
   last_updated?: Date | string;
   my_link?: LinkProps;

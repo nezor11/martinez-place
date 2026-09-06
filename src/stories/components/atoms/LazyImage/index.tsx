@@ -25,7 +25,7 @@
  */
 
 import type { CSSProperties, FC } from "react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./index.css";
 
 export interface LazyImageProps {

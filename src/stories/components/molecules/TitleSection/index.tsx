@@ -23,7 +23,6 @@
 import { BodyCopy } from "@/stories/components/atoms/BodyCopy";
 import DOMPurify from "dompurify";
 import type { CSSProperties, FC } from "react";
-import React from "react";
 import { IconGallery, type IconGalleryProps } from "../IconGallery";
 import "./index.css";
 

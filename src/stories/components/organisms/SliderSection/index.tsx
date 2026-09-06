@@ -32,7 +32,7 @@ import type { IconGalleryProps } from "@/stories/components/molecules/IconGaller
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
 import { cn } from "@/utils";
 import { nanoid } from "nanoid";
-import React, { useState, type FC } from "react";
+import type { FC } from "react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -77,7 +77,6 @@ export const SliderSection: FC<SliderSectionProps> = ({
     return null;
   }
 
-  const [swiperRef, setSwiperRef] = useState(null);
 
   const isTouchDevice = () => {
     return "ontouchstart" in window || navigator.maxTouchPoints > 0;
@@ -114,7 +113,6 @@ export const SliderSection: FC<SliderSectionProps> = ({
           keyboard={{ enabled: true, onlyInViewport: false }}
           loop={true}
           modules={[A11y, Keyboard, Mousewheel]}
-          onSwiper={setSwiperRef}
           {...(isTouch && {
             freeMode: {
               enabled: false,
@@ -136,7 +134,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
             769: { slidesOffsetBefore: 300, centeredSlides: true },
           }}
         >
-          {slidesData.map((slide, index) => (
+          {slidesData.map((slide) => (
             <SwiperSlide key={nanoid()}>
               <CardSlide
                 {...slide}
@@ -144,7 +142,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
                 cardImageAlt={slide.alt}
                 cardImageHeight={slide.imageDetails?.height}
                 year={slide.year || ""}
-                backgroundColor={slide.backgroundColor || null}
+                backgroundColor={slide.backgroundColor || undefined}
               />
             </SwiperSlide>
           ))}

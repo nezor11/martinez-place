@@ -1,12 +1,11 @@
 import type { FC } from "react";
-import React from "react";
 import HeaderSection from "./HeaderSection";
 import ResumeSection from "./ResumeSection";
 import ResumeSlider from "./ResumeSlider";
-import type { Section, Slide } from "./utils/types/section";
+import type { Section } from "./utils/types/section";
 
 interface Props {
-  section?: Section | Slide;
+  section: Section;
 }
 
 const SectionRenderer: FC<Props> = ({ section }) => {

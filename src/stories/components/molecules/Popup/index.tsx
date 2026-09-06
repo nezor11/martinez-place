@@ -36,7 +36,7 @@ import { ContentSlider } from "@/stories/components/atoms/ContentSlider";
 import type { LinkProps } from "@/stories/components/atoms/Link";
 import type { IconData } from "@/stories/components/molecules/CardSlide";
 import type { FC } from "react";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import "./index.css";
 
 export interface SanityImageData {

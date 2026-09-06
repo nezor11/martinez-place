@@ -24,7 +24,7 @@ import {
   type ResumeObject,
 } from "@/stories/components/templates/Resume";
 import { cn } from "@/utils";
-import React, { type ComponentPropsWithRef, forwardRef } from "react";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 
 interface PageObject extends ResumeObject {
   dataHeaderObject?: User[] | null;
@@ -38,7 +38,7 @@ export const Page = forwardRef<HTMLDivElement, PageProps>(
   ({ dataHeaderObject, dataResumeObject, dataFooterObject, ...props }, ref) => {
     return (
       <div className={cn("container mx-auto px-4")} {...props} ref={ref}>
-        <Header user={dataHeaderObject ? dataHeaderObject[0] : undefined} />
+        <Header user={dataHeaderObject ? dataHeaderObject[0] : null} />
         <Resume resumeItems={dataResumeObject} />
         <Footer {...dataFooterObject} />
       </div>

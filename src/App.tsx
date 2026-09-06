@@ -28,7 +28,7 @@ import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/M
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
 import type { Resume } from "@/utils/types/resume";
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import SectionRenderer from "./SectionRenderer";
 import { ThemeContext } from "./contexts";

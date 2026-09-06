@@ -1,7 +1,7 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const VueIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "VueIcon", desc, width, height, ...props }, ref) => (

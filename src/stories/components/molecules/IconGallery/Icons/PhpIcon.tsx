@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const PhpIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "PHP", desc, width, height, ...props }, ref) => (

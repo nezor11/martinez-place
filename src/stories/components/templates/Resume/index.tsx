@@ -5,7 +5,7 @@ import { SliderSection } from "@/stories/components/organisms/SliderSection";
 
 import { cn } from "@/utils";
 import type { ComponentPropsWithRef } from "react";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 export interface SliderSectionObject extends InfoSectionObject {
   type: "sliderSection";

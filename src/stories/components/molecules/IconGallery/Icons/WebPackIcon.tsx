@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const WebPackIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "WebPack", desc, width, height, ...props }, ref) => (

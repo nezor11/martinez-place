@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const PrestashopIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "Prestashop", desc, width, height, ...props }, ref) => (

@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import type { FC } from "react";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 export interface IconGalleryProps {
   iconsData?: { name: string; width?: string; height?: string }[]; // Hacer width y height opcionales
@@ -15,18 +15,20 @@ export const IconGallery: FC<IconGalleryProps> = ({ iconsData = [] }) => {
     const loadIcons = async () => {
       const iconModules = import.meta.glob("./Icons/*.tsx", { eager: true });
 
-      const availableIcons: Record<string, FC<IconProps>> = Object.entries(
-        iconModules
-      ).reduce(
-        (acc, [path, module]: [string, object]) => {
-          const iconName = path.split("/").pop()?.split(".")[0] || "";
-          if (iconName && module && "default" in module) {
-            acc[iconName] = (module as { default: FC<IconProps> }).default;
-          }
-          return acc;
-        },
-        {} as Record<string, FC<IconProps>>
-      );
+      const availableIcons = Object.entries(iconModules).reduce<
+        Record<string, FC<IconProps>>
+      >((acc, [path, module]) => {
+        const iconName = path.split("/").pop()?.split(".")[0] || "";
+        if (
+          iconName &&
+          module &&
+          typeof module === "object" &&
+          "default" in module
+        ) {
+          acc[iconName] = (module as { default: FC<IconProps> }).default;
+        }
+        return acc;
+      }, {});
 
       let selectedIcons: { name: string; Component: FC<IconProps> }[] = [];
 

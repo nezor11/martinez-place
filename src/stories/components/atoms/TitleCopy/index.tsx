@@ -7,7 +7,6 @@ import type {
   HTMLAttributes,
   ReactNode,
 } from "react";
-import React from "react";
 import "./index.css";
 
 const textStyles = cva("text", {

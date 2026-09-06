@@ -6,7 +6,6 @@
  */
 
 import type { FC } from "react";
-import React from "react";
 import "./index.css";
 
 const Loader: FC = () => {

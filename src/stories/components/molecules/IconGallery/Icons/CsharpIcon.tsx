@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const CsharpIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "Csharp", desc, width, height, ...props }, ref) => (

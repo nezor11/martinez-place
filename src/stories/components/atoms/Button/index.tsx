@@ -19,7 +19,6 @@
  */
 
 import type { CSSProperties } from "react";
-import React from "react";
 import "./index.css";
 
 interface ButtonProps {
