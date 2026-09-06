@@ -1,7 +1,7 @@
 import { unsplashUrl } from "@/stories/utils/unsplash";
 import ButtonClose from "@/stories/components/atoms/ButtonClose";
 import { Code } from "@/stories/components/system/Code";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 import { Popup } from ".";
 

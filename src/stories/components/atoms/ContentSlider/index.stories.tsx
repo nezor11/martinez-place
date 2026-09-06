@@ -1,5 +1,5 @@
 import { unsplashUrl } from "@/stories/utils/unsplash";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 import { ContentSlider } from ".";
 

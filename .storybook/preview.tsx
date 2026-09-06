@@ -1,5 +1,5 @@
 // preview.tsx
-import { Preview } from "@storybook/react";
+import { Preview } from "@storybook/react-vite";
 import React from "react";
 import { useDarkMode } from "storybook-dark-mode";
 import "../src/styles/tailwind.css";
@@ -71,7 +71,7 @@ const preview: Preview = {
       },
     },
     viewport: {
-      viewports: MY_VIEWPORTS,
+      options: MY_VIEWPORTS,
     },
     options: {
       storySort: {
