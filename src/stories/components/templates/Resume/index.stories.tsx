@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import type { SlideData } from "@/stories/components/organisms/SliderSection";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
@@ -26,7 +27,7 @@ const fetchCardImage = async () => {
   const height = getRandomHeight();
   try {
     const response = await fetch(
-      "https://api.unsplash.com/photos/random?query=river&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc"
+      unsplashUrl("photos/random", { query: "river" })
     );
     if (!response.ok) throw new Error(`Error de red: ${response.status}`);
 
@@ -48,7 +49,7 @@ const fetchCardImage = async () => {
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?query=${query}&count=${count}&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc`
+      unsplashUrl("photos/random", { query, count })
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 

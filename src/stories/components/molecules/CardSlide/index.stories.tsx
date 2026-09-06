@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
@@ -96,7 +97,7 @@ type Story = StoryObj<typeof meta>;
 const fetchCardImage = async () => {
   try {
     const response = await fetch(
-      "https://api.unsplash.com/photos/random?query=river&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc"
+      unsplashUrl("photos/random", { query: "river" })
     );
 
     // Verificar si la respuesta es correcta (código de estado 200)
@@ -117,7 +118,7 @@ const fetchCardImage = async () => {
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?query=${query}&count=${count}&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc`
+      unsplashUrl("photos/random", { query, count })
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 

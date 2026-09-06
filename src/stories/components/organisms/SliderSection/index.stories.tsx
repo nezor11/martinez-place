@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import type { Meta } from "@storybook/react";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
@@ -32,7 +33,7 @@ const fetchCardImage = async () => {
 
   try {
     const response = await fetch(
-      "https://api.unsplash.com/photos/random?query=river&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc"
+      unsplashUrl("photos/random", { query: "river" })
     );
 
     if (!response.ok) {
@@ -57,7 +58,7 @@ const fetchCardImage = async () => {
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?query=${query}&count=${count}&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc`
+      unsplashUrl("photos/random", { query, count })
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 

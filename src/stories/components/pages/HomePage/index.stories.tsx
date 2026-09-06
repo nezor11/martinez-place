@@ -1,3 +1,4 @@
+import { unsplashUrl } from "@/stories/utils/unsplash";
 import { Code } from "@/stories/components/system/Code";
 import type { Meta, StoryObj } from "@storybook/react";
 import { useEffect, useState } from "react";
@@ -17,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 const fetchRandomFaceImage = async () => {
   try {
     const response = await fetch(
-      "https://api.unsplash.com/photos/random?query=face&client_id=KsxUA5_AC79dw6VmBdoRAU6BUCf61iH6MKV4QLej6Wc"
+      unsplashUrl("photos/random", { query: "face" })
     );
     const data = await response.json();
     return {

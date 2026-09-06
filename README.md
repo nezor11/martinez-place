@@ -28,6 +28,16 @@ yarn dev        # app at http://localhost:5173
 yarn storybook  # Storybook at http://localhost:6006 (also watches Tailwind)
 ```
 
+## Environment variables
+
+Only Storybook uses one, and it is optional:
+
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `STORYBOOK_UNSPLASH_ACCESS_KEY` | stories | Fetches sample photos from Unsplash. Without it the stories show placeholder images. |
+
+Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set it in the Vercel project `martinez-place-storybook`.
+
 ## Scripts
 
 | Script | What it does |
