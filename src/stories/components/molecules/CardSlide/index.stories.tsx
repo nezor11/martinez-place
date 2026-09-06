@@ -1,6 +1,6 @@
 import { unsplashUrl } from "@/stories/utils/unsplash";
 import { Code } from "@/stories/components/system/Code";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 import { CardSlide } from ".";
 

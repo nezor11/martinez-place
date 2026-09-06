@@ -1,6 +1,6 @@
 import { unsplashUrl } from "@/stories/utils/unsplash";
 import { Code } from "@/stories/components/system/Code";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 import { LazyImage } from ".";
 

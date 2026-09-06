@@ -13,7 +13,7 @@ with Storybook.
 - Tailwind CSS with light/dark theme (system preference, persisted in `localStorage`)
 - Sanity as headless CMS (`@sanity/client`, `@sanity/image-url`)
 - Swiper and react-player for the project slider
-- Storybook 8 for the component library
+- Storybook 10 for the component library
 - Biome for linting and formatting
 - Deployed on Vercel as two projects from this repo: `martinez-place` (site) and `martinez-place-storybook` (Storybook)
 

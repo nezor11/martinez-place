@@ -1,5 +1,5 @@
 // index.stories.tsx
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Code } from "."; // Importa tu componente Code desde su archivo correspondiente
 
 const meta: Meta = {

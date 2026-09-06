@@ -1,5 +1,5 @@
 import { Code } from "@/stories/components/system/Code";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconGallery } from ".";
 
 const meta: Meta<typeof IconGallery> = {

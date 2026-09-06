@@ -1,6 +1,6 @@
 import ButtonClose from "@/stories/components/atoms/ButtonClose";
 import { Code } from "@/stories/components/system/Code";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Modal } from ".";
 
 const meta: Meta<typeof Modal> = {

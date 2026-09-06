@@ -1,5 +1,5 @@
 import { Code } from "@/stories/components/system/Code";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { VideoPlayer } from ".";
 
 const meta: Meta<typeof VideoPlayer> = {

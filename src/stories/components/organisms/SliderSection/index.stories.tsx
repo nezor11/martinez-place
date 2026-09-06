@@ -1,5 +1,5 @@
 import { unsplashUrl } from "@/stories/utils/unsplash";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import type { FC } from "react";
 import { useEffect, useState } from "react";
 import { type SlideData, SliderSection } from ".";
