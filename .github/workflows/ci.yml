@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Fetch resume content
+        run: yarn fetch-resume --strict
+
       - name: Lint
         run: yarn lint
 

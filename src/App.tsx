@@ -1,11 +1,11 @@
 /**
  * App.tsx
  *
- * This is the main application component. It fetches the latest resume data from the Sanity API
- * and renders the application with the appropriate theme context.
+ * This is the main application component. It renders the resume content that
+ * scripts/fetch-resume.mjs pulled from Sanity at build time (src/data/resume.ts)
+ * with the appropriate theme context.
  *
  * The application uses the following components:
- * - Loader: A loading spinner component.
  * - MemoizedMoonIcon: A memoized moon icon component.
  * - MemoizedSunIcon: A memoized sun icon component.
  * - Footer: The footer component of the application.
@@ -13,119 +13,22 @@
  *
  * The application also uses the following hooks and context:
  * - useContext: To access the ThemeContext.
- * - useEffect: To perform side effects such as fetching data.
- * - useState: To manage state.
+ * - useEffect: To sync the theme class on the document.
  *
  * The ThemeContext provides the current theme (dark or light) and a function to toggle the theme.
- * The latest resume data is fetched from the Sanity API and stored in the state.
+ * The resume data is bundled at build time, so there is no loading state.
  *
  */
 
-import Loader from "@/stories/components/atoms/Loader";
 import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/MoonIcon";
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
 import type { Resume } from "@/utils/types/resume";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import SectionRenderer from "./SectionRenderer";
 import { ThemeContext } from "./contexts";
-import { fetchSanity } from "./utils/setup/sanitySetup";
+import { resume } from "./data/resume";
 import type { ThemeContextInterface } from "./utils/types/theme";
-
-const useLatestResume = () => {
-  const [latestResume, setLatestResume] = useState<Resume | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchSanity<Resume>(
-        `*[_type == "resume" && !(_id in path('drafts.**'))] | order(_updatedAt desc)[0]{
-          _id,
-          title,
-          _updatedAt,
-          "pageBuilder": pageBuilder[]{
-            ...,
-            icons[] {
-              "iconDetails": icons->{
-                name,
-                width,
-                height,
-              }
-            },
-            "iconTitleDetails": iconTitle->{
-              name,
-              width,
-              height,
-            },
-            "contactDetails": contactDetails->{
-              title,
-              phone,
-              email,
-              address
-            },
-            "imageDetails": image.asset->{
-              url,
-              metadata {
-                dimensions
-              }
-            },
-            "sliderDetails": sliderDetails->{
-              name,
-              slides[] {
-                "slideDetails": slides->{
-                  _id,
-                  name,
-                  company,
-                  type,
-                  infoUrl,
-                  workDate,
-                  slideTitle,
-                  "slideImage": slideImage.asset->{
-                    "src": url,
-                    "width": metadata.dimensions.width,
-                    "height": metadata.dimensions.height,
-                    "alt": alt
-                  },
-                  slideSummary,
-                  slideDesc,
-                  workDone,
-                  backgroundColor,
-                  videoUrl,
-                  icons[] {
-                    "icon": icons-> {
-                      name,
-                      width,
-                      height
-                    }
-                  },
-                 "images": images[] {
-                    "src": asset->url,
-                    "width": asset->metadata.dimensions.width,
-                    "height": asset->metadata.dimensions.height,
-                    "alt": alt
-                  }
-                }
-              }
-            }
-          },
-          "pdfResumeUrl": pdfResume.asset->url,
-          slug
-        }`
-      )
-      .then((data: Resume) => {
-        if (!data) {
-          setError("No published resume was found.");
-          return;
-        }
-        setLatestResume(data);
-      })
-      .catch((err: unknown) => {
-        console.error(err);
-        setError("The resume could not be loaded. Please try again later.");
-      });
-  }, []);
-
-  return { latestResume, error };
-};
 
 const useTheme = () => {
   const { darkTheme, toggleTheme } = useContext(
@@ -167,27 +70,8 @@ const ResumeContent = ({ latestResume }: { latestResume: Resume }) => {
 };
 
 function App() {
-  const { latestResume, error } = useLatestResume();
+  const latestResume = resume;
   const { darkTheme, toggleTheme } = useTheme();
-
-  if (error) {
-    return (
-      <div
-        role="alert"
-        className="container mx-auto px-4 py-10 max-w-5xl text-center"
-      >
-        <p className="text-lg">{error}</p>
-      </div>
-    );
-  }
-
-  if (!latestResume) {
-    return (
-      <div className="w-[200px] h-[200px] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <>
