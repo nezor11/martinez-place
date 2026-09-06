@@ -18,6 +18,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
   }
 }

@@ -14,13 +14,11 @@
  * The application also uses the following hooks and context:
  * - useContext: To access the ThemeContext.
  * - useEffect: To perform side effects such as fetching data.
- * - useMemo: To memoize values.
  * - useState: To manage state.
  *
  * The ThemeContext provides the current theme (dark or light) and a function to toggle the theme.
  * The latest resume data is fetched from the Sanity API and stored in the state.
  *
- * The Helmet and HelmetProvider components are used for managing changes to the document head.
  */
 
 import Loader from "@/stories/components/atoms/Loader";
@@ -28,11 +26,10 @@ import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/M
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
 import type { Resume } from "@/utils/types/resume";
-import { useContext, useEffect, useMemo, useState } from "react";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useContext, useEffect, useState } from "react";
 import SectionRenderer from "./SectionRenderer";
 import { ThemeContext } from "./contexts";
-import { sanityAPI } from "./utils/setup/sanitySetup";
+import { fetchSanity } from "./utils/setup/sanitySetup";
 import type { ThemeContextInterface } from "./utils/types/theme";
 
 const useLatestResume = () => {
@@ -40,8 +37,7 @@ const useLatestResume = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    sanityAPI
-      .fetch<Resume>(
+    fetchSanity<Resume>(
         `*[_type == "resume" && !(_id in path('drafts.**'))] | order(_updatedAt desc)[0]{
           _id,
           title,
@@ -174,55 +170,6 @@ function App() {
   const { latestResume, error } = useLatestResume();
   const { darkTheme, toggleTheme } = useTheme();
 
-  // Memoriza el contenido de Helmet para evitar renderizados innecesarios
-  const helmetContent = useMemo(
-    () =>
-      latestResume && (
-        <Helmet>
-          <title>
-            Jorge Martínez Ortiz - Frontend Developer, Designer, Creator,
-            Frontender, Trainer
-          </title>
-          <meta
-            name="description"
-            content="Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment."
-          />
-          {/* Twitter Card */}
-          <meta name="twitter:card" content="summary" />
-          <meta name="twitter:site" content="@JorgeMartinez" />
-          <meta
-            name="twitter:title"
-            content="Jorge Martínez Ortiz - Designer, Creator, Developer, Trainer"
-          />
-          <meta
-            name="twitter:description"
-            content="Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment."
-          />
-          <meta
-            name="twitter:image"
-            content="https://cdn.sanity.io/images/6zr8au58/production/a67a4d8f26a8bb3762c578d7dbf46e52e0a9b402-555x555.jpg"
-          />
-
-          {/* Open Graph (OG) */}
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://martinez.place/" />
-          <meta
-            property="og:title"
-            content="Jorge Martínez Ortiz - Designer, Creator, Developer, Trainer"
-          />
-          <meta
-            property="og:description"
-            content="Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment."
-          />
-          <meta
-            property="og:image"
-            content="https://cdn.sanity.io/images/6zr8au58/production/a67a4d8f26a8bb3762c578d7dbf46e52e0a9b402-555x555.jpg"
-          />
-        </Helmet>
-      ),
-    [latestResume]
-  );
-
   if (error) {
     return (
       <div
@@ -243,8 +190,7 @@ function App() {
   }
 
   return (
-    <HelmetProvider>
-      {helmetContent}
+    <>
       <div className="container py-10 mx-auto px-4 max-w-5xl relative">
         <button
           type="button"
@@ -255,7 +201,7 @@ function App() {
         </button>
         <ResumeContent latestResume={latestResume} />
       </div>
-    </HelmetProvider>
+    </>
   );
 }
 
