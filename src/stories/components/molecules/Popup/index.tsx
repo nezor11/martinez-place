@@ -116,11 +116,10 @@ export const Popup: FC<PopupProps> = ({
   const handleClose = () => onClose();
 
   const randomizedImages = useMemo(
-    () => images.sort(() => Math.random() - 0.5),
+    () => [...images].sort(() => Math.random() - 0.5),
     [images]
   );
 
-  console.log("Imágenes recibidas en Popup:", randomizedImages);
 
   return (
     <div className="min-h-screen min-w-screen popup-content">

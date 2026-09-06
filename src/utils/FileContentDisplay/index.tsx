@@ -25,7 +25,6 @@ const FileContentDisplay: FC<FileContentDisplayProps> = ({ fileName }) => {
     };
 
     if (fileName) {
-      console.log("Fetching file from:", fileName); // Agregar este console.log
       fetchFileContent();
     }
 
