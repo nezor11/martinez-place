@@ -36,16 +36,6 @@ const config: StorybookConfig = {
       })
     );
 
-    // Configuramos el alias para "msw/browser" apuntándolo al archivo correcto en msw
-    config.resolve = config.resolve || {};
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "msw/browser": path.resolve(
-        __dirname,
-        "../node_modules/msw/lib/index.js"
-      ),
-    };
-
     // Excluimos "vue" de la optimización de dependencias
     config.optimizeDeps = config.optimizeDeps || {};
     config.optimizeDeps.exclude = [
