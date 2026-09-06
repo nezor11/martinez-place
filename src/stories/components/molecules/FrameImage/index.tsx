@@ -25,25 +25,11 @@ import {
   LazyImage,
   type LazyImageProps,
 } from "@/stories/components/atoms/LazyImage";
-import type { FC } from "react";
-import styled from "styled-components";
+import type { CSSProperties, FC } from "react";
 
 import "./index.css";
 
 import maskImage from "@/assets/images/mask-photo.png";
-
-interface StyledImageProps {
-  masksrc: string;
-}
-
-const StyledImage = styled.img<StyledImageProps>`
-  mask-image: ${(p) => `url("${p.masksrc}")`};
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-`;
 
 export type FrameImageProps = {
   image: string;
@@ -59,6 +45,10 @@ export const FrameImage: FC<FrameImageProps> = ({
   mask: maskURL,
 }: FrameImageProps) => {
   const maskFrameURL = maskURL || maskImage;
+  const maskStyle: CSSProperties = {
+    maskImage: `url("${maskFrameURL}")`,
+    WebkitMaskImage: `url("${maskFrameURL}")`,
+  };
 
   return (
     <div className="frame-wrapper-image">
@@ -67,10 +57,11 @@ export const FrameImage: FC<FrameImageProps> = ({
         src={frameImage}
         alt="Frame Image"
       />
-      <StyledImage
+      <img
         className="content-image"
         src={imageURL}
-        masksrc={maskFrameURL}
+        alt=""
+        style={maskStyle}
       />
     </div>
   );
