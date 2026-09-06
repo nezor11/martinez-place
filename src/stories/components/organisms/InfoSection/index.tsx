@@ -28,7 +28,7 @@ import {
 } from "@/stories/components/molecules/InfoItem";
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
 import { cn } from "@/utils";
-import React, { type ComponentPropsWithRef, forwardRef, useState } from "react";
+import { type ComponentPropsWithRef, forwardRef, useState } from "react";
 
 export interface InfoSectionObject {
   title?: string;
@@ -49,7 +49,11 @@ export const InfoSection = forwardRef<HTMLElement, InfoSectionProps>(
     let iconsData: { name: string; width: string; height: string }[] = [];
 
     if (icons?.iconsData) {
-      iconsData = icons.iconsData;
+      iconsData = icons.iconsData.map((icon) => ({
+        name: icon.name,
+        width: icon.width ?? "1em",
+        height: icon.height ?? "1em",
+      }));
     }
 
     const initialItemsToShow = 2;

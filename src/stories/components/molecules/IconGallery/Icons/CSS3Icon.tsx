@@ -1,6 +1,6 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const CSS3Icon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "CSS3", desc, width, height, ...props }, ref) => (

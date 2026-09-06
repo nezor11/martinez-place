@@ -1,6 +1,6 @@
 // ThemeContext.tsx
 import type { ReactNode } from "react";
-import React, {
+import {
   createContext,
   startTransition,
   useEffect,

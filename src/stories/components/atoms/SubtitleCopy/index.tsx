@@ -16,7 +16,6 @@
  * />
  */
 import type { CSSProperties, FC } from "react";
-import React from "react";
 import "./index.css";
 
 type AllowedTagValues = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";

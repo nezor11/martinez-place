@@ -23,7 +23,7 @@
 import createTripleSlider from "@/stories/assets/scripts/triple-slider";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "swiper/css";
 import "swiper/css/controller";
 import "./index.css";
@@ -51,7 +51,7 @@ export const ImageSlider: FC<ImageSliderProps> = ({ images, className }) => {
     <div className={`triple-slider ${className || ""}`} ref={sliderRef}>
       <div className="swiper">
         <div className="swiper-wrapper">
-          {images.map((image, index) => (
+          {images.map((image) => (
             <div key={nanoid()} className="swiper-slide">
               <img
                 className="bg-image"

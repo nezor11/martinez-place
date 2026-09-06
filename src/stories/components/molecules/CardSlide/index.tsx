@@ -6,7 +6,7 @@ import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { Popup } from "@/stories/components/molecules/Popup";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import type { FC, KeyboardEvent, SyntheticEvent } from "react";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./index.css";
 
@@ -63,7 +63,7 @@ export const CardSlide: FC<CardSlideProps> = ({
   const figcaptionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [containerHeight, setContainerHeight] = useState(cardImageHeight);
-  const [borderColor, setBorderColor] = useState(getRandomColor());
+  const [borderColor] = useState(getRandomColor());
 
   const getRandomHeight = () => {
     const heights = [200, 250, 300, 350];
@@ -146,7 +146,7 @@ export const CardSlide: FC<CardSlideProps> = ({
             />
             <BodyCopy
               tag="p"
-              text={summary}
+              text={summary ?? ""}
               mods="dark:text-white mb-4 px-8"
               align="center"
             />

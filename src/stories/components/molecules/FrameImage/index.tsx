@@ -26,7 +26,6 @@ import {
   type LazyImageProps,
 } from "@/stories/components/atoms/LazyImage";
 import type { FC } from "react";
-import React from "react";
 import styled from "styled-components";
 
 import "./index.css";

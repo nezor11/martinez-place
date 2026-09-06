@@ -18,13 +18,13 @@
  * Where `sectionData` is an object containing the necessary data for the resume section.
  */
 
+import type { IconGalleryProps } from "@/stories/components/molecules/IconGallery";
 import { Resume } from "@/stories/components/templates/Resume";
 import type { Section } from "@/utils/types/section";
 import blocksToHtml from "@sanity/block-content-to-html";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import type { FC } from "react";
-import React from "react";
 
 interface Props {
   section: Section;
@@ -44,22 +44,27 @@ const urlFor = (source: SanityImageSource) => {
 export const mapInfoSection = (section: Section) => {
   const { titleSection, subtitleSection, sections, iconTitleDetails } = section;
 
-  let icons = null;
-
-  if (iconTitleDetails) {
-    icons = {
-      name: iconTitleDetails.name,
-      width: iconTitleDetails.width ? `${iconTitleDetails.width}px` : "1em",
-      height: iconTitleDetails.height ? `${iconTitleDetails.height}px` : "1em",
-      iconsData: [iconTitleDetails], // Ensure iconsData is an array
-    };
-  }
+  const icons: IconGalleryProps | undefined = iconTitleDetails
+    ? {
+        iconsData: [
+          {
+            name: iconTitleDetails.name,
+            width: iconTitleDetails.width
+              ? `${iconTitleDetails.width}px`
+              : "1em",
+            height: iconTitleDetails.height
+              ? `${iconTitleDetails.height}px`
+              : "1em",
+          },
+        ],
+      }
+    : undefined;
 
   return {
     title: titleSection,
     subtitle: subtitleSection,
     icons: icons,
-    sections: sections.map((infoItem) => {
+    sections: (sections ?? []).map((infoItem) => {
       const {
         company,
         infoUrl,

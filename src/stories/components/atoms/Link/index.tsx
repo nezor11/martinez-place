@@ -19,7 +19,6 @@
  */
 
 import type { FC } from "react";
-import React from "react";
 
 export interface LinkProps {
   /** The link_text property is optional and can be a string.  */

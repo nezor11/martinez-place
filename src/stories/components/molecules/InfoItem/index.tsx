@@ -27,7 +27,7 @@ import { BodyCopy } from "@/stories/components/atoms/BodyCopy";
 import { Link } from "@/stories/components/atoms/Link";
 import { TitleCopy } from "@/stories/components/atoms/TitleCopy";
 import { cn } from "@/utils";
-import React, { type ComponentPropsWithRef, forwardRef } from "react";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 
 /**
  * Interface for the texts used in the InfoItem component.

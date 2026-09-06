@@ -13,7 +13,6 @@ import {
   type IconGalleryProps,
 } from "@/stories/components/molecules/IconGallery";
 import type { FC } from "react";
-import React from "react";
 import "./index.css";
 
 export interface User extends IconGalleryProps {

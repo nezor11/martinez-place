@@ -1,7 +1,7 @@
 import type { IconProps } from "@/utils/types/icons";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
-import React, { forwardRef, memo } from "react";
+import { forwardRef, memo } from "react";
 
 const GitBranchIcon = forwardRef<SVGSVGElement, IconProps>(
   ({ name = "GitBranch", desc, width, height, ...props }, ref) => (

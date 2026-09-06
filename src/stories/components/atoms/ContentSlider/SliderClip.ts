@@ -51,7 +51,7 @@ class SliderClip {
       this.autoPlay = true;
     });
 
-    const interval = setInterval(() => {
+    setInterval(() => {
       if (this.autoPlay) {
         // Si es el último slide, reiniciamos al primero
         this.current = (this.current + 1) % this.Slides.length;

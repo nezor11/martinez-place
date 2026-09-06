@@ -2,7 +2,6 @@ import { cn } from "@/utils";
 import { cva } from "class-variance-authority";
 import DOMPurify from "dompurify";
 import type { CSSProperties, FC, ReactNode } from "react";
-import React from "react";
 import ReactHtmlParser, {
   convertNodeToElement,
   type Transform,

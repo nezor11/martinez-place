@@ -20,7 +20,7 @@
  */
 
 import { cn } from "@/utils";
-import React, { type ComponentPropsWithRef, forwardRef } from "react";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 import Obfuscate from "react-obfuscate";
 import "./index.css";
 
@@ -52,7 +52,7 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
         .replace(/^-+|-+$/g, "");
 
     const classContactDetail = slugify(contactDetail.title);
-    const addresUrlEncoded = contactDetail.address.replace(/ /g, "+");
+    const addresUrlEncoded = (contactDetail.address ?? "").replace(/ /g, "+");
 
     return (
       <div

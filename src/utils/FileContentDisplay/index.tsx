@@ -1,6 +1,6 @@
 // FileContentDisplay.tsx
 import type { FC } from "react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface FileContentDisplayProps {
   fileName?: string;

@@ -9,7 +9,7 @@ import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./index.css";
 import SliderClip from "./SliderClip";
 
@@ -43,7 +43,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
   backgroundColor,
 }) => {
   const sliderRef = useRef<HTMLDivElement | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const formatCompanyName = (name: string) => name.replace(/_/g, " ");
@@ -119,7 +119,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                   subtitle="h4"
                 />
                 <SubtitleCopy
-                  text={year}
+                  text={year ?? ""}
                   mods="text-base uppercase text-primary-500 font-medium ml-2"
                   subtitle="h4"
                 />
@@ -130,7 +130,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 mods="text-4xl md:text-5xl dark:text-white mb-4 lg:mb-8"
               />
               <BodyCopy
-                text={description}
+                text={description ?? ""}
                 tag="div"
                 mods="max-w-screen-xl dark:text-white"
               />
@@ -162,7 +162,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
             {mappedWorkDone.length > 0 && (
               <div className="workdone-wrapper mt-2 text-right w-full xl:max-w-3xl xl:ml-auto">
                 <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-8 xl:grid-rows-4 md:grid-flow-col gap-1 justify-items-start rtl-grid">
-                  {mappedWorkDone.map((item, index) => (
+                  {mappedWorkDone.map((item) => (
                     <li
                       key={nanoid()}
                       className="text-sm text-right dark:text-white"

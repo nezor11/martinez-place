@@ -23,27 +23,11 @@ import type { SliderSectionObject } from "@/stories/components/templates/Resume"
 import { Resume } from "@/stories/components/templates/Resume";
 import type { Section } from "@/utils/types/section";
 import blocksToHtml from "@sanity/block-content-to-html";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import type { FC } from "react";
-import React from "react";
 
 // Configuración del cliente de Sanity
 const projectId = "6zr8au58";
 const dataset = "production";
-
-const builder = imageUrlBuilder({ projectId, dataset });
-
-const urlFor = (source: SanityImageSource) => {
-  return builder.image(source);
-};
-
-interface LinkProps {
-  href: string;
-  text: string;
-  link_text: string;
-  rel: string;
-}
 
 // Mapea los datos de `slider` a la estructura `SliderSectionObject`
 const mapSliderSection = (slider: Section): SliderSectionObject => {
@@ -63,7 +47,7 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
           },
         ],
       }
-    : null;
+    : undefined;
 
   const slides = Array.isArray(sliderDetails?.slides)
     ? sliderDetails.slides

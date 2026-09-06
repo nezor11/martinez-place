@@ -2,11 +2,9 @@
 import { Header } from "@/stories/components/organisms/Header";
 import type {
   ContactDetails,
-  FrameImageProps,
   ImageDetails,
   Section,
 } from "@/utils/types/section";
-import React from "react";
 
 interface Props {
   section: Section;
@@ -14,7 +12,7 @@ interface Props {
 
 const HeaderSection = ({ section }: Props) => {
   // Transformamos los íconos a la estructura esperada
-  const iconsData = section.icons
+  const iconsData = (section.icons ?? [])
     .map((iconGallery) => iconGallery.iconDetails)
     .map((icon) => ({
       name: icon.name,
@@ -48,19 +46,15 @@ const HeaderSection = ({ section }: Props) => {
       }
     : null;
 
-  const frameImageProps: FrameImageProps = {
-    image: imageDetails ? imageDetails.url : undefined,
-  };
-
   return (
     <Header
       key={section._key}
       user={{
-        name: section.name,
+        name: section.name ?? "",
         jobTitle: section.jobDescHeader,
         iconsData: iconsData,
         contactDetail: contactInfo,
-        imageDetail: imageDetails ? { image: imageDetails.url } : null,
+        imageDetail: imageDetails ? { image: imageDetails.url } : undefined,
       }}
     />
   );
