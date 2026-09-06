@@ -85,6 +85,13 @@ export default defineConfig({
       cacheLocation: undefined,
     }),
   ],
+  ssr: {
+    // Bundle these into the server build instead of importing them from
+    // node_modules at prerender time: swiper ships CSS entries, and the
+    // CommonJS packages yield `{ default }` objects instead of components
+    // when imported under Node ESM.
+    noExternal: [/^swiper/, "react-player", "react-obfuscate"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

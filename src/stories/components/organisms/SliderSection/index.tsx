@@ -78,11 +78,11 @@ export const SliderSection: FC<SliderSectionProps> = ({
   }
 
 
-  const isTouchDevice = () => {
-    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
-  };
-
-  const isTouch = isTouchDevice();
+  // Only affects Swiper parameters, not the markup, so it is safe to decide
+  // synchronously; the prerender (SSR) simply assumes a pointer device.
+  const isTouch =
+    !import.meta.env.SSR &&
+    ("ontouchstart" in window || navigator.maxTouchPoints > 0);
 
   return (
     <section className={cn("slider-section")}>
