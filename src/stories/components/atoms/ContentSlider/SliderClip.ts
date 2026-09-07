@@ -8,11 +8,12 @@ class SliderClip {
   autoPlay: boolean;
   timeTrans: number;
   IndexElements: number[];
+  private interval: ReturnType<typeof setInterval> | null = null;
 
   constructor(el: HTMLElement) {
     this.el = el;
     this.Slides = Array.from(this.el.querySelectorAll("li"));
-    this.Title = Array.from(this.el.querySelectorAll(".center-y h4"));
+    this.Title = Array.from(this.el.querySelectorAll(".center-y .slide-caption"));
     this.Nav = Array.from(this.el.querySelectorAll("nav a"));
     this.totalSlides = this.Slides.length;
     this.current = 0;
@@ -27,11 +28,9 @@ class SliderClip {
   }
 
   setCurrent() {
-    if (this.Slides[this.current]) {
-      this.Slides[this.current].classList.add("current");
-      this.Nav[this.current].classList.add("current_dot");
-      this.Title[this.current].classList.add("current");
-    }
+    this.Slides[this.current]?.classList.add("current");
+    this.Nav[this.current]?.classList.add("current_dot");
+    this.Title[this.current]?.classList.add("current");
   }
 
   initEvents() {
@@ -51,13 +50,23 @@ class SliderClip {
       this.autoPlay = true;
     });
 
-    setInterval(() => {
+    if (this.Slides.length < 2) return;
+
+    this.interval = setInterval(() => {
       if (this.autoPlay) {
         // Si es el último slide, reiniciamos al primero
         this.current = (this.current + 1) % this.Slides.length;
         this.changeSlide(this.current);
       }
     }, this.timeTrans);
+  }
+
+  /** Stops the autoplay timer; call it when the slider leaves the DOM. */
+  destroy() {
+    if (this.interval !== null) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
   }
 
   changeSlide(index: number) {
@@ -82,9 +91,9 @@ class SliderClip {
     }
 
     // Aplica las clases "current" a los elementos correspondientes
-    this.Slides[index].classList.add("current");
-    this.Title[index].classList.add("current");
-    this.Nav[index].classList.add("current_dot");
+    this.Slides[index]?.classList.add("current");
+    this.Title[index]?.classList.add("current");
+    this.Nav[index]?.classList.add("current_dot");
 
     // Actualiza el índice actual
     this.current = index;
