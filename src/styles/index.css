@@ -305,6 +305,12 @@ html.dark {
     font-family: "Raleway", system-ui, sans-serif;
   }
 
+  /* Tailwind 4 no longer gives buttons a pointer cursor; keep the v3 look. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
   strong {
     font-weight: 500;
   }
