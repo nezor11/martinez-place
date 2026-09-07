@@ -22,13 +22,10 @@ const config: StorybookConfig = {
     disableTelemetry: true,
   },
   typescript: {
-    reactDocgen: "react-docgen-typescript",
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      // Filtra props que provengan de node_modules
-      propFilter: (prop) =>
-        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
-    },
+    // react-docgen-typescript depends on the TypeScript JS API, which the
+    // native TypeScript 7 compiler no longer provides; react-docgen parses
+    // the components with Babel instead.
+    reactDocgen: "react-docgen",
   },
   docs: {},
   viteFinal: async (config) => {
