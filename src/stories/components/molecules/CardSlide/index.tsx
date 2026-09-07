@@ -114,7 +114,6 @@ export const CardSlide: FC<CardSlideProps> = ({
         style={{
           border: `3px solid ${borderColor}`,
         }}
-        aria-label={`Ver detalles de ${title}`}
       >
         <article>
           <img
@@ -160,6 +159,7 @@ export const CardSlide: FC<CardSlideProps> = ({
             <div className="card-slide__icons-wrapper text-xl mb-0 px-12">
               <SuspenseIconGallery iconsData={iconsData} />
             </div>
+            <span className="sr-only">View details</span>
           </div>
         </article>
       </button>

@@ -75,7 +75,7 @@ export const openCard = async (page: Page, title?: string) => {
   const opened = await page.evaluate((wanted) => {
     const cards = [...document.querySelectorAll<HTMLElement>(".card-slide")];
     const card = wanted
-      ? cards.find((c) => (c.getAttribute("aria-label") || "").includes(wanted))
+      ? cards.find((c) => (c.textContent || "").includes(wanted))
       : document.querySelector<HTMLElement>(".swiper-slide-active .card-slide") ||
         cards[0];
     if (!card) return false;
