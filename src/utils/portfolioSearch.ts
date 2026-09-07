@@ -14,7 +14,7 @@ const stripHtml = (html: string): string => html.replace(/<[^>]+>/g, " ");
 /** Words of a text: letters and digits, keeping "next.js", "c#" or "e-commerce". */
 const tokenize = (value: string): string[] =>
   (normalizeText(value).match(/[\p{L}\p{N}][\p{L}\p{N}.#+-]*/gu) ?? []).map(
-    (word) => word.replace(/[.\-]+$/, "")
+    (word) => word.replace(/[.-]+$/, "")
   );
 
 /** Everything a project can be found by, as words, in the page's language. */
