@@ -18,6 +18,11 @@ declare module "*.gif" {
   export = value;
 }
 
+// Swiper ships these as plain CSS entries; TypeScript 7 checks side-effect
+// imports and needs a declaration for them.
+declare module "swiper/css";
+declare module "swiper/css/*";
+
 declare module "@sanity/block-content-to-html" {
   const blocksToHtml: (options: Record<string, unknown>) => string;
   export default blocksToHtml;
