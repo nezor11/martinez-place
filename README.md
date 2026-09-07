@@ -51,7 +51,6 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | `yarn preview` | Serve the production build locally |
 | `yarn storybook` | Storybook dev server |
 | `yarn build-storybook` | Static Storybook into `storybook-static/` |
-| `yarn build-storybook-and-copy-readme` | Static Storybook with docs and the per-component README files |
 | `yarn lint` | Biome lint over `src/` |
 | `yarn format` | Biome format over `src/` |
 
