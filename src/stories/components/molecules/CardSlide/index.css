@@ -72,5 +72,15 @@ body.modal-open {
       @apply mx-1;
       @apply mb-1;
     }
+
+    /* Buttons carry the spacing so eight 24px targets fit in one row. */
+    .icon-gallery__button {
+      @apply mx-0.5;
+      @apply mb-1;
+
+      svg {
+        @apply m-0;
+      }
+    }
   }
 }
