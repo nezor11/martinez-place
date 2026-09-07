@@ -170,7 +170,7 @@ export const CardSlide: FC<CardSlideProps> = ({
           </div>
           </article>
         </button>
-        <div className="card-slide__icons-wrapper text-xl mb-0 px-12">
+        <div className="card-slide__icons-wrapper text-xl mb-0 px-8">
           <SuspenseIconGallery
             iconsData={iconsData}
             onIconClick={onIconClick}
