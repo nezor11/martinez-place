@@ -189,7 +189,7 @@ export const SourceCode: Story = {
   },
   render: () => (
     <>
-      <Code directoryPath="src/stories/components/molecules/Modal/" />
+      <Code directoryPath="src/stories/components/molecules/Popup/" />
     </>
   ),
 };

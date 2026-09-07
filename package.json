@@ -28,9 +28,6 @@
     "tailwind-merge": "^3.0.0"
   },
   "scripts": {
-    "build-storybook-and-copy-readme": "storybook build --docs && node copy-readme-files.js",
-    "copy-readme-files": "node copy-readme-files.js",
-    "delete-readme-files": "node delete-readme-files.js",
     "fetch-resume": "node scripts/fetch-resume.mjs",
     "build:pdf": "node scripts/build-pdf.mjs",
     "build:og": "node scripts/build-og.mjs",

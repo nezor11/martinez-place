@@ -34,7 +34,7 @@ export const SourceCode = {
   },
   render: () => (
     <>
-      <Code directoryPath="src/stories/components/atoms/Loader/" />
+      <Code directoryPath="src/stories/components/atoms/Play/" />
     </>
   ),
 };

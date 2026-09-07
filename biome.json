@@ -7,7 +7,6 @@
       "**/src/**/*.js",
       "**/tests/**/*.ts",
       "**/playwright.config.ts",
-      "!**/src/**/README.md",
       "!**/src/styles"
     ]
   },
