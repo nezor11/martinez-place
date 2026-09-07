@@ -10,8 +10,25 @@ body.modal-open {
   /* @apply mx-auto; */
   @apply max-w-[300px];
   text-align: center;
-  cursor: pointer;
   border: 3px solid #666666;
+  transition:
+    filter 0.3s,
+    opacity 0.3s;
+
+  &.card-slide--dimmed {
+    filter: grayscale(1);
+    opacity: 0.4;
+  }
+
+  .card-slide__open {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    text-align: center;
+    cursor: pointer;
+  }
 
   & h4 {
     @apply w-[320px];
@@ -47,6 +64,10 @@ body.modal-open {
   }
 
   .card-slide__icons-wrapper {
+    /* Sits where it did inside .card-meta, which is shifted up by 30px. */
+    position: relative;
+    top: -30px;
+
     svg {
       @apply mx-1;
       @apply mb-1;

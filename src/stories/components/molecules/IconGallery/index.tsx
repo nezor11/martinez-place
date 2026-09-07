@@ -1,9 +1,16 @@
+import { useMessages } from "@/i18n";
+import { cn } from "@/utils";
+import { iconLabel } from "@/utils/iconLabels";
 import type { IconProps } from "@/utils/types/icons";
 import type { FC } from "react";
 import { useMemo } from "react";
 
 export interface IconGalleryProps {
   iconsData?: { name: string; width?: string; height?: string }[]; // Hacer width y height opcionales
+  /** When set, every icon becomes a button that reports its component name. */
+  onIconClick?: (name: string) => void;
+  /** Component name of the icon currently used as a filter, if any. */
+  activeIcon?: string;
 }
 
 // The icon modules are imported eagerly, so the gallery can be resolved
@@ -25,7 +32,12 @@ const availableIcons = Object.entries(iconModules).reduce<
   return acc;
 }, {});
 
-export const IconGallery: FC<IconGalleryProps> = ({ iconsData = [] }) => {
+export const IconGallery: FC<IconGalleryProps> = ({
+  iconsData = [],
+  onIconClick,
+  activeIcon,
+}) => {
+  const t = useMessages();
   const icons = useMemo(() => {
     if (iconsData.length > 0) {
       return iconsData
@@ -45,7 +57,25 @@ export const IconGallery: FC<IconGalleryProps> = ({ iconsData = [] }) => {
         const width = iconConfig?.width || "1em";
         const height = iconConfig?.height || "1em";
 
-        return <Component key={name} width={width} height={height} />;
+        if (!onIconClick) {
+          return <Component key={name} width={width} height={height} />;
+        }
+        const active = activeIcon === name;
+        return (
+          <button
+            key={name}
+            type="button"
+            className={cn(
+              "icon-gallery__button inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center rounded-sm p-0.5 leading-none",
+              active && "ring-2 ring-primary-500 ring-offset-1"
+            )}
+            aria-label={t.filterByTech(iconLabel(name))}
+            aria-pressed={active}
+            onClick={() => onIconClick(name)}
+          >
+            <Component width={width} height={height} />
+          </button>
+        );
       })}
     </div>
   );

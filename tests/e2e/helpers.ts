@@ -86,7 +86,7 @@ export const openCard = async (page: Page, title?: string) => {
         cards[0];
     if (!card) return false;
     card.scrollIntoView({ block: "center" });
-    card.click();
+    (card.querySelector<HTMLElement>(".card-slide__open") ?? card).click();
     return true;
   }, title ?? null);
   if (opened) await page.locator(".popup-content").waitFor({ timeout: 10_000 });

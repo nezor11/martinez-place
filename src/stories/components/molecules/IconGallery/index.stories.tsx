@@ -33,6 +33,19 @@ export const Selected: Story = {
   },
 };
 
+/** With `onIconClick` every icon is a button; `activeIcon` marks the current filter. */
+export const Clickable: Story = {
+  args: {
+    iconsData: [
+      { name: "ReactIcon", width: "40px", height: "40px" },
+      { name: "VueIcon", width: "40px", height: "40px" },
+      { name: "TypeScriptIcon", width: "40px", height: "40px" },
+    ],
+    activeIcon: "ReactIcon",
+    onIconClick: (name) => console.log("filter by", name),
+  },
+};
+
 export const SourceCode: Story = {
   parameters: {
     layout: "fullscreen",
