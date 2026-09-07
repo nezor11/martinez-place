@@ -43,8 +43,9 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | Script | What it does |
 | --- | --- |
 | `yarn fetch-resume` | Pull the published resume from Sanity into `src/data/resume.json` (`--strict` fails instead of keeping a stale file) |
-| `yarn dev` | Fetch the resume, then start the Vite dev server |
-| `yarn build` | Fetch the resume (strict), build the client and server bundles, prerender `dist/index.html` |
+| `yarn build:pdf` | Build `public/resume.pdf` from the same data with @react-pdf/renderer |
+| `yarn dev` | Fetch the resume, build the PDF, then start the Vite dev server |
+| `yarn build` | Fetch the resume (strict), build the PDF, the client and server bundles, prerender `dist/index.html` |
 | `yarn build:client` / `yarn build:ssr` / `yarn prerender` | The three build steps, individually |
 | `yarn preview` | Serve the production build locally |
 | `yarn storybook` | Storybook dev server |
@@ -58,7 +59,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 ```
 .
 ├── .storybook/          Storybook config, theme and viewports
-├── scripts/             fetch-resume.mjs (Sanity → JSON) and prerender.mjs (HTML)
+├── scripts/             fetch-resume.mjs (Sanity → JSON), build-pdf.mjs (PDF), prerender.mjs (HTML), fonts/ (TTF for the PDF)
 ├── public/              Static assets served as-is (fonts, favicons)
 ├── src/
 │   ├── App.tsx          Renders the resume sections
@@ -84,6 +85,10 @@ Tailwind 4 runs through `@tailwindcss/vite`: `src/styles/index.css` is the entry
 ## Dependency updates
 
 Dependabot opens a grouped PR for minor and patch updates every Monday and one PR per major. CI runs lint, typecheck, build, the Playwright suite and Lighthouse on each of them, so a green PR is safe to merge.
+
+## PDF resume
+
+`scripts/build-pdf.mjs` renders `public/resume.pdf` from `src/data/resume.json` with [@react-pdf/renderer](https://react-pdf.org/), so the download link in the footer (`/resume.pdf`) always matches the published content. It embeds the Raleway subsets converted to TTF in `scripts/fonts/` (react-pdf does not render WOFF2 glyphs).
 
 ## Content model
 
