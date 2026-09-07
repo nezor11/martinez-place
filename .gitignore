@@ -12,6 +12,7 @@ dist-ssr
 /coverage
 /test-results
 /playwright-report
+/.lighthouseci
 
 # production
 /build
