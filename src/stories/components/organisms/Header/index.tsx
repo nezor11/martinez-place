@@ -38,7 +38,7 @@ const renderSubtitle = (jobTitle: string) => (
   <SubtitleCopy
     subtitle="h2"
     text={jobTitle}
-    mods="text-subheader uppercase text-gray-400"
+    mods="text-subheader uppercase text-gray-600 dark:text-gray-400"
   />
 );
 

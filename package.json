@@ -47,6 +47,7 @@
     "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@biomejs/biome": "^1.9.4",
     "@chromatic-com/storybook": "^5.3.1",
     "@playwright/test": "^1.63.0",

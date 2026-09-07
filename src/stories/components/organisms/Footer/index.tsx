@@ -18,7 +18,7 @@
  * />
  */
 
-import { ButtonTailwind } from "@/stories/components/atoms/ButtonTailwind";
+import { buttonStyles } from "@/stories/components/atoms/ButtonTailwind";
 import { Link, type LinkProps } from "@/stories/components/atoms/Link";
 import {
   ContactDetail,
@@ -77,18 +77,21 @@ export const Footer: FC<FooterProps> = ({
           <div>
             {last_updated && (
               <p className="text-sm">
-                <em className="text-gray-600">Last updated: {lastUpdated}</em>
+                <em className="text-gray-600 dark:text-gray-400">Last updated: {lastUpdated}</em>
               </p>
             )}
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               &copy; {currentYear} {copy_right_text}
             </p>
           </div>
         </div>
         <div className="flex-none mt-10 lg:mt-0">
-          <ButtonTailwind size="sm" variant="outline">
-            {my_link ? <Link {...my_link} /> : null}
-          </ButtonTailwind>
+          {my_link ? (
+            <Link
+              {...my_link}
+              mods={buttonStyles({ variant: "outline", size: "sm" })}
+            />
+          ) : null}
         </div>
       </div>
     </footer>

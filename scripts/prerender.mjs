@@ -34,10 +34,50 @@ if (!html.includes("<main")) {
   throw new Error("Prerender produced no <main> element");
 }
 
+const resume = JSON.parse(
+  readFileSync(resolve(root, "src/data/resume.json"), "utf8")
+);
+const header = resume.pageBuilder.find((s) => s._type === "header") ?? {};
+const siteUrl = "https://martinez.place/";
+const lastModified = (resume._updatedAt ?? new Date().toISOString()).slice(0, 10);
+
+// Structured data for search engines. Contact details stay out on purpose:
+// the page obfuscates them to keep scrapers away.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: header.name,
+  jobTitle: header.jobDescHeader,
+  url: siteUrl,
+  image: header.imageDetails?.url,
+  address: header.contactDetails?.address
+    ? { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" }
+    : undefined,
+};
+const jsonLdTag = `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
+
+writeFileSync(
+  resolve(root, "dist/sitemap.xml"),
+  `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>${siteUrl}</loc>
+    <lastmod>${lastModified}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
+`
+);
+
 const marker = '<div id="root"></div>';
 const template = readFileSync(indexFile, "utf8");
 if (!template.includes(marker)) {
   throw new Error(`${indexFile} has no empty #root to fill`);
 }
-writeFileSync(indexFile, template.replace(marker, `<div id="root">${html}</div>`));
-console.log(`[prerender] wrote ${indexFile} (${(html.length / 1024).toFixed(1)} KB of HTML)`);
+writeFileSync(
+  indexFile,
+  template
+    .replace(marker, `<div id="root">${html}</div>`)
+    .replace("</head>", `${jsonLdTag}</head>`)
+);
+console.log(`[prerender] wrote ${indexFile} (${(html.length / 1024).toFixed(1)} KB of HTML), JSON-LD and sitemap.xml`);

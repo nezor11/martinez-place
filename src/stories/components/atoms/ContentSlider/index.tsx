@@ -115,12 +115,12 @@ export const ContentSlider: FC<ContentSliderProps> = ({
               <div className="flex">
                 <SubtitleCopy
                   text={formatCompanyName(company)}
-                  mods="text-base uppercase text-primary-500 font-medium"
+                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
                   subtitle="h4"
                 />
                 <SubtitleCopy
                   text={year ?? ""}
-                  mods="text-base uppercase text-primary-500 font-medium ml-2"
+                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
                   subtitle="h4"
                 />
               </div>
@@ -135,7 +135,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 mods="max-w-(--breakpoint-xl) dark:text-white"
               />
               {link?.href && (
-                <div className="mt-4 w-full link-text [&_a]:text-primary-500 [&_a]:underline">
+                <div className="mt-4 w-full link-text [&_a]:text-primary-600 dark:[&_a]:text-primary-400 [&_a]:underline">
                   <BodyCopy
                     tag="span"
                     mods="dark:text-white"
@@ -233,8 +233,8 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 <SubtitleCopy
                   key={nanoid()}
                   text={`${imageProperties.alt}`}
-                  mods="text-xs uppercase text-primary-500 font-medium -mb-4"
-                  subtitle="h4"
+                  mods="text-xs uppercase text-primary-600 dark:text-primary-400 font-medium -mb-4"
+                  subtitle="p"
                 />
               ))}
             </div>

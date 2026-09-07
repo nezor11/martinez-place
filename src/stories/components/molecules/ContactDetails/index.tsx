@@ -62,17 +62,17 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
       >
         <ul>
           {contactDetail.phone && (
-            <li className="mb-0 text-gray-400 text-sm">
+            <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
               <Obfuscate tel={contactDetail.phone} />
             </li>
           )}
           {contactDetail.email && (
-            <li className="mb-0 text-gray-400 text-sm">
+            <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
               <Obfuscate email={contactDetail.email} />
             </li>
           )}
           {contactDetail.address && (
-            <li className="mb-0 text-gray-400 text-sm">
+            <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
               <a
                 href={`https://maps.google.com/maps?q=${addresUrlEncoded}`}
                 target="_blank"

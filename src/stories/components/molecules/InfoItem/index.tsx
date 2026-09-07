@@ -81,7 +81,7 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
             {info.infoUrl ? (
               <>
                 <TitleCopy
-                  as="h5"
+                  as="h4"
                   mods="mb-2 font-medium text-base lg:text-xl dark:text-white mr-2"
                 >
                   <Link
@@ -93,7 +93,7 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
               </>
             ) : (
               <TitleCopy
-                as="h5"
+                as="h4"
                 mods="mb-2 font-medium text-base lg:text-xl dark:text-white mr-2"
                 underline
                 text={info.company}
@@ -101,8 +101,8 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
             )}
             {info.date && (
               <TitleCopy
-                as="h6"
-                mods="text-gray-400 dark:text-white mb-2"
+                as="p"
+                mods="text-gray-600 dark:text-gray-400 mb-2"
                 text={info.date}
               />
             )}
@@ -111,7 +111,7 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
         <div className={colSpanClass}>
           {info.jobTitle && (
             <TitleCopy
-              as="h4"
+              as="h5"
               mods="mb-2 font-medium text-xl dark:text-white"
               text={info.jobTitle}
             />
