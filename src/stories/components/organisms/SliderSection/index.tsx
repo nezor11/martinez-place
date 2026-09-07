@@ -53,6 +53,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "./index.css";
 
 export interface SlideData {
+  /** Sanity slide name; unique even when two cards share a title. */
+  name?: string;
   backgroundColor?: string;
   alt?: string;
   year?: string;
@@ -233,7 +235,9 @@ export const SliderSection: FC<SliderSectionProps> = ({
           {slidesData.map((slide, index) => (
             // Stable keys: a fresh key on every render would remount every
             // card (and lose the slider state) on each keystroke.
-            <SwiperSlide key={`${slide.title}|${slide.year}|${slide.company}`}>
+            <SwiperSlide
+              key={`${slide.name || slide.title}|${slide.year}|${slide.company}`}
+            >
               <CardSlide
                 {...slide}
                 cardImage={slide.imageUrl}
