@@ -113,6 +113,9 @@ export const SliderSection: FC<SliderSectionProps> = ({
           keyboard={{ enabled: true, onlyInViewport: false }}
           loop={true}
           modules={[A11y, Keyboard, Mousewheel]}
+          // Horizontal wheel/trackpad gestures move the slider on every
+          // device; forceToAxis keeps vertical scrolling for the page.
+          mousewheel={{ enabled: true, forceToAxis: true, sensitivity: 1 }}
           {...(isTouch && {
             freeMode: {
               enabled: false,
@@ -122,11 +125,6 @@ export const SliderSection: FC<SliderSectionProps> = ({
               momentumVelocityRatio: 4,
               momentumBounce: true,
               momentumBounceRatio: 1,
-            },
-            mousewheel: {
-              enabled: true,
-              releaseOnEdges: false,
-              sensitivity: 4,
             },
           })}
           breakpoints={{
