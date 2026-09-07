@@ -5,8 +5,9 @@ import { TitleCopy } from "@/stories/components/atoms/TitleCopy";
 import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { Popup } from "@/stories/components/molecules/Popup";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
-import type { FC, KeyboardEvent, SyntheticEvent } from "react";
+import type { FC, SyntheticEvent } from "react";
 import { useMessages } from "@/i18n";
+import { cn } from "@/utils";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./index.css";
@@ -35,6 +36,12 @@ export interface CardSlideProps {
   videoUrl?: string;
   backgroundColor?: string;
   infoUrl?: string;
+  /** Greyed out because it does not match the portfolio filter. */
+  dimmed?: boolean;
+  /** Makes the tech icons buttons that report their component name. */
+  onIconClick?: (name: string) => void;
+  /** Component name of the icon currently used as a filter, if any. */
+  activeIcon?: string;
 }
 
 /**
@@ -71,6 +78,9 @@ export const CardSlide: FC<CardSlideProps> = ({
   workDone,
   videoUrl,
   backgroundColor,
+  dimmed = false,
+  onIconClick,
+  activeIcon,
 }) => {
   const figcaptionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
@@ -100,24 +110,22 @@ export const CardSlide: FC<CardSlideProps> = ({
   const openModal = () => setShowModal(true);
   const closeModal = () => setShowModal(false);
 
-  const handleKeyUp = (e: KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter" || e.key === " ") {
-      openModal();
-    }
-  };
-
+  // The card is a plain wrapper: the opening control and the tech icon
+  // buttons are siblings, so no interactive element nests inside another.
   return (
     <>
-      <button
-        type="button"
-        className="card-slide portfolio__slide-content"
-        onClick={openModal}
-        onKeyUp={handleKeyUp}
+      <div
+        className={cn(
+          "card-slide portfolio__slide-content",
+          dimmed && "card-slide--dimmed"
+        )}
+        data-dimmed={dimmed || undefined}
         style={{
           border: `3px solid ${borderColor}`,
         }}
       >
-        <article>
+        <button type="button" className="card-slide__open" onClick={openModal}>
+          <article>
           <img
             src={
               cardImage ||
@@ -158,13 +166,18 @@ export const CardSlide: FC<CardSlideProps> = ({
               mods="dark:text-white mb-4 px-8"
               align="center"
             />
-            <div className="card-slide__icons-wrapper text-xl mb-0 px-12">
-              <SuspenseIconGallery iconsData={iconsData} />
-            </div>
             <span className="sr-only">{t.viewDetails}</span>
           </div>
-        </article>
-      </button>
+          </article>
+        </button>
+        <div className="card-slide__icons-wrapper text-xl mb-0 px-12">
+          <SuspenseIconGallery
+            iconsData={iconsData}
+            onIconClick={onIconClick}
+            activeIcon={activeIcon}
+          />
+        </div>
+      </div>
       {showModal &&
         createPortal(
           <Popup
