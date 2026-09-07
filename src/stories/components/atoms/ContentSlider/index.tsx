@@ -86,13 +86,17 @@ export const ContentSlider: FC<ContentSliderProps> = ({
 
   useEffect(() => {
     if (!videoUrl) {
+      let slider: SliderClip | null = null;
       const timer = setTimeout(() => {
         if (sliderRef.current) {
-          new SliderClip(sliderRef.current);
+          slider = new SliderClip(sliderRef.current);
         }
       }, 100);
 
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        slider?.destroy();
+      };
     }
   }, [videoUrl]);
 
@@ -233,7 +237,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 <SubtitleCopy
                   key={nanoid()}
                   text={`${imageProperties.alt}`}
-                  mods="text-xs uppercase text-primary-600 dark:text-primary-400 font-medium -mb-4"
+                  mods="slide-caption text-xs uppercase text-primary-600 dark:text-primary-400 font-medium -mb-4"
                   subtitle="p"
                 />
               ))}
