@@ -1,5 +1,6 @@
 // HeaderSection.tsx
 import { Header } from "@/stories/components/organisms/Header";
+import { sanityImageUrl } from "@/utils/sanityImage";
 import type {
   ContactDetails,
   ImageDetails,
@@ -36,7 +37,8 @@ const HeaderSection = ({ section }: Props) => {
 
   const imageDetails: ImageDetails | null = section.imageDetails
     ? {
-        url: section.imageDetails.url,
+        // Shown at 150 CSS px inside the frame.
+        url: sanityImageUrl(section.imageDetails.url, { width: 300 }),
         metadata: {
           dimensions: {
             width: section.imageDetails.metadata.dimensions.width,

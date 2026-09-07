@@ -124,6 +124,8 @@ export const CardSlide: FC<CardSlideProps> = ({
             }
             width={cardImageWidth}
             height={cardImageHeight}
+            loading="lazy"
+            decoding="async"
             onLoad={handleImageLoad}
             style={{
               height: `${containerHeight}px`,

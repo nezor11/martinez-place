@@ -93,7 +93,12 @@ export const mapInfoSection = (section: Section) => {
       }
 
       const imageUrl = imageDetails?.url
-        ? urlFor(imageDetails).width(800).height(600).url()
+        ? urlFor(imageDetails)
+            .width(800)
+            .height(600)
+            .auto("format")
+            .quality(80)
+            .url()
         : null;
 
       const consolidatedJobDescHtml = blocksToHtml({

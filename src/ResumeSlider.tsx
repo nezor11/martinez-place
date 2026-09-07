@@ -21,6 +21,7 @@
 import type { SlideData } from "@/stories/components/organisms/SliderSection";
 import type { SliderSectionObject } from "@/stories/components/templates/Resume";
 import { Resume } from "@/stories/components/templates/Resume";
+import { sanityImageUrl } from "@/utils/sanityImage";
 import type { Section } from "@/utils/types/section";
 import blocksToHtml from "@sanity/block-content-to-html";
 import type { FC } from "react";
@@ -62,7 +63,10 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
     });
 
     return {
-      imageUrl: slide.slideDetails.slideImage?.src || "",
+      // Cards render at ~270 CSS px; 600 covers 2x screens without upscaling.
+      imageUrl: sanityImageUrl(slide.slideDetails.slideImage?.src || "", {
+        width: 600,
+      }),
       imageWidth: slide.slideDetails.slideImage?.width || undefined,
       imageHeight: slide.slideDetails.slideImage?.height || undefined,
       imageAltText: slide.slideDetails.slideImage?.alt || "",
@@ -85,7 +89,10 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
       workType: slide.slideDetails.type || "",
       backgroundColor: slide.slideDetails.backgroundColor || "",
       videoUrl: slide.slideDetails.videoUrl || "",
-      images: slide.slideDetails.images || [],
+      images: (slide.slideDetails.images || []).map((image) => ({
+        ...image,
+        src: sanityImageUrl(image.src, { width: 1200 }),
+      })),
       link: {
         href: slide.slideDetails.infoUrl || "",
         text: "More Info",
