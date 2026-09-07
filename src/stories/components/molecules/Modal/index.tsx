@@ -222,9 +222,9 @@ export const Modal: FC<ModalProps> = ({
       <div className="fixed top-0 left-0 right-0 bottom-0 p-6 lg:p-0 lg:flex lg:items-center lg:justify-center modal-wrapper z-50 bg-white dark:bg-slate-950 overflow-y-auto">
         <ButtonCloseComponent onClick={handleClose} />
 
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place */}
         <div
           className="meta-data-wrapper mt-0 lg:mt-0 w-full lg:absolute top-14 left-14 z-10 bg-white p-8 rounded-sm border lg:max-w-xl max-h-fit absolute-element"
-          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -273,9 +273,9 @@ export const Modal: FC<ModalProps> = ({
         </div>
 
         {mappedWorkDone.length > 0 && (
+          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           <div
             className="workdone-wrapper w-full mt-8 lg:absolute top-[10%] right-14 z-10 bg-white p-8 rounded-sm border absolute-element lg:max-w-max"
-            // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -292,9 +292,9 @@ export const Modal: FC<ModalProps> = ({
         )}
 
         {workType && (
+          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           <div
             className="worktype-wrapper w-full mt-8 lg:absolute bottom-32 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-14"
-            // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -308,9 +308,9 @@ export const Modal: FC<ModalProps> = ({
           </div>
         )}
 
+        {/* biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place */}
         <div
           className="logos-wrapper w-full mt-8 lg:absolute bottom-14 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-16"
-          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
