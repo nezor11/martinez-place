@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .storybook-button {
   font-weight: 700;
   border: 0;

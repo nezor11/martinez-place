@@ -10,7 +10,7 @@ with Storybook.
 ## Stack
 
 - React 18 + TypeScript, bundled with Vite
-- Tailwind CSS with light/dark theme (system preference, persisted in `localStorage`)
+- Tailwind CSS 4 with light/dark theme (system preference, persisted in `localStorage`)
 - Sanity as headless CMS (`@sanity/client`, `@sanity/image-url`)
 - Swiper and react-player for the project slider
 - Storybook 10 for the component library
@@ -47,7 +47,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | `yarn build` | Fetch the resume (strict), build the client and server bundles, prerender `dist/index.html` |
 | `yarn build:client` / `yarn build:ssr` / `yarn prerender` | The three build steps, individually |
 | `yarn preview` | Serve the production build locally |
-| `yarn storybook` | Storybook dev server plus Tailwind watcher |
+| `yarn storybook` | Storybook dev server |
 | `yarn build-storybook` | Static Storybook into `storybook-static/` |
 | `yarn build-storybook-and-copy-readme` | Static Storybook with docs and the per-component README files |
 | `yarn lint` | Biome lint over `src/` |
@@ -68,7 +68,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 │   ├── contexts/        ThemeContext and ThemeProvider
 │   ├── data/            resume.json (generated, ignored) and its typed export
 │   ├── stories/         Component library (atoms, molecules, organisms, templates, pages)
-│   ├── styles/          Generated Tailwind CSS (do not edit; see tailwind-input.css)
+│   ├── styles/          index.css: Tailwind 4 entry (theme via tailwind.config.js) and global styles
 │   └── utils/           Sanity client, shared types, helpers
 ├── index.html           Vite entry with SEO / Open Graph metadata
 ├── vercel.json          Cache headers for hashed assets and fonts
@@ -79,9 +79,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 
 Everything rendered on the first pass must be identical on the build server and in the browser: no `Math.random`, no `window`/`localStorage` reads during render (use effects or `import.meta.env.SSR`), and dates formatted with a fixed locale and time zone. The theme starts light and is applied after mount; an inline script in `index.html` (allowed by its hash in the CSP) adds the `dark` class before paint so there is no flash.
 
-Tailwind is compiled from `src/tailwind-input.css` into `src/styles/tailwind.css`
-by the `watch:tailwind` script; the generated file is committed so the app can
-import it directly.
+Tailwind 4 runs through `@tailwindcss/vite`: `src/styles/index.css` is the entry (it imports Tailwind and the legacy `tailwind.config.js` via `@config`), and component stylesheets that use `@apply` start with `@reference` to it.
 
 ## Content model
 

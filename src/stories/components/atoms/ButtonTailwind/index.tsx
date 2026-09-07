@@ -29,7 +29,7 @@ const buttonStyles = cva(
     "w-full",
     "rounded-md",
     "font-medium",
-    "focus:outline-none",
+    "focus:outline-hidden",
     "disabled:cursor-not-allowed",
   ],
   {

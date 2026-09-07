@@ -1,9 +1,11 @@
+@reference "../../../../styles/index.css";
+
 .header__main {
   .text {
     &.text-header {
       font-size: calc(1.25rem + 1.2vw);
 
-      @screen lg {
+      @media (width >= theme(--breakpoint-lg)) {
         font-size: 3.75rem;
         line-height: 1;
       }
@@ -12,7 +14,7 @@
       font-size: calc(1rem + 1.2vw);
       @apply -mt-2;
 
-      @screen lg {
+      @media (width >= theme(--breakpoint-lg)) {
         font-size: calc(1.875rem);
         @apply mt-0;
       }
@@ -25,7 +27,7 @@
     @apply text-base;
     @apply justify-start;
 
-    @screen lg {
+    @media (width >= theme(--breakpoint-lg)) {
       @apply text-4xl;
     }
   }
@@ -38,7 +40,7 @@
 .header__aux-image-details {
   .frame-wrapper-image {
     /* transform: scale(0.5);
-    @screen lg {
+    @media (width >= theme(--breakpoint-lg)) {
       transform: scale(1);
     } */
   }

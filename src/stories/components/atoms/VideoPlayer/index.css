@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .video-wrapper .player-wrapper .loader {
   @apply w-[100px] h-[100px] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mx-auto;
 }

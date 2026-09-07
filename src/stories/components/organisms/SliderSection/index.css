@@ -1,3 +1,5 @@
+@reference "../../../../styles/index.css";
+
 .slider-section {
   .swiper {
     @apply overflow-visible;
@@ -8,7 +10,7 @@
   width: auto;
   @apply mt-8;
 
-  @media screen(sm) {
+  @media (width >= theme(--breakpoint-sm)) {
     @apply mt-0;
   }
 }

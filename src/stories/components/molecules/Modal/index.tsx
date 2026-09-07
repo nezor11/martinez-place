@@ -221,7 +221,7 @@ export const Modal: FC<ModalProps> = ({
         <ButtonCloseComponent onClick={handleClose} />
 
         <div
-          className="meta-data-wrapper mt-0 lg:mt-0 w-full lg:absolute top-14 left-14 z-10 bg-white p-8 rounded border lg:max-w-xl max-h-fit absolute-element"
+          className="meta-data-wrapper mt-0 lg:mt-0 w-full lg:absolute top-14 left-14 z-10 bg-white p-8 rounded-sm border lg:max-w-xl max-h-fit absolute-element"
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -271,7 +271,7 @@ export const Modal: FC<ModalProps> = ({
 
         {mappedWorkDone.length > 0 && (
           <div
-            className="workdone-wrapper w-full mt-8 lg:absolute top-[10%] right-14 z-10 bg-white p-8 rounded border absolute-element lg:max-w-max"
+            className="workdone-wrapper w-full mt-8 lg:absolute top-[10%] right-14 z-10 bg-white p-8 rounded-sm border absolute-element lg:max-w-max"
             onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -289,7 +289,7 @@ export const Modal: FC<ModalProps> = ({
 
         {workType && (
           <div
-            className="worktype-wrapper w-full mt-8 lg:absolute bottom-32 right-14 z-10 bg-white p-4 rounded border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-14"
+            className="worktype-wrapper w-full mt-8 lg:absolute bottom-32 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-14"
             onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -304,7 +304,7 @@ export const Modal: FC<ModalProps> = ({
         )}
 
         <div
-          className="logos-wrapper w-full mt-8 lg:absolute bottom-14 right-14 z-10 bg-white p-4 rounded border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-16"
+          className="logos-wrapper w-full mt-8 lg:absolute bottom-14 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-16"
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
