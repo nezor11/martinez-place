@@ -74,8 +74,7 @@ function App() {
   const { darkTheme, toggleTheme } = useTheme();
 
   return (
-    <>
-      <div className="container py-10 mx-auto px-4 max-w-5xl relative">
+    <div className="container py-10 mx-auto px-4 max-w-5xl relative">
         <button
           type="button"
           onClick={toggleTheme}
@@ -85,7 +84,6 @@ function App() {
         </button>
         <ResumeContent latestResume={latestResume} />
       </div>
-    </>
   );
 }
 
