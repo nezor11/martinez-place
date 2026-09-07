@@ -24,7 +24,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "globals.d.ts", "declarations.d.ts", ".storybook"],
+  "include": ["src", "globals.d.ts", "declarations.d.ts", ".storybook", "tests", "playwright.config.ts"],
   "exclude": [
     "**/dist",
     "**/test.*",

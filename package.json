@@ -43,11 +43,13 @@
     "build-storybook": "storybook build",
     "lint": "biome lint",
     "format": "biome format",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@chromatic-com/storybook": "^5.3.1",
+    "@playwright/test": "^1.63.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/react-vite": "^10.6.0",
     "@tailwindcss/vite": "^4.3.3",
