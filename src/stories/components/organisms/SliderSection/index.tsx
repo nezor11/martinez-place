@@ -36,7 +36,7 @@ import { iconLabel } from "@/utils/iconLabels";
 import {
   normalizeText,
   slideMatches,
-  slideSearchText,
+  slideSearchTokens,
 } from "@/utils/portfolioSearch";
 import type { FC } from "react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
@@ -88,13 +88,13 @@ export const SliderSection: FC<SliderSectionProps> = ({
 
   // Text search and the tech icons share one filter: an icon click puts the
   // technology's label in the box (or clears it when already there).
-  const searchTexts = useMemo(
-    () => slidesData.map((slide) => slideSearchText(slide, locale, t)),
+  const searchTokens = useMemo(
+    () => slidesData.map((slide) => slideSearchTokens(slide, locale, t)),
     [slidesData, locale, t]
   );
   const matches = useMemo(
-    () => searchTexts.map((text) => slideMatches(text, query)),
-    [searchTexts, query]
+    () => searchTokens.map((tokens) => slideMatches(tokens, query)),
+    [searchTokens, query]
   );
   const matchCount = matches.filter(Boolean).length;
   const activeIcon = useMemo(() => {

@@ -11,13 +11,19 @@ export const normalizeText = (value: string): string =>
 
 const stripHtml = (html: string): string => html.replace(/<[^>]+>/g, " ");
 
-/** Everything a project can be found by, in the page's language. */
-export const slideSearchText = (
+/** Words of a text: letters and digits, keeping "next.js", "c#" or "e-commerce". */
+const tokenize = (value: string): string[] =>
+  (normalizeText(value).match(/[\p{L}\p{N}][\p{L}\p{N}.#+-]*/gu) ?? []).map(
+    (word) => word.replace(/[.\-]+$/, "")
+  );
+
+/** Everything a project can be found by, as words, in the page's language. */
+export const slideSearchTokens = (
   slide: SlideData,
   locale: Locale,
   t: Messages
-): string =>
-  normalizeText(
+): string[] =>
+  tokenize(
     [
       slide.title,
       slide.summary ?? "",
@@ -30,8 +36,14 @@ export const slideSearchText = (
     ].join(" ")
   );
 
-/** True when every word of the query appears in the searchable text. */
-export const slideMatches = (searchText: string, query: string): boolean => {
-  const words = normalizeText(query).split(/\s+/).filter(Boolean);
-  return words.every((word) => searchText.includes(word));
+/**
+ * True when every word of the query is a word of the project, or the start
+ * of one: "vue" finds "Vue" and "react" finds "React", but neither matches
+ * "devuelve" or "preact" the way a substring search would.
+ */
+export const slideMatches = (tokens: string[], query: string): boolean => {
+  const words = tokenize(query);
+  return words.every((word) =>
+    tokens.some((token) => token === word || token.startsWith(word))
+  );
 };
