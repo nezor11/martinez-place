@@ -110,6 +110,8 @@ const iconLabel = (name) =>
     CommercetoolsIcon: "commercetools",
     KotlinIcon: "Kotlin",
     ReactNativeIcon: "React Native",
+    AndroidIcon: "Android",
+    JetpackComposeIcon: "Jetpack Compose",
   })[name] || name.replace(/Icon$/, "");
 
 // --- styles ----------------------------------------------------------------
