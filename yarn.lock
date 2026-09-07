@@ -5667,7 +5667,7 @@ __metadata:
     storybook: "npm:^10.6.0"
     storybook-dark-mode: "npm:^5.0.0"
     svgo: "npm:^3.2.0"
-    swiper: "npm:^11.1.1"
+    swiper: "npm:^14.2.0"
     tailwind-merge: "npm:^3.0.0"
     tailwindcss: "npm:^4.3.3"
     typescript: "npm:~5.6"
@@ -7559,10 +7559,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:^11.1.1":
-  version: 11.2.4
-  resolution: "swiper@npm:11.2.4"
-  checksum: 10c0/911c405a2d7feae9ac59d8b6683c40e50f6f5be8ca5c5e44673647c37e319a564417b813dc79a09da034e8fe927b2883253fe72cd8efecfcc09247f669fd5a30
+"swiper@npm:^14.2.0":
+  version: 14.2.0
+  resolution: "swiper@npm:14.2.0"
+  checksum: 10c0/af1822ea895878d34d09214c1ea9d884a930d85b28ec37f334a6a6ab5f38a47fae52a4ed2d0648464662dd854210ebf051c422b489b4d2a9d134e2a435b7f5dd
   languageName: node
   linkType: hard
 
