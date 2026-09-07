@@ -10,6 +10,8 @@ dist-ssr
 
 # testing
 /coverage
+/test-results
+/playwright-report
 
 # production
 /build

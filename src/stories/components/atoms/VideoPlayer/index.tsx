@@ -19,8 +19,16 @@
 import Loader from "@/stories/components/atoms/Loader";
 import type { FC } from "react";
 import { useState } from "react";
-import ReactPlayer from "react-player";
+import ReactPlayerImport from "react-player";
 import "./index.css";
+
+// react-player 2.x is a CommonJS module whose export is `{ default }` with an
+// __esModule flag. Bundlers disagree on the interop: Vite 8 (Rolldown) hands
+// the namespace object to the default import, which React rejects as an
+// invalid element type and unmounts the app. Unwrap it at runtime so both
+// shapes work.
+const ReactPlayer = ((ReactPlayerImport as unknown as { default?: unknown })
+  .default ?? ReactPlayerImport) as typeof ReactPlayerImport;
 
 interface VideoPlayerProps {
   videoUrl: string;
