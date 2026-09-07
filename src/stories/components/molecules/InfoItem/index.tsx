@@ -79,18 +79,16 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
         {info.company && (
           <div className="col-span-5 lg:col-span-2 flex flex-row lg:flex-col flex-wrap -mb-4">
             {info.infoUrl ? (
-              <>
-                <TitleCopy
-                  as="h4"
-                  mods="mb-2 font-medium text-base lg:text-xl dark:text-white mr-2"
-                >
-                  <Link
-                    href={info.infoUrl}
-                    link_text={info.company}
-                    rel="noreferrer noopener"
-                  />
-                </TitleCopy>
-              </>
+              <TitleCopy
+                as="h4"
+                mods="mb-2 font-medium text-base lg:text-xl dark:text-white mr-2"
+              >
+                <Link
+                  href={info.infoUrl}
+                  link_text={info.company}
+                  rel="noreferrer noopener"
+                />
+              </TitleCopy>
             ) : (
               <TitleCopy
                 as="h4"

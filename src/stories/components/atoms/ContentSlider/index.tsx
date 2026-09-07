@@ -28,6 +28,38 @@ interface ContentSliderProps {
   backgroundColor?: string;
 }
 
+/** Human-readable labels for the workDone keys stored in Sanity. */
+const nameMapping: { [key: string]: string } = {
+  front_end: "Frontend Development",
+  front_end_frameworks: "Frontend Frameworks",
+  back_end: "Backend Development",
+  back_end_frameworks: "Backend Frameworks",
+  full_stack: "Full Stack Development",
+  databases: "Databases",
+  cms: "CMS",
+  ecommerce: "E-commerce",
+  mobile_app: "Mobile App Development",
+  game_dev: "Game Development",
+  machine_learning: "Machine Learning",
+  data_science: "Data Science",
+  artificial_intelligence: "Artificial Intelligence",
+  cloud_computing: "Cloud Computing",
+  dev_ops: "DevOps",
+  blockchain: "Blockchain",
+  iot: "Internet of Things",
+  cybersecurity: "Cybersecurity",
+  servers_hosting: "Servers & Hosting",
+  testing_debugging: "Debugging",
+  version_control: "Version Control",
+  maintenance_updates: "Maintenance",
+  performance_optimization: "Performance",
+  responsive_design: "Responsive Design",
+  ux_ui_design: "UX/UI Consultancy",
+  seo: "SEO Support",
+  analytics_metrics: "Metrics",
+  security: "Security",
+};
+
 export const ContentSlider: FC<ContentSliderProps> = ({
   title,
   company = "Nezor Houze",
@@ -48,36 +80,6 @@ export const ContentSlider: FC<ContentSliderProps> = ({
 
   const formatCompanyName = (name: string) => name.replace(/_/g, " ");
 
-  const nameMapping: { [key: string]: string } = {
-    front_end: "Frontend Development",
-    front_end_frameworks: "Frontend Frameworks",
-    back_end: "Backend Development",
-    back_end_frameworks: "Backend Frameworks",
-    full_stack: "Full Stack Development",
-    databases: "Databases",
-    cms: "CMS",
-    ecommerce: "E-commerce",
-    mobile_app: "Mobile App Development",
-    game_dev: "Game Development",
-    machine_learning: "Machine Learning",
-    data_science: "Data Science",
-    artificial_intelligence: "Artificial Intelligence",
-    cloud_computing: "Cloud Computing",
-    dev_ops: "DevOps",
-    blockchain: "Blockchain",
-    iot: "Internet of Things",
-    cybersecurity: "Cybersecurity",
-    servers_hosting: "Servers & Hosting",
-    testing_debugging: "Debugging",
-    version_control: "Version Control",
-    maintenance_updates: "Maintenance",
-    performance_optimization: "Performance",
-    responsive_design: "Responsive Design",
-    ux_ui_design: "UX/UI Consultancy",
-    seo: "SEO Support",
-    analytics_metrics: "Metrics",
-    security: "Security",
-  };
 
   const mappedWorkDone = useMemo(
     () => workDone.map((item) => nameMapping[item] || item),
@@ -103,7 +105,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
   const handleReady = () => setLoading(false);
   const handlePlayClick = () => setIsPlaying(true);
 
-  const domain = link?.href?.match(/https?:\/\/(www\.)?([^\/]+)/)?.[2] || "";
+  const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";
 
   const dynamicBackgroundColor =
     backgroundColor ||

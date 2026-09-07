@@ -67,6 +67,38 @@ interface ModalProps {
   ButtonCloseComponent: FC<{ onClick: () => void }>;
 }
 
+/** Human-readable labels for the workDone keys stored in Sanity. */
+const nameMapping: { [key: string]: string } = {
+  front_end: "Frontend Development",
+  front_end_frameworks: "Frontend Frameworks",
+  back_end: "Backend Development",
+  back_end_frameworks: "Backend Frameworks",
+  full_stack: "Full Stack Development",
+  databases: "Databases",
+  cms: "CMS",
+  ecommerce: "E-commerce",
+  mobile_app: "Mobile App Development",
+  game_dev: "Game Development",
+  machine_learning: "Machine Learning",
+  data_science: "Data Science",
+  artificial_intelligence: "Artificial Intelligence",
+  cloud_computing: "Cloud Computing",
+  dev_ops: "DevOps",
+  blockchain: "Blockchain",
+  iot: "Internet of Things",
+  cybersecurity: "Cybersecurity",
+  servers_hosting: "Servers & Hosting",
+  testing_debugging: "Testing & Debugging",
+  version_control: "Version Control",
+  maintenance_updates: "Maintenance & Updates",
+  performance_optimization: "Performance",
+  responsive_design: "Responsive Design",
+  ux_ui_design: "UX/UI Consultancy",
+  seo: "SEO Support",
+  analytics_metrics: "Analytics & Metrics",
+  security: "Security",
+};
+
 export const Modal: FC<ModalProps> = ({
   onClose,
   title,
@@ -91,43 +123,13 @@ export const Modal: FC<ModalProps> = ({
     new Set()
   );
 
-  const nameMapping: { [key: string]: string } = {
-    front_end: "Frontend Development",
-    front_end_frameworks: "Frontend Frameworks",
-    back_end: "Backend Development",
-    back_end_frameworks: "Backend Frameworks",
-    full_stack: "Full Stack Development",
-    databases: "Databases",
-    cms: "CMS",
-    ecommerce: "E-commerce",
-    mobile_app: "Mobile App Development",
-    game_dev: "Game Development",
-    machine_learning: "Machine Learning",
-    data_science: "Data Science",
-    artificial_intelligence: "Artificial Intelligence",
-    cloud_computing: "Cloud Computing",
-    dev_ops: "DevOps",
-    blockchain: "Blockchain",
-    iot: "Internet of Things",
-    cybersecurity: "Cybersecurity",
-    servers_hosting: "Servers & Hosting",
-    testing_debugging: "Testing & Debugging",
-    version_control: "Version Control",
-    maintenance_updates: "Maintenance & Updates",
-    performance_optimization: "Performance",
-    responsive_design: "Responsive Design",
-    ux_ui_design: "UX/UI Consultancy",
-    seo: "SEO Support",
-    analytics_metrics: "Analytics & Metrics",
-    security: "Security",
-  };
 
   const mappedWorkDone = useMemo(
     () => workDone.map((item) => nameMapping[item] || item),
     [workDone]
   );
 
-  const domain = link?.href?.match(/https?:\/\/(www\.)?([^\/]+)/)?.[2] || "";
+  const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
@@ -222,6 +224,7 @@ export const Modal: FC<ModalProps> = ({
 
         <div
           className="meta-data-wrapper mt-0 lg:mt-0 w-full lg:absolute top-14 left-14 z-10 bg-white p-8 rounded-sm border lg:max-w-xl max-h-fit absolute-element"
+          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -272,7 +275,8 @@ export const Modal: FC<ModalProps> = ({
         {mappedWorkDone.length > 0 && (
           <div
             className="workdone-wrapper w-full mt-8 lg:absolute top-[10%] right-14 z-10 bg-white p-8 rounded-sm border absolute-element lg:max-w-max"
-            onMouseDown={handleMouseDown}
+            // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
+          onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -290,7 +294,8 @@ export const Modal: FC<ModalProps> = ({
         {workType && (
           <div
             className="worktype-wrapper w-full mt-8 lg:absolute bottom-32 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-14"
-            onMouseDown={handleMouseDown}
+            // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
+          onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -305,6 +310,7 @@ export const Modal: FC<ModalProps> = ({
 
         <div
           className="logos-wrapper w-full mt-8 lg:absolute bottom-14 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-16"
+          // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           onMouseDown={handleMouseDown}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}

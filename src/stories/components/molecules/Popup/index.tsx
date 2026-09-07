@@ -62,6 +62,38 @@ interface PopupProps {
   ButtonCloseComponent: FC<{ onClick: () => void }>;
 }
 
+/** Human-readable labels for the workDone keys stored in Sanity. */
+const nameMapping: { [key: string]: string } = {
+  front_end: "Frontend Development",
+  front_end_frameworks: "Frontend Frameworks",
+  back_end: "Backend Development",
+  back_end_frameworks: "Backend Frameworks",
+  full_stack: "Full Stack Development",
+  databases: "Databases",
+  cms: "CMS",
+  ecommerce: "E-commerce",
+  mobile_app: "Mobile App Development",
+  game_dev: "Game Development",
+  machine_learning: "Machine Learning",
+  data_science: "Data Science",
+  artificial_intelligence: "Artificial Intelligence",
+  cloud_computing: "Cloud Computing",
+  dev_ops: "DevOps",
+  blockchain: "Blockchain",
+  iot: "Internet of Things",
+  cybersecurity: "Cybersecurity",
+  servers_hosting: "Servers & Hosting",
+  testing_debugging: "Testing & Debugging",
+  version_control: "Version Control",
+  maintenance_updates: "Maintenance & Updates",
+  performance_optimization: "Performance",
+  responsive_design: "Responsive Design",
+  ux_ui_design: "UX/UI Consultancy",
+  seo: "SEO Support",
+  analytics_metrics: "Analytics & Metrics",
+  security: "Security",
+};
+
 export const Popup: FC<PopupProps> = ({
   onClose,
   title,
@@ -77,36 +109,6 @@ export const Popup: FC<PopupProps> = ({
   backgroundColor,
   ButtonCloseComponent,
 }) => {
-  const nameMapping: { [key: string]: string } = {
-    front_end: "Frontend Development",
-    front_end_frameworks: "Frontend Frameworks",
-    back_end: "Backend Development",
-    back_end_frameworks: "Backend Frameworks",
-    full_stack: "Full Stack Development",
-    databases: "Databases",
-    cms: "CMS",
-    ecommerce: "E-commerce",
-    mobile_app: "Mobile App Development",
-    game_dev: "Game Development",
-    machine_learning: "Machine Learning",
-    data_science: "Data Science",
-    artificial_intelligence: "Artificial Intelligence",
-    cloud_computing: "Cloud Computing",
-    dev_ops: "DevOps",
-    blockchain: "Blockchain",
-    iot: "Internet of Things",
-    cybersecurity: "Cybersecurity",
-    servers_hosting: "Servers & Hosting",
-    testing_debugging: "Testing & Debugging",
-    version_control: "Version Control",
-    maintenance_updates: "Maintenance & Updates",
-    performance_optimization: "Performance",
-    responsive_design: "Responsive Design",
-    ux_ui_design: "UX/UI Consultancy",
-    seo: "SEO Support",
-    analytics_metrics: "Analytics & Metrics",
-    security: "Security",
-  };
 
   const mappedWorkDone = useMemo(
     () => workDone.map((item) => nameMapping[item] || item),
@@ -124,7 +126,6 @@ export const Popup: FC<PopupProps> = ({
   return (
     <div
       className="min-h-screen min-w-screen popup-content"
-      // biome-ignore lint/a11y/useSemanticElements: full-screen overlay styled as a div; a native <dialog> would need showModal() and user-agent style resets
       role="dialog"
       aria-modal="true"
       aria-label={title}
