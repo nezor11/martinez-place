@@ -59,7 +59,7 @@ const ResumeContent = ({ latestResume }: { latestResume: Resume }) => {
           contact_details={latestResume.pageBuilder[0].contactDetails}
           my_link={{
             link_text: "Download PDF Resume",
-            href: latestResume.pdfResumeUrl,
+            href: "/resume.pdf",
             target: "_blank",
             rel: "noopener noreferrer",
           }}
