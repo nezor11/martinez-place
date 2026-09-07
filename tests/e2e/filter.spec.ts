@@ -45,6 +45,14 @@ test("clicking a tech icon on a card applies and toggles the same filter", async
   await expect(page.locator(".card-slide[data-dimmed]")).toHaveCount(0);
 });
 
+test("the search matches whole words or prefixes, not substrings", async ({ page }) => {
+  await page.goto("/es/");
+  await page.getByRole("searchbox").fill("vue");
+  // "devuelve" appears in this description; it must not count as Vue.
+  await expect(page.locator(".card-slide", { hasText: "Grünenthal Campus" })).toHaveAttribute("data-dimmed", "true");
+  await expect(page.locator(".card-slide", { hasText: "Vinduet" })).not.toHaveAttribute("data-dimmed", /.*/);
+});
+
 test("the search ignores accents and case", async ({ page }) => {
   await page.goto("/es/");
   const input = page.getByRole("searchbox");
