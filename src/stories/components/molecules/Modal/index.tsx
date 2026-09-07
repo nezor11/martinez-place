@@ -40,6 +40,7 @@ import { TitleCopy } from "@/stories/components/atoms/TitleCopy";
 import { VideoPlayer } from "@/stories/components/atoms/VideoPlayer";
 import type { IconData } from "@/stories/components/molecules/CardSlide";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
+import { useLocale, workDoneLabel } from "@/i18n";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -67,38 +68,6 @@ interface ModalProps {
   ButtonCloseComponent: FC<{ onClick: () => void }>;
 }
 
-/** Human-readable labels for the workDone keys stored in Sanity. */
-const nameMapping: { [key: string]: string } = {
-  front_end: "Frontend Development",
-  front_end_frameworks: "Frontend Frameworks",
-  back_end: "Backend Development",
-  back_end_frameworks: "Backend Frameworks",
-  full_stack: "Full Stack Development",
-  databases: "Databases",
-  cms: "CMS",
-  ecommerce: "E-commerce",
-  mobile_app: "Mobile App Development",
-  game_dev: "Game Development",
-  machine_learning: "Machine Learning",
-  data_science: "Data Science",
-  artificial_intelligence: "Artificial Intelligence",
-  cloud_computing: "Cloud Computing",
-  dev_ops: "DevOps",
-  blockchain: "Blockchain",
-  iot: "Internet of Things",
-  cybersecurity: "Cybersecurity",
-  servers_hosting: "Servers & Hosting",
-  testing_debugging: "Testing & Debugging",
-  version_control: "Version Control",
-  maintenance_updates: "Maintenance & Updates",
-  performance_optimization: "Performance",
-  responsive_design: "Responsive Design",
-  ux_ui_design: "UX/UI Consultancy",
-  seo: "SEO Support",
-  analytics_metrics: "Analytics & Metrics",
-  security: "Security",
-};
-
 export const Modal: FC<ModalProps> = ({
   onClose,
   title,
@@ -124,9 +93,10 @@ export const Modal: FC<ModalProps> = ({
   );
 
 
+  const locale = useLocale();
   const mappedWorkDone = useMemo(
-    () => workDone.map((item) => nameMapping[item] || item),
-    [workDone]
+    () => workDone.map((item) => workDoneLabel(locale, item)),
+    [workDone, locale]
   );
 
   const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";

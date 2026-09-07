@@ -6,6 +6,7 @@ import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { Popup } from "@/stories/components/molecules/Popup";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import type { FC, KeyboardEvent, SyntheticEvent } from "react";
+import { useMessages } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./index.css";
@@ -73,6 +74,7 @@ export const CardSlide: FC<CardSlideProps> = ({
 }) => {
   const figcaptionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
+  const t = useMessages();
   const [containerHeight, setContainerHeight] = useState(cardImageHeight);
   const borderColor = getColorFor(title);
 
@@ -130,7 +132,7 @@ export const CardSlide: FC<CardSlideProps> = ({
               height: `${containerHeight}px`,
               objectFit: "cover",
             }}
-            alt={cardImageAlt || "Card image"}
+            alt={cardImageAlt || t.cardImage}
             onError={(e) => {
               e.currentTarget.src = "path/to/fallback/image.png";
             }}
@@ -159,7 +161,7 @@ export const CardSlide: FC<CardSlideProps> = ({
             <div className="card-slide__icons-wrapper text-xl mb-0 px-12">
               <SuspenseIconGallery iconsData={iconsData} />
             </div>
-            <span className="sr-only">View details</span>
+            <span className="sr-only">{t.viewDetails}</span>
           </div>
         </article>
       </button>

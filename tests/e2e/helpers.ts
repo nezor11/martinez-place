@@ -15,9 +15,15 @@ export const productionCsp = (): string => {
   ).value;
 };
 
-/** The resume fetched at build time (src/data/resume.json). */
-export const resumeData = () =>
-  JSON.parse(readFileSync(resolve(root, "src/data/resume.json"), "utf8"));
+/** Languages the site is built in, with the path each one lives at. */
+export const locales = [
+  { locale: "en", path: "/", pdf: "/resume.pdf", og: "/og.png", lastUpdated: /last updated/i },
+  { locale: "es", path: "/es/", pdf: "/resume.es.pdf", og: "/og.es.png", lastUpdated: /última actualización/i },
+] as const;
+
+/** The resume fetched at build time (src/data/resume.<locale>.json). */
+export const resumeData = (locale = "en") =>
+  JSON.parse(readFileSync(resolve(root, `src/data/resume.${locale}.json`), "utf8"));
 
 /** Slide titles that carry a video URL matching the pattern. */
 export const slideTitlesWithVideo = (pattern: RegExp): string[] => {

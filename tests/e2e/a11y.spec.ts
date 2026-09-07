@@ -22,6 +22,12 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
+test("the Spanish page has no accessibility violations", async ({ page }) => {
+  await page.goto("/es/");
+  await page.waitForLoadState("networkidle");
+  expect(await audit(page)).toEqual([]);
+});
+
 test("an open project modal has no accessibility violations", async ({ page }) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");

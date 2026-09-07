@@ -1,40 +1,27 @@
 #!/usr/bin/env node
 /**
  * Builds public/og.png (1200x630), the image shown when the site is shared
- * on LinkedIn, X, Slack and similar, from src/data/resume.json. Uses satori
- * (layout to SVG with the site's Raleway fonts) and resvg (SVG to PNG), so it
- * needs no browser and runs the same on Vercel, in CI and locally.
+ * on LinkedIn, X, Slack and similar, from src/data/resume.<locale>.json, plus
+ * og.<locale>.png for every other language. Uses satori (layout to SVG with
+ * the site's Raleway fonts) and resvg (SVG to PNG), so it needs no browser
+ * and runs the same on Vercel, in CI and locally.
+ *
+ * Usage: node scripts/build-og.mjs [--locale es]
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
+import { localeFile, localesFromArgv, resumeDataFile } from "./locales.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const dataFile = resolve(root, "src/data/resume.json");
-const outFile = resolve(root, "public/og.png");
 const siteUrl = "martinez.place";
 const width = 1200;
 const height = 630;
 
-if (!existsSync(dataFile)) {
-  console.error("[build-og] src/data/resume.json is missing; run fetch-resume first");
-  process.exit(1);
-}
-const resume = JSON.parse(readFileSync(dataFile, "utf8"));
-const header = resume.pageBuilder.find((s) => s._type === "header") ?? {};
-const name = header.name ?? "Jorge Martínez";
-const role = header.jobDescHeader ?? "";
-const city = (header.contactDetails?.address ?? "").replace(/^\d+\s*/, "") || "Barcelona";
-const skills = (header.icons ?? [])
-  .map((i) => i.iconDetails?.name ?? "")
-  .map((n) => ({ HTML5Icon: "HTML5", CSS3Icon: "CSS3", JavaScriptIcon: "JavaScript", TypeScriptIcon: "TypeScript", NodeJSIcon: "Node.js", WebPackIcon: "Webpack", NextJSIcon: "Next.js", VueIcon: "Vue", ViteIcon: "Vite", NuxtIcon: "Nuxt", ReactIcon: "React", WordpressIcon: "WordPress", PhpIcon: "PHP", GitBranchIcon: "Git" })[n] ?? n.replace(/Icon$/, ""))
-  .filter(Boolean)
-  .slice(0, 8);
-
 /** Profile photo as a data URI (JPEG, 400px) so satori can inline it. */
-const loadPhoto = async () => {
+const loadPhoto = async (header) => {
   const url = header.imageDetails?.url;
   if (!url) return null;
   try {
@@ -50,9 +37,26 @@ const loadPhoto = async () => {
 
 const font = (file) => readFileSync(resolve(root, "scripts/fonts", file));
 const h = (type, props, ...children) => ({ type, props: { ...props, children: children.length === 1 ? children[0] : children } });
-
-const photo = await loadPhoto();
 const rose = "#e11d48";
+
+const buildOg = async (locale) => {
+const dataFile = resolve(root, resumeDataFile(locale));
+const outFile = resolve(root, "public", localeFile("og", "png", locale));
+if (!existsSync(dataFile)) {
+  console.error(`[build-og] ${dataFile} is missing; run fetch-resume first`);
+  process.exit(1);
+}
+const resume = JSON.parse(readFileSync(dataFile, "utf8"));
+const header = resume.pageBuilder.find((s) => s._type === "header") ?? {};
+const name = header.name ?? "Jorge Martínez";
+const role = header.jobDescHeader ?? "";
+const city = (header.contactDetails?.address ?? "").replace(/^\d+\s*/, "") || "Barcelona";
+const skills = (header.icons ?? [])
+  .map((i) => i.iconDetails?.name ?? "")
+  .map((n) => ({ HTML5Icon: "HTML5", CSS3Icon: "CSS3", JavaScriptIcon: "JavaScript", TypeScriptIcon: "TypeScript", NodeJSIcon: "Node.js", WebPackIcon: "Webpack", NextJSIcon: "Next.js", VueIcon: "Vue", ViteIcon: "Vite", NuxtIcon: "Nuxt", ReactIcon: "React", WordpressIcon: "WordPress", PhpIcon: "PHP", GitBranchIcon: "Git" })[n] ?? n.replace(/Icon$/, ""))
+  .filter(Boolean)
+  .slice(0, 8);
+const photo = await loadPhoto(header);
 
 const tree = h(
   "div",
@@ -87,3 +91,8 @@ const png = new Resvg(svg, { fitTo: { mode: "width", value: width } }).render().
 mkdirSync(dirname(outFile), { recursive: true });
 writeFileSync(outFile, png);
 console.log(`[build-og] wrote ${outFile} (${(png.length / 1024).toFixed(0)} KB)`);
+};
+
+for (const locale of localesFromArgv(process.argv)) {
+  await buildOg(locale);
+}

@@ -33,7 +33,7 @@
     "build:og": "node scripts/build-og.mjs",
     "dev": "node scripts/fetch-resume.mjs && node scripts/build-pdf.mjs && node scripts/build-og.mjs && vite",
     "build": "yarn fetch-resume --strict && yarn build:pdf && yarn build:og && yarn build:client && yarn build:ssr && yarn prerender",
-    "build:client": "vite build",
+    "build:client": "vite build && SITE_LOCALE=es vite build",
     "build:ssr": "vite build --ssr src/entry-server.tsx --outDir dist-ssr",
     "prerender": "node scripts/prerender.mjs",
     "build-storybook-docs": "storybook build --docs",

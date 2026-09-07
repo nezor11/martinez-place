@@ -5,14 +5,16 @@
  * <Loader />
  */
 
+import { useMessages } from "@/i18n";
 import type { FC } from "react";
 import "./index.css";
 
 const Loader: FC = () => {
+  const t = useMessages();
   return (
     <div className="loader">
       <svg className="circular-loader" viewBox="25 25 50 50">
-        <title>Loading...</title>
+        <title>{t.loading}</title>
         <circle
           className="loader-path"
           cx="50"

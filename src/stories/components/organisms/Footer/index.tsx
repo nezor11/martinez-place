@@ -24,6 +24,7 @@ import {
   ContactDetail,
   type ContactDetailTexts,
 } from "@/stories/components/molecules/ContactDetails";
+import { useMessages } from "@/i18n";
 import type { FC } from "react";
 
 export interface FooterProps {
@@ -42,22 +43,19 @@ export const Footer: FC<FooterProps> = ({
   mods = "",
   ...props
 }: FooterProps) => {
+  const t = useMessages();
   const currentYear = new Date().getFullYear();
 
   const formatDate = (dateString: string): string => {
-    // Fixed locale and time zone: the site is in English and the value must
-    // not depend on where it is rendered (build server vs. visitor).
+    // Locale fixed per build and UTC time zone: the value must not depend on
+    // where it is rendered (build server vs. visitor) or hydration breaks.
     const options: Intl.DateTimeFormatOptions = {
       day: "numeric",
       month: "long",
       year: "numeric",
       timeZone: "UTC",
     };
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      "en-US",
-      options
-    );
-    return formattedDate;
+    return new Date(dateString).toLocaleDateString(t.dateLocale, options);
   };
 
   const lastUpdated = last_updated ? formatDate(last_updated.toString()) : null;
@@ -77,7 +75,9 @@ export const Footer: FC<FooterProps> = ({
           <div>
             {last_updated && (
               <p className="text-sm">
-                <em className="text-gray-600 dark:text-gray-400">Last updated: {lastUpdated}</em>
+                <em className="text-gray-600 dark:text-gray-400">
+                  {t.lastUpdated}: {lastUpdated}
+                </em>
               </p>
             )}
             <p className="text-sm text-gray-600 dark:text-gray-400">

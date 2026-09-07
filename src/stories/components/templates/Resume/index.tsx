@@ -3,6 +3,7 @@ import { InfoSection } from "@/stories/components/organisms/InfoSection";
 import type { SlideData } from "@/stories/components/organisms/SliderSection";
 import { SliderSection } from "@/stories/components/organisms/SliderSection";
 
+import { useMessages } from "@/i18n";
 import { cn } from "@/utils";
 import type { ComponentPropsWithRef } from "react";
 import { forwardRef } from "react";
@@ -21,6 +22,7 @@ type ResumeProps = ComponentPropsWithRef<"article"> & ResumeObject;
 
 export const Resume = forwardRef<HTMLElement, ResumeProps>(
   ({ resumeItems, ...props }, ref) => {
+    const t = useMessages();
     return (
       <article ref={ref} className={cn("my-10")} {...props}>
         {resumeItems?.map((item, index) => {
@@ -40,7 +42,7 @@ export const Resume = forwardRef<HTMLElement, ResumeProps>(
               );
             }
             default:
-              return <div key={key}>No data available</div>;
+              return <div key={key}>{t.noData}</div>;
           }
         })}
       </article>

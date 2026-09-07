@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 /**
- * Builds public/resume.pdf from src/data/resume.json (the same content the
- * site renders) with @react-pdf/renderer, so the downloadable resume never
- * drifts from the page. Runs before the Vite build; Vite copies public/ to
- * dist/, so the file ships as /resume.pdf.
+ * Builds public/resume.pdf (and resume.<locale>.pdf for every other
+ * language) from src/data/resume.<locale>.json, the same content the site
+ * renders, with @react-pdf/renderer, so the downloadable resume never drifts
+ * from the page. Runs before the Vite build; Vite copies public/ to dist/,
+ * so the files ship as /resume.pdf and /resume.es.pdf.
+ *
+ * Usage: node scripts/build-pdf.mjs [--locale es]
  */
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -19,18 +22,11 @@ import {
   View,
   renderToFile,
 } from "@react-pdf/renderer";
+import { localeFile, localePath, localesFromArgv, pdfMessages, resumeDataFile } from "./locales.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const dataFile = resolve(root, "src/data/resume.json");
-const outFile = resolve(root, "public/resume.pdf");
 const siteUrl = "https://martinez.place";
 const h = React.createElement;
-
-if (!existsSync(dataFile)) {
-  console.error("[build-pdf] src/data/resume.json is missing; run fetch-resume first");
-  process.exit(1);
-}
-const resume = JSON.parse(readFileSync(dataFile, "utf8"));
 
 // --- fonts -----------------------------------------------------------------
 // TTF versions of the site's Raleway subsets (react-pdf embeds TTF/OTF only;
@@ -61,11 +57,11 @@ Font.registerHyphenationCallback((word) => [word]);
 
 // --- content helpers -------------------------------------------------------
 const year = (iso) => (iso ? new Date(iso).getUTCFullYear() : null);
-const dateRange = (start, finish) => {
+const dateRange = (start, finish, t) => {
   const a = year(start);
   const b = year(finish);
   if (!a) return "";
-  if (!finish) return `${a} > Current`;
+  if (!finish) return `${a} > ${t.current}`;
   return a === b ? `${a}` : `${a} > ${b}`;
 };
 
@@ -168,7 +164,7 @@ const Paragraphs = ({ blocks }) =>
 const Bullets = ({ lines }) =>
   h(View, null, ...lines.map((line, i) => h(View, { key: i, style: styles.bullet }, h(Text, { style: styles.bulletDot }, "•"), h(Text, { style: { flex: 1 } }, line))));
 
-const InfoSection = ({ section }) =>
+const InfoSection = ({ section, t }) =>
   h(
     View,
     { style: styles.section },
@@ -183,7 +179,7 @@ const InfoSection = ({ section }) =>
               View,
               { style: styles.itemHead },
               item.infoUrl ? h(Link, { src: item.infoUrl, style: [styles.company, styles.link] }, item.company) : h(Text, { style: styles.company }, item.company),
-              h(Text, { style: styles.date }, dateRange(item.startDate, item.finishDate))
+              h(Text, { style: styles.date }, dateRange(item.startDate, item.finishDate, t))
             )
           : null,
         item.jobTitle ? h(Text, { style: styles.jobTitle }, item.jobTitle) : null,
@@ -192,7 +188,7 @@ const InfoSection = ({ section }) =>
     )
   );
 
-const Portfolio = ({ section }) => {
+const Portfolio = ({ section, t }) => {
   const slides = (section.sliderDetails?.slides || [])
     .map((s) => s.slideDetails)
     .filter(Boolean)
@@ -218,7 +214,7 @@ const Portfolio = ({ section }) => {
   return h(
     View,
     { style: styles.section },
-    h(Text, { style: styles.sectionTitle }, section.titleSection || "Portfolio"),
+    h(Text, { style: styles.sectionTitle }, section.titleSection || t.portfolio),
     h(
       View,
       { style: styles.columns },
@@ -228,43 +224,59 @@ const Portfolio = ({ section }) => {
   );
 };
 
-const header = resume.pageBuilder.find((s) => s._type === "header") || {};
-const contact = header.contactDetails || {};
-const skills = (header.icons || []).map((i) => iconLabel(i.iconDetails?.name || "")).filter(Boolean);
 const generated = new Date().toISOString().slice(0, 10);
 
-const doc = h(
-  Document,
-  { title: `${header.name} – ${header.jobDescHeader}`, author: header.name, subject: "Resume", creator: siteUrl },
-  h(
-    Page,
-    { size: "A4", style: styles.page },
-    h(Text, { style: styles.name }, header.name),
-    h(Text, { style: styles.role }, header.jobDescHeader),
-    h(
-      Text,
-      { style: styles.contact },
-      [contact.email, contact.phone, contact.address].filter(Boolean).join("   ·   "),
-      "   ·   ",
-      h(Link, { src: siteUrl, style: styles.link }, "martinez.place")
-    ),
-    skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, "Skills"), h(Text, { style: styles.skills }, skills.join("  ·  "))) : null,
-    ...resume.pageBuilder.map((section) =>
-      section._type === "infoSection"
-        ? h(InfoSection, { key: section._key, section })
-        : section._type === "sliderSection"
-          ? h(Portfolio, { key: section._key, section })
-          : null
-    ),
-    h(
-      View,
-      { style: styles.footer, fixed: true },
-      h(Text, null, `${header.name} · ${siteUrl} · generated ${generated}`),
-      h(Text, { render: ({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}` })
-    )
-  )
-);
+const buildPdf = async (locale) => {
+  const t = pdfMessages[locale];
+  const dataFile = resolve(root, resumeDataFile(locale));
+  const outFile = resolve(root, "public", localeFile("resume", "pdf", locale));
+  const pageUrl = `${siteUrl}${localePath(locale)}`;
+  if (!existsSync(dataFile)) {
+    console.error(`[build-pdf] ${dataFile} is missing; run fetch-resume first`);
+    process.exit(1);
+  }
+  const resume = JSON.parse(readFileSync(dataFile, "utf8"));
+  const header = resume.pageBuilder.find((s) => s._type === "header") || {};
+  const contact = header.contactDetails || {};
+  const skills = (header.icons || []).map((i) => iconLabel(i.iconDetails?.name || "")).filter(Boolean);
 
-mkdirSync(dirname(outFile), { recursive: true });
-await renderToFile(doc, outFile);
-console.log(`[build-pdf] wrote ${outFile} (${family})`);
+  const doc = h(
+    Document,
+    { title: `${header.name} – ${header.jobDescHeader}`, author: header.name, subject: t.subject, creator: siteUrl, language: locale },
+    h(
+      Page,
+      { size: "A4", style: styles.page },
+      h(Text, { style: styles.name }, header.name),
+      h(Text, { style: styles.role }, header.jobDescHeader),
+      h(
+        Text,
+        { style: styles.contact },
+        [contact.email, contact.phone, contact.address].filter(Boolean).join("   ·   "),
+        "   ·   ",
+        h(Link, { src: pageUrl, style: styles.link }, "martinez.place")
+      ),
+      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, t.skills), h(Text, { style: styles.skills }, skills.join("  ·  "))) : null,
+      ...resume.pageBuilder.map((section) =>
+        section._type === "infoSection"
+          ? h(InfoSection, { key: section._key, section, t })
+          : section._type === "sliderSection"
+            ? h(Portfolio, { key: section._key, section, t })
+            : null
+      ),
+      h(
+        View,
+        { style: styles.footer, fixed: true },
+        h(Text, null, `${header.name} · ${siteUrl} · ${t.generated} ${generated}`),
+        h(Text, { render: ({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}` })
+      )
+    )
+  );
+
+  mkdirSync(dirname(outFile), { recursive: true });
+  await renderToFile(doc, outFile);
+  console.log(`[build-pdf] wrote ${outFile} (${family})`);
+};
+
+for (const locale of localesFromArgv(process.argv)) {
+  await buildPdf(locale);
+}

@@ -3,7 +3,7 @@ module.exports = {
   ci: {
     collect: {
       staticDistDir: "./dist",
-      url: ["http://localhost/index.html"],
+      url: ["http://localhost/index.html", "http://localhost/es/index.html"],
       numberOfRuns: 3,
       settings: {
         // Mobile emulation with simulated throttling is Lighthouse's default

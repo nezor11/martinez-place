@@ -23,6 +23,15 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
+test("the Spanish page hydrates without errors", async ({ page }) => {
+  const errors = collectErrors(page, ignore);
+  await page.goto("/es/");
+  await page.waitForLoadState("networkidle");
+  await page.waitForTimeout(500);
+  await expect(page.locator("button.button-light")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test("theme toggle switches and persists the preference", async ({ page }) => {
   await page.goto("/");
   await page.locator("button.button-light").click();

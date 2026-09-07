@@ -3,10 +3,33 @@ import react from "@vitejs/plugin-react";
 import path from "node:path";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import {
+  defaultLocale,
+  localeDist,
+  localePath,
+  locales,
+  resumeDataFile,
+} from "./scripts/locales.mjs";
+
+// The client is built once per language (`yarn build:client`), each bundle
+// carrying only its own resume data: SITE_LOCALE picks the data file, the
+// output directory and the base path. The default language stays at the
+// root; the others live under /<locale>/ and reuse the root's public files.
+const locale = process.env.SITE_LOCALE ?? defaultLocale;
+if (!locales.includes(locale)) {
+  throw new Error(
+    `SITE_LOCALE must be one of ${locales.join(", ")}, got "${locale}"`
+  );
+}
+const isDefaultLocale = locale === defaultLocale;
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  publicDir: "public",
+  base: localePath(locale),
+  publicDir: isDefaultLocale ? "public" : false,
+  define: {
+    __SITE_LOCALE__: JSON.stringify(locale),
+  },
   json: {
     // resume.json is large; JSON.parse is faster than an object literal
     stringify: true,
@@ -94,10 +117,15 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@resume-data": path.resolve(
+        import.meta.dirname,
+        resumeDataFile(locale)
+      ),
       "@": path.resolve(import.meta.dirname, "src"),
     },
   },
   build: {
+    outDir: localeDist(locale),
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {

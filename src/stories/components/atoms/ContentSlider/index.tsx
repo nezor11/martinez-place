@@ -7,6 +7,7 @@ import { VideoPlayer } from "@/stories/components/atoms/VideoPlayer";
 import type { IconData } from "@/stories/components/molecules/CardSlide";
 import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
+import { useLocale, useMessages, workDoneLabel } from "@/i18n";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -28,38 +29,6 @@ interface ContentSliderProps {
   backgroundColor?: string;
 }
 
-/** Human-readable labels for the workDone keys stored in Sanity. */
-const nameMapping: { [key: string]: string } = {
-  front_end: "Frontend Development",
-  front_end_frameworks: "Frontend Frameworks",
-  back_end: "Backend Development",
-  back_end_frameworks: "Backend Frameworks",
-  full_stack: "Full Stack Development",
-  databases: "Databases",
-  cms: "CMS",
-  ecommerce: "E-commerce",
-  mobile_app: "Mobile App Development",
-  game_dev: "Game Development",
-  machine_learning: "Machine Learning",
-  data_science: "Data Science",
-  artificial_intelligence: "Artificial Intelligence",
-  cloud_computing: "Cloud Computing",
-  dev_ops: "DevOps",
-  blockchain: "Blockchain",
-  iot: "Internet of Things",
-  cybersecurity: "Cybersecurity",
-  servers_hosting: "Servers & Hosting",
-  testing_debugging: "Debugging",
-  version_control: "Version Control",
-  maintenance_updates: "Maintenance",
-  performance_optimization: "Performance",
-  responsive_design: "Responsive Design",
-  ux_ui_design: "UX/UI Consultancy",
-  seo: "SEO Support",
-  analytics_metrics: "Metrics",
-  security: "Security",
-};
-
 export const ContentSlider: FC<ContentSliderProps> = ({
   title,
   company = "Nezor Houze",
@@ -77,13 +46,14 @@ export const ContentSlider: FC<ContentSliderProps> = ({
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const [, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const locale = useLocale();
+  const t = useMessages();
 
   const formatCompanyName = (name: string) => name.replace(/_/g, " ");
 
-
   const mappedWorkDone = useMemo(
-    () => workDone.map((item) => nameMapping[item] || item),
-    [workDone]
+    () => workDone.map((item) => workDoneLabel(locale, item)),
+    [workDone, locale]
   );
 
   useEffect(() => {
@@ -145,7 +115,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                   <BodyCopy
                     tag="span"
                     mods="dark:text-white"
-                    text="More info at: "
+                    text={t.moreInfoAt}
                   />
                   <Link
                     href={link.href}
@@ -159,8 +129,8 @@ export const ContentSlider: FC<ContentSliderProps> = ({
             {workType && (
               <BodyCopy
                 tag="div"
-                text={`${workType} - Project`}
-                mods="col-span-full capitalize text-worktype dark:text-white mt-4"
+                text={t.project(workType)}
+                mods="col-span-full text-worktype dark:text-white mt-4"
                 weight="bold"
                 align="right"
               />
@@ -249,9 +219,9 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 <a
                   key={nanoid()}
                   href={`#slide-${index + 1}`}
-                  aria-label={`Slide ${index + 1}`}
+                  aria-label={t.slide(index + 1)}
                 >
-                  <span className="sr-only">{`Slide ${index + 1}`}</span>
+                  <span className="sr-only">{t.slide(index + 1)}</span>
                 </a>
               ))}
             </nav>

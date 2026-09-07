@@ -8,6 +8,7 @@
  * <ButtonClose onClick={handleClose} />
  */
 
+import { useMessages } from "@/i18n";
 import type { FC } from "react";
 
 interface ButtonCloseProps {
@@ -15,11 +16,12 @@ interface ButtonCloseProps {
 }
 
 const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): JSX.Element => {
+  const t = useMessages();
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Close"
+      aria-label={t.close}
       className="absolute top-2 right-2 bg-white text-gray-500 dark:text-white hover:text-gray-700 z-50 dark:bg-transparent rounded-sm"
     >
       <svg
@@ -29,7 +31,7 @@ const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): JSX.Element => {
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <title>Close</title>
+        <title>{t.close}</title>
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

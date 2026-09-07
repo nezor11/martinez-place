@@ -25,6 +25,7 @@ import blocksToHtml from "@sanity/block-content-to-html";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import type { FC } from "react";
+import { type Messages, useMessages } from "@/i18n";
 
 interface Props {
   section: Section;
@@ -41,7 +42,7 @@ const urlFor = (source: SanityImageSource) => {
   return builder.image(source);
 };
 
-export const mapInfoSection = (section: Section) => {
+export const mapInfoSection = (section: Section, t: Messages) => {
   const { titleSection, subtitleSection, sections, iconTitleDetails } = section;
 
   const icons: IconGalleryProps | undefined = iconTitleDetails
@@ -80,7 +81,7 @@ export const mapInfoSection = (section: Section) => {
       const startYear = startDateObj.getUTCFullYear();
       const finishYear = finishDateObj ? finishDateObj.getUTCFullYear() : null;
 
-      let dateText = `${startYear} > Current`;
+      let dateText = `${startYear} > ${t.current}`;
 
       if (finishDateObj) {
         const finishYear = finishDateObj.getUTCFullYear();
@@ -115,7 +116,7 @@ export const mapInfoSection = (section: Section) => {
           jobTitle,
           jobDesc: consolidatedJobDescHtml,
           imageDetails: imageUrl
-            ? { src: imageUrl, alt: "Image Alt Text" }
+            ? { src: imageUrl, alt: company ?? "" }
             : null,
         },
       };
@@ -124,10 +125,11 @@ export const mapInfoSection = (section: Section) => {
 };
 
 const ResumeSection: FC<Props> = ({ section }) => {
+  const t = useMessages();
   return (
     <Resume
       key={section._key}
-      resumeItems={[{ ...mapInfoSection(section), type: "infoSection" }]}
+      resumeItems={[{ ...mapInfoSection(section, t), type: "infoSection" }]}
     />
   );
 };
