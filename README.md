@@ -44,8 +44,9 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | --- | --- |
 | `yarn fetch-resume` | Pull the published resume from Sanity into `src/data/resume.json` (`--strict` fails instead of keeping a stale file) |
 | `yarn build:pdf` | Build `public/resume.pdf` from the same data with @react-pdf/renderer |
-| `yarn dev` | Fetch the resume, build the PDF, then start the Vite dev server |
-| `yarn build` | Fetch the resume (strict), build the PDF, the client and server bundles, prerender `dist/index.html` |
+| `yarn build:og` | Build `public/og.png` (1200×630 social card) from the same data with satori + resvg |
+| `yarn dev` | Fetch the resume, build the PDF and the social card, then start the Vite dev server |
+| `yarn build` | Fetch the resume (strict), build the PDF and the social card, the client and server bundles, prerender `dist/index.html` |
 | `yarn build:client` / `yarn build:ssr` / `yarn prerender` | The three build steps, individually |
 | `yarn preview` | Serve the production build locally |
 | `yarn storybook` | Storybook dev server |
@@ -59,7 +60,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 ```
 .
 ├── .storybook/          Storybook config, theme and viewports
-├── scripts/             fetch-resume.mjs (Sanity → JSON), build-pdf.mjs (PDF), prerender.mjs (HTML), fonts/ (TTF for the PDF)
+├── scripts/             fetch-resume.mjs (Sanity → JSON), build-pdf.mjs (PDF), build-og.mjs (social card), prerender.mjs (HTML), fonts/ (TTF)
 ├── public/              Static assets served as-is (fonts, favicons)
 ├── src/
 │   ├── App.tsx          Renders the resume sections
@@ -89,6 +90,10 @@ Dependabot opens a grouped PR for minor and patch updates every Monday and one P
 ## PDF resume
 
 `scripts/build-pdf.mjs` renders `public/resume.pdf` from `src/data/resume.json` with [@react-pdf/renderer](https://react-pdf.org/), so the download link in the footer (`/resume.pdf`) always matches the published content. It embeds the Raleway subsets converted to TTF in `scripts/fonts/` (react-pdf does not render WOFF2 glyphs).
+
+## Social card
+
+`scripts/build-og.mjs` renders `public/og.png` (1200×630) with [satori](https://github.com/vercel/satori) and [resvg](https://github.com/RazrFalcon/resvg): name, role, city, skills and the profile photo from Sanity, in the site's Raleway. `index.html` points `og:image` and `twitter:image` at it.
 
 ## Content model
 
