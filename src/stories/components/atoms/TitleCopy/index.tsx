@@ -28,9 +28,9 @@ const textStyles = cva("text", {
   },
 });
 
-type AllowedTagValues = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+type AllowedTagValues = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 interface TitleCopyProps {
-  /** The as property is optional and can be either an AllowedTagValues ("h1", "h2", "h3", "h4", "h5", "h6") or a React ComponentType<HTMLAttributes<HTMLElement>>.  */
+  /** The as property is optional and can be either an AllowedTagValues ("h1", "h2", "h3", "h4", "h5", "h6", "p") or a React ComponentType<HTMLAttributes<HTMLElement>>.  */
   as?: AllowedTagValues | ComponentType<HTMLAttributes<HTMLElement>>;
   /** The text property is optional and can be a string.  */
   text?: string;

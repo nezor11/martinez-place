@@ -58,12 +58,13 @@ const buttonStyles = cva(
         variant: "outline",
         colorscheme: "primary",
         className:
-          "text-primary-600 border-primary-500 bg-transparent hover:bg-primary-100",
+          "text-primary-600 dark:text-primary-400 border-primary-500 bg-transparent hover:bg-primary-100 dark:hover:bg-primary-950",
       },
       {
         variant: "ghost",
         colorscheme: "primary",
-        className: "text-primary-600 bg-transparent hover:bg-primary-100",
+        className:
+          "text-primary-600 dark:text-primary-400 bg-transparent hover:bg-primary-100 dark:hover:bg-primary-950",
       },
     ],
     defaultVariants: {
@@ -75,6 +76,8 @@ const buttonStyles = cva(
 );
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
+
+export { buttonStyles };
 
 export const ButtonTailwind = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, size, colorscheme, className, ...props }, ref) => {

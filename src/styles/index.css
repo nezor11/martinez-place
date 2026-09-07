@@ -319,11 +319,11 @@ html.dark {
       color: var(--textColor);
 
       &:hover {
-        @apply text-primary-600;
+        @apply text-primary-400;
       }
 
       &:visited {
-        @apply text-primary-600;
+        @apply text-primary-400;
       }
     }
   }

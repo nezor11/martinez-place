@@ -112,7 +112,7 @@ export const BodyCopy: FC<BodyCopyProps> = ({
 
   const classes = cn(
     mods,
-    "[&_a]:text-primary-500",
+    "[&_a]:text-primary-600 dark:[&_a]:text-primary-400",
     "[&_a]:underline",
     textStyles({
       size,

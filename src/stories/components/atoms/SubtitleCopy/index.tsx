@@ -18,10 +18,10 @@
 import type { CSSProperties, FC } from "react";
 import "./index.css";
 
-type AllowedTagValues = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+type AllowedTagValues = "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p";
 
 interface SubtitleCopyProps {
-  /** The subtitle property is optional and can be an AllowedTagValues ("h1", "h2", "h3", "h4", "h5", "h6").  */
+  /** The subtitle property is optional and can be an AllowedTagValues ("h1", "h2", "h3", "h4", "h5", "h6", "p").  */
   subtitle: AllowedTagValues;
   /** The text property is optional and can be a string.  */
   text: string;

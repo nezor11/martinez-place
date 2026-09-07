@@ -122,7 +122,13 @@ export const Popup: FC<PopupProps> = ({
 
 
   return (
-    <div className="min-h-screen min-w-screen popup-content">
+    <div
+      className="min-h-screen min-w-screen popup-content"
+      // biome-ignore lint/a11y/useSemanticElements: full-screen overlay styled as a div; a native <dialog> would need showModal() and user-agent style resets
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+    >
       <div className="fixed top-0 left-0 right-0 bottom-0 lg:flex lg:items-center lg:justify-center modal-wrapper z-50 bg-white dark:bg-slate-950">
         <ButtonCloseComponent onClick={handleClose} />
         <ContentSlider
