@@ -81,6 +81,10 @@ Everything rendered on the first pass must be identical on the build server and 
 
 Tailwind 4 runs through `@tailwindcss/vite`: `src/styles/index.css` is the entry (it imports Tailwind and the legacy `tailwind.config.js` via `@config`), and component stylesheets that use `@apply` start with `@reference` to it.
 
+## Dependency updates
+
+Dependabot opens a grouped PR for minor and patch updates every Monday and one PR per major. CI runs lint, typecheck, build, the Playwright suite and Lighthouse on each of them, so a green PR is safe to merge.
+
 ## Content model
 
 The build queries the latest published `resume` document. Publishing in Sanity does not update the live site by itself: a Sanity webhook must call the Vercel deploy hook of the `martinez-place` project so it rebuilds with fresh content.
