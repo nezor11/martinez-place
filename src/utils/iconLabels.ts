@@ -4,6 +4,7 @@
  * component name without the "Icon" suffix.
  */
 const labels: Record<string, string> = {
+  AndroidIcon: "Android",
   BehanceIcon: "Behance",
   CommercetoolsIcon: "commercetools",
   CsharpIcon: "C#",
@@ -15,6 +16,7 @@ const labels: Record<string, string> = {
   HTML5Icon: "HTML5",
   IllustratorIcon: "Illustrator",
   JavaScriptIcon: "JavaScript",
+  JetpackComposeIcon: "Jetpack Compose",
   JQueryIcon: "jQuery",
   KotlinIcon: "Kotlin",
   LaravelIcon: "Laravel",
