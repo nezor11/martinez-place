@@ -9,6 +9,9 @@
  *   node scripts/fetch-resume.mjs --strict   fail when the request fails
  *                                            (production builds)
  *   node scripts/fetch-resume.mjs --locale es   one language only
+ *   RESUME_ID=<id> node scripts/fetch-resume.mjs   build from another resume
+ *                                            document (e.g. a new edition
+ *                                            before switching activeResumeId)
  *
  * Translatable fields are localised objects in Sanity ({ en, es }); the query
  * resolves each one to a string for the requested language, falling back to
@@ -27,6 +30,14 @@ const projectId = "6zr8au58";
 const dataset = "production";
 const apiVersion = "2022-03-07";
 
+/**
+ * The published resume document the site is built from. Pinned by id so a
+ * new edition can be written and published in the Studio without going live
+ * until this constant changes. RESUME_ID overrides it for one build.
+ */
+const activeResumeId = "5cd8ab7f-d791-49ea-a436-5c42af02ad8d"; // Resume Jorge Martínez 2026
+const resumeId = process.env.RESUME_ID ?? activeResumeId;
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 /** GROQ expression that picks a localised field's value for `locale`. */
@@ -40,7 +51,7 @@ const buildQuery = (locale) => {
   // exact shape they had before localisation (no `name: null` on sliders).
   const l = (field, name = field) =>
     `defined(${field}) => { "${name}": ${localised(locale, field)} }`;
-  return `*[_type == "resume" && !(_id in path('drafts.**'))] | order(_updatedAt desc)[0]{
+  return `*[_type == "resume" && _id == $id][0]{
   _id,
   ${l("title")},
   _updatedAt,
@@ -134,6 +145,7 @@ const fetchLocale = async (locale) => {
     `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}`
   );
   url.searchParams.set("query", buildQuery(locale));
+  url.searchParams.set("$id", JSON.stringify(resumeId));
   url.searchParams.set("perspective", "published");
 
   try {
@@ -143,12 +155,12 @@ const fetchLocale = async (locale) => {
     }
     const { result } = await response.json();
     if (!result || !Array.isArray(result.pageBuilder)) {
-      throw new Error("Sanity returned no published resume");
+      throw new Error(`Sanity has no published resume with id ${resumeId}`);
     }
     mkdirSync(dirname(outFile), { recursive: true });
     writeFileSync(outFile, `${JSON.stringify(result, null, 2)}\n`);
     console.log(
-      `[fetch-resume] wrote ${outFile} (${result.pageBuilder.length} sections, updated ${result._updatedAt})`
+      `[fetch-resume] wrote ${outFile} ("${result.title}", ${result.pageBuilder.length} sections, updated ${result._updatedAt})`
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
