@@ -107,122 +107,19 @@ html.dark {
   }
 }
 
+/*
+ * Only the faces the site actually renders are shipped: 400, 400 italic, 500
+ * and 700 (the 700 slot deliberately uses the ExtraBold cut, which is what the
+ * old stylesheet resolved to as well). Every supported browser understands
+ * woff2, so the woff fallbacks are gone too.
+ */
 @font-face {
   font-family: 'Raleway';
   src:
-    local('Raleway ExtraLight Italic'),
-    local('Raleway-ExtraLightItalic'),
-    url('/font/hinted-subset-Raleway-ExtraLightItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-ExtraLightItalic.woff') format('woff');
-  font-weight: 200;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway ExtraLight'),
-    local('Raleway-ExtraLight'),
-    url('/font/hinted-subset-Raleway-ExtraLight.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-ExtraLight.woff') format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Black Italic'),
-    local('Raleway-BlackItalic'),
-    url('/font/hinted-subset-Raleway-BlackItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-BlackItalic.woff') format('woff');
-  font-weight: 900;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Light'),
-    local('Raleway-Light'),
-    url('/font/hinted-subset-Raleway-Light.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Light.woff') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Bold'),
-    local('Raleway-Bold'),
-    url('/font/hinted-subset-Raleway-Bold.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Bold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway ExtraBold Italic'),
-    local('Raleway-ExtraBoldItalic'),
-    url('/font/hinted-subset-Raleway-ExtraBoldItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-ExtraBoldItalic.woff') format('woff');
-  font-weight: bold;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Light Italic'),
-    local('Raleway-LightItalic'),
-    url('/font/hinted-subset-Raleway-LightItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-LightItalic.woff') format('woff');
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Bold Italic'),
-    local('Raleway-BoldItalic'),
-    url('/font/hinted-subset-Raleway-BoldItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-BoldItalic.woff') format('woff');
-  font-weight: bold;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway ExtraBold'),
-    local('Raleway-ExtraBold'),
-    url('/font/hinted-subset-Raleway-ExtraBold.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-ExtraBold.woff') format('woff');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Medium'),
-    local('Raleway-Medium'),
-    url('/font/hinted-subset-Raleway-Medium.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Medium.woff') format('woff');
-  font-weight: 500;
+    local('Raleway'),
+    local('Raleway-Regular'),
+    url('/font/hinted-subset-Raleway-Regular.woff2') format('woff2');
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -232,9 +129,8 @@ html.dark {
   src:
     local('Raleway Italic'),
     local('Raleway-Italic'),
-    url('/font/hinted-subset-Raleway-Italic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Italic.woff') format('woff');
-  font-weight: normal;
+    url('/font/hinted-subset-Raleway-Italic.woff2') format('woff2');
+  font-weight: 400;
   font-style: italic;
   font-display: swap;
 }
@@ -242,35 +138,10 @@ html.dark {
 @font-face {
   font-family: 'Raleway';
   src:
-    local('Raleway Black'),
-    local('Raleway-Black'),
-    url('/font/hinted-subset-Raleway-Black.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Black.woff') format('woff');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Medium Italic'),
-    local('Raleway-MediumItalic'),
-    url('/font/hinted-subset-Raleway-MediumItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-MediumItalic.woff') format('woff');
+    local('Raleway Medium'),
+    local('Raleway-Medium'),
+    url('/font/hinted-subset-Raleway-Medium.woff2') format('woff2');
   font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway Thin'),
-    local('Raleway-Thin'),
-    url('/font/hinted-subset-Raleway-Thin.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Thin.woff') format('woff');
-  font-weight: 100;
   font-style: normal;
   font-display: swap;
 }
@@ -278,23 +149,10 @@ html.dark {
 @font-face {
   font-family: 'Raleway';
   src:
-    local('Raleway Thin Italic'),
-    local('Raleway-ThinItalic'),
-    url('/font/hinted-subset-Raleway-ThinItalic.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-ThinItalic.woff') format('woff');
-  font-weight: 100;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src:
-    local('Raleway'),
-    local('Raleway-Regular'),
-    url('/font/hinted-subset-Raleway-Regular.woff2') format('woff2'),
-    url('/font/hinted-subset-Raleway-Regular.woff') format('woff');
-  font-weight: normal;
+    local('Raleway ExtraBold'),
+    local('Raleway-ExtraBold'),
+    url('/font/hinted-subset-Raleway-ExtraBold.woff2') format('woff2');
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
