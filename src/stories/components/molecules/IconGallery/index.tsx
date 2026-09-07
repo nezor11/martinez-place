@@ -17,7 +17,8 @@ export interface IconGalleryProps {
 // synchronously and rendered at prerender time.
 const iconModules = import.meta.glob("./Icons/*.tsx", { eager: true });
 
-const availableIcons = Object.entries(iconModules).reduce<
+/** Every icon component by name (file name without extension). */
+export const availableIcons = Object.entries(iconModules).reduce<
   Record<string, FC<IconProps>>
 >((acc, [path, module]) => {
   const iconName = path.split("/").pop()?.split(".")[0] || "";

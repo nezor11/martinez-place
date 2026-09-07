@@ -1,0 +1,64 @@
+@reference "../../../../styles/index.css";
+
+.portfolio-filter {
+  @apply mt-4 lg:mt-0;
+}
+
+.portfolio-filter__row {
+  @apply flex items-start gap-2;
+}
+
+/* One scrolling row on small screens, wrapping from lg up. */
+.portfolio-filter__techs {
+  @apply flex flex-nowrap gap-1 overflow-x-auto pb-1 lg:flex-wrap lg:overflow-visible;
+  scrollbar-width: thin;
+}
+
+.portfolio-filter__tech,
+.portfolio-filter__search-toggle {
+  @apply inline-flex min-h-6 min-w-6 cursor-pointer items-center rounded-sm p-0.5 text-xl leading-none;
+  transition:
+    opacity 0.3s,
+    filter 0.3s;
+}
+
+.portfolio-filter__tech--active {
+  @apply ring-2 ring-primary-500 ring-offset-1;
+}
+
+.portfolio-filter__tech--dimmed {
+  @apply opacity-40 grayscale;
+}
+
+.portfolio-filter__count {
+  @apply ml-0.5 text-[10px] tabular-nums text-gray-600 dark:text-gray-400;
+}
+
+.portfolio-filter__search-toggle {
+  @apply shrink-0 text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400;
+}
+
+.portfolio-filter__search-toggle--open {
+  @apply text-primary-600 dark:text-primary-400;
+}
+
+.portfolio-filter__search {
+  @apply relative mt-2 w-full lg:w-72;
+}
+
+.portfolio-filter__input {
+  @apply w-full rounded-sm border border-gray-300 bg-transparent px-3 py-1.5 pr-8 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:text-white dark:placeholder:text-gray-400;
+}
+
+/* The search box has its own clear button; hide the browser's. */
+.portfolio-filter__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.portfolio-filter__clear {
+  @apply absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer rounded-sm px-1.5 text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400;
+}
+
+.portfolio-filter__status {
+  @apply mt-1 min-h-4 text-xs text-gray-600 dark:text-gray-400;
+}
