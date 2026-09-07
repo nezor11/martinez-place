@@ -6,11 +6,6 @@
   }
 }
 
-/* The search box has its own clear button; hide the browser's. */
-.portfolio__search input[type="search"]::-webkit-search-cancel-button {
-  appearance: none;
-}
-
 .portfolio__slider .swiper-slide {
   width: auto;
   @apply mt-8;

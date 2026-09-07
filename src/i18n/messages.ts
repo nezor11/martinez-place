@@ -85,6 +85,10 @@ export interface Messages {
   filterByTech: (label: string) => string;
   /** "3 of 34 projects" while a filter is active. */
   resultsCount: (matching: number, total: number) => string;
+  /** Accessible name of a technology button in the portfolio filter bar. */
+  filterByTechCount: (label: string, count: number) => string;
+  technologies: string;
+  hideSearch: string;
   /** "fresh - Project", "Proyecto nuevo"… from the Sanity slide type. */
   project: (workType: string) => string;
   workDone: Record<WorkDoneKey, string>;
@@ -122,6 +126,10 @@ export const messages: Record<Locale, Messages> = {
     clearSearch: "Clear search",
     filterByTech: (label) => `Filter by ${label}`,
     resultsCount: (matching, total) => `${matching} of ${total} projects`,
+    filterByTechCount: (label, count) =>
+      `Filter by ${label}, ${count} ${count === 1 ? "project" : "projects"}`,
+    technologies: "Technologies",
+    hideSearch: "Hide search",
     project: (workType) =>
       `${{ fresh: "New", maintenance: "Maintenance" }[workType] ?? workType} - Project`,
     workDone: {
@@ -178,6 +186,10 @@ export const messages: Record<Locale, Messages> = {
     clearSearch: "Borrar búsqueda",
     filterByTech: (label) => `Filtrar por ${label}`,
     resultsCount: (matching, total) => `${matching} de ${total} proyectos`,
+    filterByTechCount: (label, count) =>
+      `Filtrar por ${label}, ${count} ${count === 1 ? "proyecto" : "proyectos"}`,
+    technologies: "Tecnologías",
+    hideSearch: "Ocultar búsqueda",
     project: (workType) =>
       `Proyecto ${{ fresh: "nuevo", maintenance: "de mantenimiento" }[workType] ?? workType}`,
     workDone: {

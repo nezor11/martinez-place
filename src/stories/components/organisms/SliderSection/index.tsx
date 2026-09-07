@@ -30,6 +30,10 @@ import { useLocale, useMessages } from "@/i18n";
 import type { LinkProps } from "@/stories/components/atoms/Link";
 import { CardSlide } from "@/stories/components/molecules/CardSlide";
 import type { IconGalleryProps } from "@/stories/components/molecules/IconGallery";
+import {
+  PortfolioFilter,
+  type TechCount,
+} from "@/stories/components/molecules/PortfolioFilter";
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
 import { cn } from "@/utils";
 import { iconLabel } from "@/utils/iconLabels";
@@ -39,7 +43,7 @@ import {
   slideSearchTokens,
 } from "@/utils/portfolioSearch";
 import type { FC } from "react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -82,9 +86,9 @@ export const SliderSection: FC<SliderSectionProps> = ({
 }) => {
   const locale = useLocale();
   const t = useMessages();
-  const inputId = useId();
   const swiperRef = useRef<SwiperClass | null>(null);
   const [query, setQuery] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
 
   // Text search and the tech icons share one filter: an icon click puts the
   // technology's label in the box (or clears it when already there).
@@ -108,6 +112,30 @@ export const SliderSection: FC<SliderSectionProps> = ({
     }
     return undefined;
   }, [query, slidesData]);
+
+  // Technologies used by the projects, most used first; the ones no
+  // matching project uses are dimmed while a filter is active.
+  const techs = useMemo<TechCount[]>(() => {
+    const counts = new Map<string, number>();
+    const inMatches = new Set<string>();
+    slidesData.forEach((slide, index) => {
+      for (const { name } of slide.iconsData ?? []) {
+        counts.set(name, (counts.get(name) ?? 0) + 1);
+        if (matches[index]) inMatches.add(name);
+      }
+    });
+    return [...counts]
+      .map(([name, count]) => ({
+        name,
+        count,
+        dimmed: Boolean(query) && !inMatches.has(name),
+      }))
+      .sort(
+        (a, b) =>
+          b.count - a.count ||
+          iconLabel(a.name).localeCompare(iconLabel(b.name))
+      );
+  }, [slidesData, matches, query]);
 
   const handleIconClick = (name: string) => {
     const label = iconLabel(name);
@@ -155,37 +183,18 @@ export const SliderSection: FC<SliderSectionProps> = ({
             />
           </div>
         )}
-        <div className="portfolio__search col-span-5 lg:col-span-3 flex flex-col items-start lg:items-end gap-1">
-          <div className="relative w-full lg:w-72">
-            <label htmlFor={inputId} className="sr-only">
-              {t.searchProjects}
-            </label>
-            <input
-              id={inputId}
-              type="search"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              placeholder={t.searchProjects}
-              autoComplete="off"
-              className="w-full rounded-sm border border-gray-300 dark:border-gray-600 bg-transparent px-3 py-1.5 pr-8 text-sm dark:text-white placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500"
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                aria-label={t.clearSearch}
-                className="absolute right-1 top-1/2 -translate-y-1/2 cursor-pointer rounded-sm px-1.5 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
-              >
-                ×
-              </button>
-            )}
-          </div>
-          <p
-            className="text-xs text-gray-600 dark:text-gray-400 min-h-4"
-            aria-live="polite"
-          >
-            {query ? t.resultsCount(matchCount, slidesData.length) : ""}
-          </p>
+        <div className="col-span-5 lg:col-span-3">
+          <PortfolioFilter
+            techs={techs}
+            activeIcon={activeIcon}
+            onIconClick={handleIconClick}
+            query={query}
+            onQueryChange={setQuery}
+            searchOpen={searchOpen}
+            onSearchToggle={setSearchOpen}
+            matchCount={matchCount}
+            total={slidesData.length}
+          />
         </div>
       </div>
       <div className="portfolio__slider">

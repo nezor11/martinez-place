@@ -73,10 +73,10 @@ body.modal-open {
       @apply mb-1;
     }
 
-    /* Buttons carry the spacing so eight 24px targets fit in one row. */
+    /* 28px targets: non-active slides are scaled to 0.92, and the touch
+       target audit wants at least 24px after scaling. Eight fit in a row. */
     .icon-gallery__button {
-      @apply mx-0.5;
-      @apply mb-1;
+      @apply min-h-7 min-w-7 mx-0 mb-1;
 
       svg {
         @apply m-0;
