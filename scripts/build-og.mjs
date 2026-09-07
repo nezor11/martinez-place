@@ -53,7 +53,7 @@ const role = header.jobDescHeader ?? "";
 const city = (header.contactDetails?.address ?? "").replace(/^\d+\s*/, "") || "Barcelona";
 const skills = (header.icons ?? [])
   .map((i) => i.iconDetails?.name ?? "")
-  .map((n) => ({ HTML5Icon: "HTML5", CSS3Icon: "CSS3", JavaScriptIcon: "JavaScript", TypeScriptIcon: "TypeScript", NodeJSIcon: "Node.js", WebPackIcon: "Webpack", NextJSIcon: "Next.js", VueIcon: "Vue", ViteIcon: "Vite", NuxtIcon: "Nuxt", ReactIcon: "React", WordpressIcon: "WordPress", PhpIcon: "PHP", GitBranchIcon: "Git" })[n] ?? n.replace(/Icon$/, ""))
+  .map((n) => ({ HTML5Icon: "HTML5", CSS3Icon: "CSS3", JavaScriptIcon: "JavaScript", TypeScriptIcon: "TypeScript", NodeJSIcon: "Node.js", WebPackIcon: "Webpack", NextJSIcon: "Next.js", VueIcon: "Vue", ViteIcon: "Vite", NuxtIcon: "Nuxt", ReactIcon: "React", WordpressIcon: "WordPress", PhpIcon: "PHP", GitBranchIcon: "Git", CommercetoolsIcon: "commercetools", KotlinIcon: "Kotlin", ReactNativeIcon: "React Native" })[n] ?? n.replace(/Icon$/, ""))
   .filter(Boolean)
   .slice(0, 8);
 const photo = await loadPhoto(header);

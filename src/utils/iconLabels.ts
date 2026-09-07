@@ -5,6 +5,7 @@
  */
 const labels: Record<string, string> = {
   BehanceIcon: "Behance",
+  CommercetoolsIcon: "commercetools",
   CsharpIcon: "C#",
   CSS3Icon: "CSS3",
   FractalIcon: "Fractal",
@@ -15,6 +16,7 @@ const labels: Record<string, string> = {
   IllustratorIcon: "Illustrator",
   JavaScriptIcon: "JavaScript",
   JQueryIcon: "jQuery",
+  KotlinIcon: "Kotlin",
   LaravelIcon: "Laravel",
   LitmusIcon: "Litmus",
   MailchimpIcon: "Mailchimp",
@@ -27,6 +29,7 @@ const labels: Record<string, string> = {
   PhpIcon: "PHP",
   PrestashopIcon: "PrestaShop",
   ReactIcon: "React",
+  ReactNativeIcon: "React Native",
   SanityIcon: "Sanity",
   SitecoreIcon: "Sitecore",
   StorybookIcon: "Storybook",

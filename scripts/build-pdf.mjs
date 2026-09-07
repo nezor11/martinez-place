@@ -107,6 +107,9 @@ const iconLabel = (name) =>
     WordpressIcon: "WordPress",
     PhpIcon: "PHP",
     GitBranchIcon: "Git",
+    CommercetoolsIcon: "commercetools",
+    KotlinIcon: "Kotlin",
+    ReactNativeIcon: "React Native",
   })[name] || name.replace(/Icon$/, "");
 
 // --- styles ----------------------------------------------------------------
