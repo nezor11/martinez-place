@@ -1,9 +1,10 @@
 /**
- * Resume content, fetched from Sanity at build time by
- * scripts/fetch-resume.mjs and bundled with the site. Run
- * `yarn fetch-resume` to refresh it locally.
+ * The published resume in the language this bundle is built for. Vite maps
+ * `@resume-data` to src/data/resume.<locale>.json (see vite.config.js and
+ * SITE_LOCALE); scripts/fetch-resume.mjs writes those files. Run
+ * `yarn fetch-resume` to refresh them locally.
  */
 import type { Resume } from "@/utils/types/resume";
-import data from "./resume.json";
+import data from "@resume-data";
 
 export const resume = data as unknown as Resume;

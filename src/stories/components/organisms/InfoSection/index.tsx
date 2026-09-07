@@ -27,6 +27,7 @@ import {
   type InfoItemObject,
 } from "@/stories/components/molecules/InfoItem";
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
+import { useMessages } from "@/i18n";
 import { cn } from "@/utils";
 import { type ComponentPropsWithRef, forwardRef, useState } from "react";
 
@@ -58,6 +59,7 @@ export const InfoSection = forwardRef<HTMLElement, InfoSectionProps>(
 
     const initialItemsToShow = 2;
     const [itemsToShow, setItemsToShow] = useState(initialItemsToShow);
+    const t = useMessages();
 
     const handleLoadMore = () => {
       setItemsToShow(itemsToShow + initialItemsToShow);
@@ -96,7 +98,7 @@ export const InfoSection = forwardRef<HTMLElement, InfoSectionProps>(
                       variant="ghost"
                       className="w-32"
                     >
-                      Load More
+                      {t.loadMore}
                     </ButtonTailwind>
                   </div>
                 )}

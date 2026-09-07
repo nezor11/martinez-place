@@ -25,13 +25,17 @@ import { sanityImageUrl } from "@/utils/sanityImage";
 import type { Section } from "@/utils/types/section";
 import blocksToHtml from "@sanity/block-content-to-html";
 import type { FC } from "react";
+import { type Messages, useMessages } from "@/i18n";
 
 // Configuración del cliente de Sanity
 const projectId = "6zr8au58";
 const dataset = "production";
 
 // Mapea los datos de `slider` a la estructura `SliderSectionObject`
-const mapSliderSection = (slider: Section): SliderSectionObject => {
+const mapSliderSection = (
+  slider: Section,
+  t: Messages
+): SliderSectionObject => {
   const { titleSection, sliderDetails, iconTitleDetails } = slider;
 
   const icons = iconTitleDetails
@@ -95,8 +99,8 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
       })),
       link: {
         href: slide.slideDetails.infoUrl || "",
-        text: "More Info",
-        link_text: slide.slideDetails.linkText || "More Info",
+        text: t.moreInfo,
+        link_text: slide.slideDetails.linkText || t.moreInfo,
         rel: slide.slideDetails.rel || "noopener noreferrer",
       },
     };
@@ -111,7 +115,8 @@ const mapSliderSection = (slider: Section): SliderSectionObject => {
 };
 
 const ResumeSlider: FC<{ slider: Section }> = ({ slider }) => {
-  const formattedSliderData: SliderSectionObject = mapSliderSection(slider);
+  const t = useMessages();
+  const formattedSliderData: SliderSectionObject = mapSliderSection(slider, t);
 
   return <Resume resumeItems={[formattedSliderData]} />;
 };

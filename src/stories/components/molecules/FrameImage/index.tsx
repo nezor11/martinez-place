@@ -55,7 +55,7 @@ export const FrameImage: FC<FrameImageProps> = ({
       <LazyImage
         placeholderSrc={frameImage}
         src={frameImage}
-        alt="Frame Image"
+        alt=""
       />
       <img
         className="content-image"
