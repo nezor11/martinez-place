@@ -2735,12 +2735,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.3.0":
-  version: 18.3.5
-  resolution: "@types/react-dom@npm:18.3.5"
+"@types/react-dom@npm:^19.3.0":
+  version: 19.3.0
+  resolution: "@types/react-dom@npm:19.3.0"
   peerDependencies:
-    "@types/react": ^18.0.0
-  checksum: 10c0/b163d35a6b32a79f5782574a7aeb12a31a647e248792bf437e6d596e2676961c394c5e3c6e91d1ce44ae90441dbaf93158efb4f051c0d61e2612f1cb04ce4faa
+    "@types/react": ^19.3.0
+  checksum: 10c0/ce0066d28b62bc6afdd17ca84756b8fbe0f6ffc0c8b1e60739abc30e81510da2edbc1007e6ab3d974d30f5a8c25bb0f7de8d7ce09736c909fe84c0f9aed0b946
   languageName: node
   linkType: hard
 
@@ -6018,7 +6018,7 @@ __metadata:
     "@types/dompurify": "npm:^3.0.5"
     "@types/jsdom": "npm:^30"
     "@types/react": "npm:^18.3.1"
-    "@types/react-dom": "npm:^18.3.0"
+    "@types/react-dom": "npm:^19.3.0"
     "@types/react-syntax-highlighter": "npm:^15.5.11"
     "@vitejs/plugin-react": "npm:^6.1"
     class-variance-authority: "npm:^0.7.0"
@@ -6029,7 +6029,7 @@ __metadata:
     prettier: "npm:^3.9.6"
     prettier-plugin-tailwindcss: "npm:^0.8.1"
     react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
+    react-dom: "npm:^19.3.0"
     react-obfuscate: "npm:^3.6.9"
     react-player: "npm:^2.16.0"
     react-syntax-highlighter: "npm:^16.1.1"
