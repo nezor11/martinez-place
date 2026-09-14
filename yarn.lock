@@ -6044,7 +6044,7 @@ __metadata:
     tailwindcss: "npm:^4.3.3"
     typescript: "npm:^7"
     vite: "npm:^8"
-    vite-plugin-image-optimizer: "npm:^1.1.7"
+    vite-plugin-image-optimizer: "npm:^2.0.3"
     vite-tsconfig-paths: "npm:^6"
   languageName: unknown
   linkType: soft
@@ -6757,10 +6757,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pathe@npm:^1.1.2":
-  version: 1.1.2
-  resolution: "pathe@npm:1.1.2"
-  checksum: 10c0/64ee0a4e587fb0f208d9777a6c56e4f9050039268faaaaecd50e959ef01bf847b7872785c36483fa5cdcdbdfdb31fef2ff222684d4fc21c330ab60395c681897
+"pathe@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "pathe@npm:2.0.3"
+  checksum: 10c0/c118dc5a8b5c4166011b2b70608762e260085180bb9e33e80a50dcdb1e78c010b1624f4280c492c92b05fc276715a4c357d1f9edc570f8f1b3d90b6839ebaca1
   languageName: node
   linkType: hard
 
@@ -8571,15 +8571,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-image-optimizer@npm:^1.1.7":
-  version: 1.1.8
-  resolution: "vite-plugin-image-optimizer@npm:1.1.8"
+"vite-plugin-image-optimizer@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "vite-plugin-image-optimizer@npm:2.0.3"
   dependencies:
     ansi-colors: "npm:^4.1.3"
-    pathe: "npm:^1.1.2"
+    pathe: "npm:^2.0.3"
   peerDependencies:
-    vite: ">=3"
-  checksum: 10c0/1631e0a1604b42b12348b99ecf86565f06e3e3ccd2ce3be8c2b9ac85e3292c5ec6101130b4860424e06932c81c5b7fcc2540504d8b7bc73aa4e08e0eb5073247
+    sharp: ">=0.34.0"
+    svgo: ">=4"
+    vite: ">=5"
+  peerDependenciesMeta:
+    sharp:
+      optional: true
+    svgo:
+      optional: true
+  checksum: 10c0/42826cb13c84258cb01a885e4f56816040daa09ceeaa3d6051d95e097ef7cede226d38a372ef5a8b84ed2de314648d1ea7f4d62b0348e4a5d96a98ff8b1a26e5
   languageName: node
   linkType: hard
 
