@@ -20,7 +20,7 @@
     "clsx": "^2.0.0",
     "dompurify": "^3.4.14",
     "nanoid": "^6.0.1",
-    "react": "^18.3.1",
+    "react": "^19.3.0",
     "react-dom": "^18.3.1",
     "react-obfuscate": "^3.6.9",
     "react-player": "^2.16.0",
@@ -59,7 +59,7 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/dompurify": "^3.0.5",
     "@types/jsdom": "^30",
-    "@types/react": "^18.3.1",
+    "@types/react": "^19.3.0",
     "@types/react-dom": "^18.3.0",
     "@types/react-syntax-highlighter": "^15.5.11",
     "@vitejs/plugin-react": "^6.1",
@@ -84,7 +84,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "strip-ansi": "6.0.0",
-    "@types/react": "^18.3.1",
+    "@types/react": "^19.3.0",
     "@types/react-dom": "^18.3.0"
   }
 }
