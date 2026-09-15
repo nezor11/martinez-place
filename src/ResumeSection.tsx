@@ -21,7 +21,6 @@
 import type { IconGalleryProps } from "@/stories/components/molecules/IconGallery";
 import { Resume } from "@/stories/components/templates/Resume";
 import type { Section } from "@/utils/types/section";
-import blocksToHtml from "@sanity/block-content-to-html";
 import imageUrlBuilder from "@sanity/image-url";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import type { FC } from "react";
@@ -102,19 +101,13 @@ export const mapInfoSection = (section: Section, t: Messages) => {
             .url()
         : null;
 
-      const consolidatedJobDescHtml = blocksToHtml({
-        blocks: jobDesc,
-        projectId: projectId,
-        dataset: dataset,
-      });
-
       return {
         info: {
           company,
           infoUrl,
           date: dateText,
           jobTitle,
-          jobDesc: consolidatedJobDescHtml,
+          jobDesc: jobDesc ?? "",
           imageDetails: imageUrl
             ? { src: imageUrl, alt: company ?? "" }
             : null,

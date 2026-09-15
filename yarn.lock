@@ -2199,14 +2199,14 @@ __metadata:
   linkType: hard
 
 "@sanity/block-content-to-hyperscript@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@sanity/block-content-to-hyperscript@npm:3.0.0"
+  version: 3.0.1
+  resolution: "@sanity/block-content-to-hyperscript@npm:3.0.1"
   dependencies:
     "@sanity/generate-help-url": "npm:^0.140.0"
     "@sanity/image-url": "npm:^0.140.15"
     hyperscript: "npm:^2.0.2"
     object-assign: "npm:^4.1.1"
-  checksum: 10c0/29f0fa39d2e39cd68e541968b27c1dfd0a31be87b3e10e26b2a654d1085583ad7c3d7590b3b867289739629e4fed5d87276bf877a95d28fa5f4fa48bd74afbcc
+  checksum: 10c0/dcf3f0e2a1521cca3d44b7733fe3ec29febe5e34a33a4677d6741a06c347b6dbc61a6d70f7c6df6752b79f4a12562c4173e89e91d420bcf834db2f98c7c930b3
   languageName: node
   linkType: hard
 
@@ -2808,15 +2808,6 @@ __metadata:
   version: 0.0.9
   resolution: "@types/doctrine@npm:0.0.9"
   checksum: 10c0/cdaca493f13c321cf0cacd1973efc0ae74569633145d9e6fc1128f32217a6968c33bea1f858275239fe90c98f3be57ec8f452b416a9ff48b8e8c1098b20fa51c
-  languageName: node
-  linkType: hard
-
-"@types/dompurify@npm:^3.0.5":
-  version: 3.2.0
-  resolution: "@types/dompurify@npm:3.2.0"
-  dependencies:
-    dompurify: "npm:*"
-  checksum: 10c0/e83fec586ffbb1b43f7c8479f2a99c223814d240db912d53fb126aaeea52a4091deceeb75632b5d76004d88ef0fbf444984887b121dece6fa69f4172ed4b2b07
   languageName: node
   linkType: hard
 
@@ -4469,18 +4460,6 @@ __metadata:
   dependencies:
     domelementtype: "npm:^2.3.0"
   checksum: 10c0/bba1e5932b3e196ad6862286d76adc89a0dbf0c773e5ced1eb01f9af930c50093a084eff14b8de5ea60b895c56a04d5de8bbc4930c5543d029091916770b2d2a
-  languageName: node
-  linkType: hard
-
-"dompurify@npm:*":
-  version: 3.2.4
-  resolution: "dompurify@npm:3.2.4"
-  dependencies:
-    "@types/trusted-types": "npm:^2.0.7"
-  dependenciesMeta:
-    "@types/trusted-types":
-      optional: true
-  checksum: 10c0/6be56810fb7ad2776155c8fc2967af5056783c030094362c7d0cf1ad13f2129cf922d8eefab528a34bdebfb98e2f44b306a983ab93aefb9d6f24c18a3d027a05
   languageName: node
   linkType: hard
 
@@ -6373,7 +6352,6 @@ __metadata:
     "@storybook/addon-docs": "npm:^10.6.0"
     "@storybook/react-vite": "npm:^10.6.0"
     "@tailwindcss/vite": "npm:^4.3.3"
-    "@types/dompurify": "npm:^3.0.5"
     "@types/jsdom": "npm:^30"
     "@types/react": "npm:^19.3.0"
     "@types/react-dom": "npm:^19.3.0"

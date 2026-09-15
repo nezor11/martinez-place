@@ -1,24 +1,7 @@
 import { cn } from "@/utils";
 import { cva } from "class-variance-authority";
-import DOMPurify from "dompurify";
 import type { CSSProperties, FC } from "react";
 import "./index.css";
-
-/**
- * Sanitizes untrusted HTML and makes every link open in a new tab.
- * DOMPurify strips `target` by default, so the attributes are added after
- * sanitizing, on the resulting DOM fragment.
- */
-const sanitizeWithExternalLinks = (html: string): string => {
-  const fragment = DOMPurify.sanitize(html, { RETURN_DOM_FRAGMENT: true });
-  for (const anchor of fragment.querySelectorAll("a")) {
-    anchor.setAttribute("target", "_blank");
-    anchor.setAttribute("rel", "noreferrer noopener");
-  }
-  const container = document.createElement("div");
-  container.appendChild(fragment);
-  return container.innerHTML;
-};
 
 const textStyles = cva("text", {
   variants: {
@@ -108,7 +91,8 @@ export const BodyCopy: FC<BodyCopyProps> = ({
 }: BodyCopyProps) => {
   const Tag = tag as keyof React.JSX.IntrinsicElements;
 
-  const sanitizedHTML = sanitizeWithExternalLinks(text);
+  // `text` is trusted HTML: Sanity rich text is converted and sanitised by
+  // scripts/rich-text.mjs at build time (links already open in a new tab).
 
   const classes = cn(
     mods,
@@ -128,8 +112,8 @@ export const BodyCopy: FC<BodyCopyProps> = ({
       className={classes}
       style={styles}
       {...props}
-      // biome-ignore lint/security/noDangerouslySetInnerHtml: the HTML is sanitized with DOMPurify in sanitizeWithExternalLinks
-      dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: the HTML is sanitised at build time by scripts/rich-text.mjs
+      dangerouslySetInnerHTML={{ __html: text }}
     />
   );
 };

@@ -31,21 +31,14 @@ export interface FrameImageProps {
   };
 }
 
-interface JobDescription {
-  description: string;
-}
-
-interface SlideDescription {
-  description: string;
-}
-
 interface InfoItem {
   company: string;
   infoUrl: string;
   startDate: string;
   finishDate: string | null;
   jobTitle: string;
-  jobDesc: JobDescription;
+  /** Sanitised HTML, rendered from Portable Text at build time. */
+  jobDesc: string;
   imageDetails: { url: string } | null;
 }
 
@@ -80,7 +73,8 @@ export interface SlideDetails {
     height: number;
     alt?: string | null;
   } | null;
-  slideDesc?: SlideDescription;
+  /** Sanitised HTML, rendered from Portable Text at build time. */
+  slideDesc?: string;
   workDone?: string[];
   name: string;
   company?: string;

@@ -23,13 +23,10 @@ import type { SliderSectionObject } from "@/stories/components/templates/Resume"
 import { Resume } from "@/stories/components/templates/Resume";
 import { sanityImageUrl } from "@/utils/sanityImage";
 import type { Section } from "@/utils/types/section";
-import blocksToHtml from "@sanity/block-content-to-html";
 import type { FC } from "react";
 import { type Messages, useMessages } from "@/i18n";
 
 // Configuración del cliente de Sanity
-const projectId = "6zr8au58";
-const dataset = "production";
 
 // Mapea los datos de `slider` a la estructura `SliderSectionObject`
 const mapSliderSection = (
@@ -59,12 +56,8 @@ const mapSliderSection = (
     : [];
 
   const slidesData: SlideData[] = slides.map((slide) => {
-    const slideDesc = slide.slideDetails.slideDesc ?? [];
-    const consolidatedJobDescHtml = blocksToHtml({
-      blocks: slideDesc,
-      projectId: projectId,
-      dataset: dataset,
-    });
+    // Rich text arrives as sanitised HTML from fetch-resume.
+    const consolidatedJobDescHtml = slide.slideDetails.slideDesc ?? "";
 
     return {
       // Cards render at ~270 CSS px; 600 covers 2x screens without upscaling.
