@@ -19,7 +19,7 @@
 import Loader from "@/stories/components/atoms/Loader";
 import type { FC } from "react";
 import { useState } from "react";
-import ReactPlayer from "react-player";
+import { ReactPlayer } from "./player";
 import "./index.css";
 
 interface VideoPlayerProps {

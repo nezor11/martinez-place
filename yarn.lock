@@ -6372,6 +6372,7 @@ __metadata:
     vite-plugin-image-optimizer: "npm:^2.0.3"
     vite-tsconfig-paths: "npm:^6"
     vitest: "npm:^5"
+    youtube-video-element: "npm:^1.9.0"
   languageName: unknown
   linkType: soft
 
@@ -9511,7 +9512,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"youtube-video-element@npm:^1.8.0":
+"youtube-video-element@npm:^1.8.0, youtube-video-element@npm:^1.9.0":
   version: 1.9.0
   resolution: "youtube-video-element@npm:1.9.0"
   dependencies:
