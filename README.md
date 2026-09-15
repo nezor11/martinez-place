@@ -96,6 +96,10 @@ Every project card has a slug from its Sanity name. Opening a card sets `#projec
 
 `@media print` rules in `src/styles/index.css` hide the controls, print the portfolio as columns of cards, force the light theme (`beforeprint` in `App.tsx`) and expand the "Load more" lists.
 
+## Analytics
+
+Page views go to [Vercel Web Analytics](https://vercel.com/docs/analytics), which is cookieless and needs no consent banner. `App.tsx` renders `<Analytics />` only when the bundle was built on Vercel (`__VERCEL__`, from the `VERCEL` build variable), so local and CI builds request nothing; on Vercel the script and beacons are same-origin under `/_vercel/insights/`, already allowed by the CSP.
+
 ## Dependency updates
 
 Dependabot opens a grouped PR for minor and patch updates every Monday and one PR per major. CI runs lint, typecheck, unit tests, both builds, the Playwright suite and Lighthouse on each of them, so a green PR is safe to merge.

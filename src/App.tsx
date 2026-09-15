@@ -25,6 +25,7 @@
 import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/MoonIcon";
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
+import { Analytics } from "@vercel/analytics/react";
 import type { Resume } from "@/utils/types/resume";
 import { useContext, useEffect } from "react";
 import SectionRenderer from "./SectionRenderer";
@@ -154,6 +155,8 @@ function App({ locale, resume }: AppProps) {
           </button>
         </div>
         <ResumeContent latestResume={resume} locale={locale} />
+        {/* Cookieless page views, only on Vercel builds; served same-origin under /_vercel/insights. */}
+        {__VERCEL__ && <Analytics />}
       </div>
     </LocaleProvider>
   );
