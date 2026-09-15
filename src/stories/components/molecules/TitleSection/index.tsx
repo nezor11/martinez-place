@@ -47,7 +47,7 @@ export const TitleSection: FC<TitleSectionProps> = ({
   iconsData = [],
   ...props
 }: TitleSectionProps) => {
-  const Header = header as keyof JSX.IntrinsicElements;
+  const Header = header as keyof React.JSX.IntrinsicElements;
 
   const sanitizedText = DOMPurify.sanitize(text);
 

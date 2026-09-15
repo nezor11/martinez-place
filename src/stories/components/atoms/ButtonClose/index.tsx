@@ -15,7 +15,7 @@ interface ButtonCloseProps {
   onClick: () => void;
 }
 
-const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): JSX.Element => {
+const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): React.JSX.Element => {
   const t = useMessages();
   return (
     <button
