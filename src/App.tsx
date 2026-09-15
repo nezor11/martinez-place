@@ -53,6 +53,27 @@ const useTheme = () => {
     }
   }, [darkTheme]);
 
+  // Paper is always light: drop the dark classes while printing and put them
+  // back afterwards (Tailwind's dark: utilities key on them).
+  useEffect(() => {
+    const before = () => {
+      document.documentElement.classList.remove("dark");
+      document.body.classList.remove("theme-dark");
+    };
+    const after = () => {
+      if (darkTheme) {
+        document.documentElement.classList.add("dark");
+        document.body.classList.add("theme-dark");
+      }
+    };
+    window.addEventListener("beforeprint", before);
+    window.addEventListener("afterprint", after);
+    return () => {
+      window.removeEventListener("beforeprint", before);
+      window.removeEventListener("afterprint", after);
+    };
+  }, [darkTheme]);
+
   return { darkTheme, toggleTheme };
 };
 
@@ -121,7 +142,7 @@ function App({ locale, resume }: AppProps) {
   return (
     <LocaleProvider locale={locale}>
       <div className="container py-10 mx-auto px-4 max-w-5xl relative">
-        <div className="absolute right-3 top-4 flex items-center gap-4">
+        <div className="site-controls absolute right-3 top-4 flex items-center gap-4">
           <LanguageSwitcher locale={locale} />
           <button
             type="button"
