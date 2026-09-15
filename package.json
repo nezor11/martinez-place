@@ -16,6 +16,7 @@
   "dependencies": {
     "@sanity/block-content-to-html": "^2.0.0",
     "@sanity/image-url": "^1.0.2",
+    "@vercel/analytics": "^2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dompurify": "^3.4.14",

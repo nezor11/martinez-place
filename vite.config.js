@@ -59,6 +59,9 @@ export default defineConfig({
   publicDir: isDefaultLocale ? "public" : false,
   define: {
     __SITE_LOCALE__: JSON.stringify(locale),
+    // Vercel sets VERCEL=1 while building; local and CI builds leave the
+    // analytics script out so nothing is requested from a missing endpoint.
+    __VERCEL__: JSON.stringify(Boolean(process.env.VERCEL)),
   },
   json: {
     // resume.json is large; JSON.parse is faster than an object literal

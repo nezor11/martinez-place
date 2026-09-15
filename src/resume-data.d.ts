@@ -6,3 +6,6 @@ declare module "@resume-data" {
 
 /** Language this client bundle is built for (`define` in vite.config.js). */
 declare const __SITE_LOCALE__: string;
+
+/** True when the bundle was built on Vercel (`define` in vite.config.js). */
+declare const __VERCEL__: boolean;
