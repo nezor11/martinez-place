@@ -1,8 +1,10 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { defineConfig } from "vite";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
+import { criticalIconNames } from "./scripts/critical-icons.mjs";
 import {
   defaultLocale,
   localeDist,
@@ -22,6 +24,34 @@ if (!locales.includes(locale)) {
   );
 }
 const isDefaultLocale = locale === defaultLocale;
+
+
+// `virtual:critical-icons` statically imports the icons the prerendered HTML
+// contains (header skills, section titles) and registers them, so hydration
+// has them synchronously while the other icons stay in lazy chunks.
+const criticalIconsPlugin = () => {
+  const id = "virtual:critical-icons";
+  const resolvedId = `\0${id}`;
+  const iconsDir = "/src/stories/components/molecules/IconGallery/Icons";
+  const registry = "/src/stories/components/molecules/IconGallery/registry";
+  return {
+    name: "critical-icons",
+    resolveId(source) {
+      return source === id ? resolvedId : undefined;
+    },
+    load(moduleId) {
+      if (moduleId !== resolvedId) return undefined;
+      const resume = JSON.parse(readFileSync(resumeDataFile(locale), "utf8"));
+      const names = criticalIconNames(resume).filter((name) =>
+        existsSync(path.join(import.meta.dirname, `.${iconsDir}/${name}.tsx`))
+      );
+      const imports = names
+        .map((name) => `import ${name} from "${iconsDir}/${name}.tsx";`)
+        .join("\n");
+      return `${imports}\nimport { registerIcons } from "${registry}";\nregisterIcons({ ${names.join(", ")} });\n`;
+    },
+  };
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -43,6 +73,7 @@ export default defineConfig({
   ],
   plugins: [
     react(),
+    criticalIconsPlugin(),
     tailwindcss(),
     ViteImageOptimizer({
       test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,

@@ -1,9 +1,13 @@
 import { useMessages } from "@/i18n";
-import { availableIcons } from "@/stories/components/molecules/IconGallery";
+import {
+  Icon,
+  IconPlaceholder,
+  hasIcon,
+} from "@/stories/components/molecules/IconGallery/registry";
 import { cn } from "@/utils";
 import { iconLabel } from "@/utils/iconLabels";
 import type { FC, KeyboardEvent } from "react";
-import { useEffect, useId, useRef } from "react";
+import { startTransition, useEffect, useId, useRef, useState } from "react";
 import "./index.css";
 
 export interface TechCount {
@@ -62,6 +66,13 @@ export const PortfolioFilter: FC<PortfolioFilterProps> = ({
   const t = useMessages();
   const inputId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
+  // The tech icons load after mount, like the card icons: the prerendered
+  // HTML keeps same-sized placeholders so the buttons never move.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    startTransition(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (searchOpen) inputRef.current?.focus();
@@ -84,8 +95,7 @@ export const PortfolioFilter: FC<PortfolioFilterProps> = ({
       <div className="portfolio-filter__row">
         <ul className="portfolio-filter__techs" aria-label={t.technologies}>
           {techs.map(({ name, count, dimmed }) => {
-            const Icon = availableIcons[name];
-            if (!Icon) return null;
+            if (!hasIcon(name)) return null;
             const active = activeIcon === name;
             return (
               <li key={name}>
@@ -94,13 +104,17 @@ export const PortfolioFilter: FC<PortfolioFilterProps> = ({
                   className={cn(
                     "portfolio-filter__tech",
                     active && "portfolio-filter__tech--active",
-                    dimmed && !active && "portfolio-filter__tech--dimmed"
+                    dimmed && !active && "portfolio-filter__tech--dimmed",
                   )}
                   aria-label={t.filterByTechCount(iconLabel(name), count)}
                   aria-pressed={active}
                   onClick={() => onIconClick(name)}
                 >
-                  <Icon width="1em" height="1em" />
+                  {mounted ? (
+                    <Icon name={name} width="1em" height="1em" />
+                  ) : (
+                    <IconPlaceholder width="1em" height="1em" />
+                  )}
                   <span className="portfolio-filter__count" aria-hidden="true">
                     {count}
                   </span>
@@ -113,7 +127,7 @@ export const PortfolioFilter: FC<PortfolioFilterProps> = ({
           type="button"
           className={cn(
             "portfolio-filter__search-toggle",
-            searchOpen && "portfolio-filter__search-toggle--open"
+            searchOpen && "portfolio-filter__search-toggle--open",
           )}
           aria-label={searchOpen ? t.hideSearch : t.searchProjects}
           aria-expanded={searchOpen}
@@ -123,9 +137,7 @@ export const PortfolioFilter: FC<PortfolioFilterProps> = ({
           <SearchIcon />
         </button>
       </div>
-      <div
-        className={cn("portfolio-filter__search", !searchOpen && "hidden")}
-      >
+      <div className={cn("portfolio-filter__search", !searchOpen && "hidden")}>
         <label htmlFor={inputId} className="sr-only">
           {t.searchProjects}
         </label>

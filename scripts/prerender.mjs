@@ -106,7 +106,7 @@ const jsonLdFor = (locale) => {
 const marker = '<div id="root"></div>';
 
 for (const locale of locales) {
-  const html = render(locale);
+  const html = await render(locale);
   if (!html.includes("<main")) {
     throw new Error(`Prerender for ${locale} produced no <main> element`);
   }
