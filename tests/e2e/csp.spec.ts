@@ -8,7 +8,6 @@ import {
 } from "./helpers";
 
 const ignore = [
-  /Swiper Loop Warning/,
   // youtube-video-element logs the YouTube player's onError event as
   // `{target: X, data: 150}`. YouTube refuses embedded playback from GitHub
   // Actions runners (codes 150/153); the embed itself still loads under the
