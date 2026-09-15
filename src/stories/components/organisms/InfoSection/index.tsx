@@ -29,7 +29,12 @@ import {
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
 import { useMessages } from "@/i18n";
 import { cn } from "@/utils";
-import { type ComponentPropsWithRef, forwardRef, useState } from "react";
+import {
+  type ComponentPropsWithRef,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 
 export interface InfoSectionObject {
   title?: string;
@@ -64,6 +69,13 @@ export const InfoSection = forwardRef<HTMLElement, InfoSectionProps>(
     const handleLoadMore = () => {
       setItemsToShow(itemsToShow + initialItemsToShow);
     };
+
+    // Paper has no "Load more": show every item when printing.
+    useEffect(() => {
+      const expand = () => setItemsToShow(sections?.length ?? itemsToShow);
+      window.addEventListener("beforeprint", expand);
+      return () => window.removeEventListener("beforeprint", expand);
+    }, [sections, itemsToShow]);
 
     return (
       <section ref={ref} className={cn("info-section")} {...props}>

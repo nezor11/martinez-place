@@ -201,3 +201,104 @@ html.dark {
     fill: var(--textColor);
   }
 }
+
+/*
+ * Print: light colours, no controls, and the portfolio slider laid out as a
+ * grid of cards instead of a horizontal strip. App.tsx removes the dark
+ * classes on beforeprint and InfoSection expands its "Load more" lists.
+ */
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  :root {
+    color-scheme: light;
+  }
+
+  body,
+  .container {
+    overflow: visible;
+  }
+
+  .site-controls,
+  .portfolio-filter,
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-pagination,
+  footer a[href$=".pdf"] {
+    display: none !important;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  .portfolio__slider .swiper {
+    overflow: visible;
+  }
+
+  /* Inline blocks rather than a grid: Chromium paints a grid row's borders
+     before a page break even when the items move to the next page. */
+  .portfolio__slider .swiper-wrapper {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  .portfolio__slider .swiper-slide {
+    display: inline-block !important;
+    width: 23% !important;
+    margin: 0 2% 1rem 0 !important;
+    vertical-align: top;
+    transform: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* Cards assume a 300px column on screen; let them fill the print column. */
+  .portfolio__slider .card-slide,
+  .portfolio__slider .card-slide__open,
+  .portfolio__slider .card-slide article {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .portfolio__slider .card-slide {
+    max-width: none;
+  }
+
+  .portfolio__slider .card-slide img {
+    width: 100%;
+    height: auto !important;
+    padding: 0.5rem;
+  }
+
+  .portfolio__slider .card-slide h4,
+  .portfolio__slider .card-slide div.card-meta {
+    width: 100% !important;
+    max-width: none;
+    margin-left: 0 !important;
+  }
+
+  footer {
+    break-inside: avoid;
+  }
+
+  .portfolio__slider .portfolio__slide-content::after {
+    content: none !important;
+  }
+
+  .portfolio__slider .portfolio__slide-content,
+  .card-slide--dimmed {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
