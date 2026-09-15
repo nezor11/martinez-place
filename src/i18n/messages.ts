@@ -89,6 +89,8 @@ export interface Messages {
   filterByTechCount: (label: string, count: number) => string;
   technologies: string;
   hideSearch: string;
+  copyLink: string;
+  linkCopied: string;
   /** "fresh - Project", "Proyecto nuevo"… from the Sanity slide type. */
   project: (workType: string) => string;
   workDone: Record<WorkDoneKey, string>;
@@ -130,6 +132,8 @@ export const messages: Record<Locale, Messages> = {
       `Filter by ${label}, ${count} ${count === 1 ? "project" : "projects"}`,
     technologies: "Technologies",
     hideSearch: "Hide search",
+    copyLink: "Copy link",
+    linkCopied: "Link copied",
     project: (workType) =>
       `${{ fresh: "New", maintenance: "Maintenance" }[workType] ?? workType} - Project`,
     workDone: {
@@ -190,6 +194,8 @@ export const messages: Record<Locale, Messages> = {
       `Filtrar por ${label}, ${count} ${count === 1 ? "proyecto" : "proyectos"}`,
     technologies: "Tecnologías",
     hideSearch: "Ocultar búsqueda",
+    copyLink: "Copiar enlace",
+    linkCopied: "Enlace copiado",
     project: (workType) =>
       `Proyecto ${{ fresh: "nuevo", maintenance: "de mantenimiento" }[workType] ?? workType}`,
     workDone: {

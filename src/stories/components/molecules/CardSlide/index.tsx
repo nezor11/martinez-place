@@ -8,6 +8,7 @@ import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIcon
 import type { FC, SyntheticEvent } from "react";
 import { useMessages } from "@/i18n";
 import { cn } from "@/utils";
+import { projectHash } from "@/utils/slug";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./index.css";
@@ -42,6 +43,12 @@ export interface CardSlideProps {
   onIconClick?: (name: string) => void;
   /** Component name of the icon currently used as a filter, if any. */
   activeIcon?: string;
+  /** URL slug of the project; enables the deep link and the "Copy link" button. */
+  slug?: string;
+  /** True while the location hash points at this card: opens its popup. */
+  linkedOpen?: boolean;
+  onOpen?: (slug: string) => void;
+  onClose?: (slug: string) => void;
 }
 
 /**
@@ -81,6 +88,10 @@ export const CardSlide: FC<CardSlideProps> = ({
   dimmed = false,
   onIconClick,
   activeIcon,
+  slug,
+  linkedOpen,
+  onOpen,
+  onClose,
 }) => {
   const figcaptionRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
@@ -107,8 +118,24 @@ export const CardSlide: FC<CardSlideProps> = ({
     setContainerHeight(naturalHeight);
   };
 
-  const openModal = () => setShowModal(true);
-  const closeModal = () => setShowModal(false);
+  // Deep links: the section owns the location hash and tells the card whether
+  // it points here; the card reports its own open/close so the hash follows.
+  useEffect(() => {
+    if (slug !== undefined) setShowModal(Boolean(linkedOpen));
+  }, [slug, linkedOpen]);
+
+  const openModal = () => {
+    setShowModal(true);
+    if (slug !== undefined) onOpen?.(slug);
+  };
+  const closeModal = () => {
+    setShowModal(false);
+    if (slug !== undefined) onClose?.(slug);
+  };
+  const shareUrl =
+    slug !== undefined && typeof window !== "undefined"
+      ? `${window.location.origin}${window.location.pathname}${projectHash(slug)}`
+      : undefined;
 
   // The card is a plain wrapper: the opening control and the tech icon
   // buttons are siblings, so no interactive element nests inside another.
@@ -192,6 +219,7 @@ export const CardSlide: FC<CardSlideProps> = ({
             iconsData={iconsData}
             videoUrl={videoUrl}
             backgroundColor={backgroundColor}
+            shareUrl={shareUrl}
             onClose={closeModal}
             ButtonCloseComponent={ButtonClose}
           />,

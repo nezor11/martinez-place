@@ -35,8 +35,9 @@
 import { ContentSlider } from "@/stories/components/atoms/ContentSlider";
 import type { LinkProps } from "@/stories/components/atoms/Link";
 import type { IconData } from "@/stories/components/molecules/CardSlide";
+import { useMessages } from "@/i18n";
 import type { FC } from "react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./index.css";
 
 export interface SanityImageData {
@@ -59,6 +60,8 @@ interface PopupProps {
   link?: LinkProps;
   iconsData?: IconData[];
   backgroundColor?: string;
+  /** Absolute deep link to this project; shows a "Copy link" button when set. */
+  shareUrl?: string;
   ButtonCloseComponent: FC<{ onClick: () => void }>;
 }
 
@@ -75,8 +78,27 @@ export const Popup: FC<PopupProps> = ({
   iconsData,
   videoUrl,
   backgroundColor,
+  shareUrl,
   ButtonCloseComponent,
 }) => {
+  const t = useMessages();
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+
+  const copyLink = async () => {
+    if (!shareUrl) return;
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+    } catch {
+      window.prompt(t.copyLink, shareUrl);
+    }
+  };
 
   const handleClose = () => onClose();
 
@@ -95,6 +117,16 @@ export const Popup: FC<PopupProps> = ({
     >
       <div className="fixed top-0 left-0 right-0 bottom-0 lg:flex lg:items-center lg:justify-center modal-wrapper z-50 bg-white dark:bg-slate-950">
         <ButtonCloseComponent onClick={handleClose} />
+        {shareUrl && (
+          <button
+            type="button"
+            className="popup__share absolute top-3 right-14 z-50 rounded-sm px-2 py-1 text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white cursor-pointer"
+            onClick={copyLink}
+            aria-live="polite"
+          >
+            {copied ? t.linkCopied : t.copyLink}
+          </button>
+        )}
         <ContentSlider
           title={title}
           company={company}
