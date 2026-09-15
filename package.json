@@ -25,7 +25,8 @@
     "react-obfuscate": "^3.6.9",
     "react-player": "^3.4.0",
     "swiper": "^14.2.0",
-    "tailwind-merge": "^3.0.0"
+    "tailwind-merge": "^3.0.0",
+    "youtube-video-element": "^1.9.0"
   },
   "scripts": {
     "fetch-resume": "node scripts/fetch-resume.mjs",
