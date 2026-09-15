@@ -15,9 +15,10 @@ module.exports = {
       // Judge the median of the runs, not the best or worst one.
       aggregationMethod: "median-run",
       assertions: {
-        // Mobile performance sits around 85-92 depending on the machine;
-        // 0.8 catches real regressions without failing on noise.
-        "categories:performance": ["error", { minScore: 0.8 }],
+        // Mobile performance sits at 95 locally since rich text and icons
+        // moved out of the bundle (2026-09); 0.85 leaves room for slower CI
+        // runners while still catching real regressions.
+        "categories:performance": ["error", { minScore: 0.85 }],
         "categories:accessibility": ["error", { minScore: 0.95 }],
         "categories:best-practices": ["error", { minScore: 0.95 }],
         "categories:seo": ["error", { minScore: 0.95 }],

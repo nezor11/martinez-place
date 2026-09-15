@@ -49,7 +49,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 | `yarn lint` / `yarn format` / `yarn typecheck` | Biome lint, Biome format, `tsc --noEmit` |
 | `yarn test` / `yarn test:watch` | Vitest unit tests over the pure helpers in `src/utils` and `scripts` |
 | `yarn test:e2e` | Playwright suite against `vite preview` of the built site (prerender, hydration, CSP and video playback, deep links, filter, print, manifest, i18n, PDF, social card, axe) |
-| `yarn lighthouse` | Lighthouse CI with the thresholds in `lighthouserc.cjs` |
+| `yarn lighthouse` | Lighthouse CI with the thresholds in `lighthouserc.cjs`; locally, point it at a browser with `CHROME_PATH=~/.cache/ms-playwright/chromium-*/chrome-linux64/chrome` if no system Chrome is installed |
 
 ## Project layout
 
