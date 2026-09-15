@@ -112,6 +112,8 @@ const iconLabel = (name) =>
     ReactNativeIcon: "React Native",
     AndroidIcon: "Android",
     JetpackComposeIcon: "Jetpack Compose",
+    TailwindIcon: "Tailwind CSS",
+    ExpoIcon: "Expo",
   })[name] || name.replace(/Icon$/, "");
 
 // --- styles ----------------------------------------------------------------
