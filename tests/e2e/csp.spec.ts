@@ -7,7 +7,14 @@ import {
   slideTitlesWithVideo,
 } from "./helpers";
 
-const ignore = [/Swiper Loop Warning/];
+const ignore = [
+  /Swiper Loop Warning/,
+  // youtube-video-element logs the YouTube player's onError event as
+  // `{target: X, data: 150}`. YouTube refuses embedded playback from GitHub
+  // Actions runners (codes 150/153); the embed itself still loads under the
+  // CSP, which is what this test checks.
+  /^\{target: .*, data: 1[05]\d\}$/,
+];
 
 test("loads, opens a project and plays videos under the production CSP", async ({ page, baseURL }) => {
   const errors = collectErrors(page, ignore);
