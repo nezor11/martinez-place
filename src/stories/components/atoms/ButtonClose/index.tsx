@@ -9,20 +9,39 @@
  */
 
 import { useMessages } from "@/i18n";
+import { cn } from "@/utils";
 import type { FC } from "react";
+
+/** Which background the button sits on; picks a contrasting pill. */
+export type ButtonTone = "onLight" | "onDark";
+
+export const toneClasses: Record<ButtonTone, string> = {
+  onLight: "bg-gray-900/80 text-white hover:bg-gray-900",
+  onDark: "bg-white/90 text-gray-900 hover:bg-white",
+};
 
 interface ButtonCloseProps {
   onClick: () => void;
+  /** Defaults to the legacy white square; popups pass the tone of their background. */
+  tone?: ButtonTone;
 }
 
-const ButtonClose: FC<ButtonCloseProps> = ({ onClick }): React.JSX.Element => {
+const ButtonClose: FC<ButtonCloseProps> = ({
+  onClick,
+  tone,
+}): React.JSX.Element => {
   const t = useMessages();
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={t.close}
-      className="absolute top-2 right-2 bg-white text-gray-500 dark:text-white hover:text-gray-700 z-50 dark:bg-transparent rounded-sm"
+      className={cn(
+        "absolute top-2 right-2 z-50 cursor-pointer rounded-full p-1 shadow-sm",
+        tone
+          ? toneClasses[tone]
+          : "bg-white text-gray-500 dark:text-white hover:text-gray-700 dark:bg-transparent rounded-sm",
+      )}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

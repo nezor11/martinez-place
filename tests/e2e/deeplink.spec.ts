@@ -21,9 +21,9 @@ test("opening a project sets a shareable hash that reopens it", async ({ page })
   expect((await page.locator(".popup-content h2, .popup-content h1").first().textContent())?.trim()).toBe(title);
 
   const share = page.locator(".popup__share");
-  await expect(share).toHaveText("Copy link");
+  await expect(share).toHaveAttribute("aria-label", "Copy link");
   await share.click();
-  await expect(share).toHaveText("Link copied");
+  await expect(share).toHaveAttribute("aria-label", "Link copied");
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`http://localhost:4173/${hash}`);
 });
 
@@ -31,6 +31,6 @@ test("the Spanish page deep-links with translated copy", async ({ page }) => {
   await page.goto("/es/");
   await page.waitForLoadState("networkidle");
   expect(await openCard(page)).toBe(true);
-  await expect(page.locator(".popup__share")).toHaveText("Copiar enlace");
+  await expect(page.locator(".popup__share")).toHaveAttribute("aria-label", "Copiar enlace");
   expect(await page.evaluate(() => window.location.hash)).toMatch(/^#project-/);
 });

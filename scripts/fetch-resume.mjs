@@ -24,6 +24,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { annotateImageLuminance } from "./image-luminance.mjs";
 import { defaultLocale, localesFromArgv, resumeDataFile } from "./locales.mjs";
 
 const projectId = "6zr8au58";
@@ -157,10 +158,11 @@ const fetchLocale = async (locale) => {
     if (!result || !Array.isArray(result.pageBuilder)) {
       throw new Error(`Sanity has no published resume with id ${resumeId}`);
     }
+    const imageCount = await annotateImageLuminance(result);
     mkdirSync(dirname(outFile), { recursive: true });
     writeFileSync(outFile, `${JSON.stringify(result, null, 2)}\n`);
     console.log(
-      `[fetch-resume] wrote ${outFile} ("${result.title}", ${result.pageBuilder.length} sections, updated ${result._updatedAt})`
+      `[fetch-resume] wrote ${outFile} ("${result.title}", ${result.pageBuilder.length} sections, ${imageCount} gallery images sampled, updated ${result._updatedAt})`
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

@@ -8,6 +8,7 @@ import type { IconData } from "@/stories/components/molecules/CardSlide";
 import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import { useLocale, useMessages, workDoneLabel } from "@/i18n";
+import { popupBackground } from "@/utils/color";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -77,9 +78,10 @@ export const ContentSlider: FC<ContentSliderProps> = ({
 
   const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";
 
-  const dynamicBackgroundColor =
-    backgroundColor ||
-    (videoUrl ? "#000" : images.length > 0 ? "#fff" : "#f5f5f5");
+  const dynamicBackgroundColor = popupBackground(backgroundColor, {
+    videoUrl,
+    imageCount: images.length,
+  });
 
 
   return (
