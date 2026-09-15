@@ -39,7 +39,7 @@ export const SubtitleCopy: FC<SubtitleCopyProps> = ({
   styles = {},
   ...props
 }: SubtitleCopyProps) => {
-  const SubTitle = subtitle as keyof JSX.IntrinsicElements;
+  const SubTitle = subtitle as keyof React.JSX.IntrinsicElements;
 
   return (
     <SubTitle className={`text ${mods}`} style={styles} {...props}>

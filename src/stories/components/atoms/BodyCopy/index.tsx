@@ -106,7 +106,7 @@ export const BodyCopy: FC<BodyCopyProps> = ({
   weight = "normal",
   ...props
 }: BodyCopyProps) => {
-  const Tag = tag as keyof JSX.IntrinsicElements;
+  const Tag = tag as keyof React.JSX.IntrinsicElements;
 
   const sanitizedHTML = sanitizeWithExternalLinks(text);
 
