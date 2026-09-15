@@ -25,7 +25,8 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { annotateImageLuminance } from "./image-luminance.mjs";
-import { defaultLocale, localesFromArgv, resumeDataFile } from "./locales.mjs";
+import { renderRichText } from "./rich-text.mjs";
+import { defaultLocale, localesFromArgv, resumeDataFile, resumeRawFile } from "./locales.mjs";
 
 const projectId = "6zr8au58";
 const dataset = "production";
@@ -142,6 +143,7 @@ const strict = process.argv.includes("--strict");
 
 const fetchLocale = async (locale) => {
   const outFile = resolve(root, resumeDataFile(locale));
+  const rawFile = resolve(root, resumeRawFile(locale));
   const url = new URL(
     `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}`
   );
@@ -158,11 +160,15 @@ const fetchLocale = async (locale) => {
     if (!result || !Array.isArray(result.pageBuilder)) {
       throw new Error(`Sanity has no published resume with id ${resumeId}`);
     }
-    const imageCount = await annotateImageLuminance(result);
     mkdirSync(dirname(outFile), { recursive: true });
+    // The raw result keeps Portable Text for the PDF; the site file gets
+    // sanitised HTML and image luminance so the browser needs neither.
+    writeFileSync(rawFile, `${JSON.stringify(result, null, 2)}\n`);
+    const imageCount = await annotateImageLuminance(result);
+    const richTextCount = renderRichText(result, { projectId, dataset });
     writeFileSync(outFile, `${JSON.stringify(result, null, 2)}\n`);
     console.log(
-      `[fetch-resume] wrote ${outFile} ("${result.title}", ${result.pageBuilder.length} sections, ${imageCount} gallery images sampled, updated ${result._updatedAt})`
+      `[fetch-resume] wrote ${outFile} ("${result.title}", ${result.pageBuilder.length} sections, ${richTextCount} rich-text fields, ${imageCount} gallery images sampled, updated ${result._updatedAt})`
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);

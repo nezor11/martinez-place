@@ -22,7 +22,7 @@ import {
   View,
   renderToFile,
 } from "@react-pdf/renderer";
-import { localeFile, localePath, localesFromArgv, pdfMessages, resumeDataFile } from "./locales.mjs";
+import { localeFile, localePath, localesFromArgv, pdfMessages, resumeRawFile } from "./locales.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const siteUrl = "https://martinez.place";
@@ -235,7 +235,8 @@ const generated = new Date().toISOString().slice(0, 10);
 
 const buildPdf = async (locale) => {
   const t = pdfMessages[locale];
-  const dataFile = resolve(root, resumeDataFile(locale));
+  // The raw Sanity result: the PDF lays out Portable Text itself.
+  const dataFile = resolve(root, resumeRawFile(locale));
   const outFile = resolve(root, "public", localeFile("resume", "pdf", locale));
   const pageUrl = `${siteUrl}${localePath(locale)}`;
   if (!existsSync(dataFile)) {

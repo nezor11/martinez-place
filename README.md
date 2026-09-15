@@ -38,7 +38,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 
 | Script | What it does |
 | --- | --- |
-| `yarn fetch-resume` | Pull the published resume from Sanity into `src/data/resume.<locale>.json`, one file per language, and sample the corner luminance of every gallery image (`--strict` fails instead of keeping a stale file; `--locale es` for one language) |
+| `yarn fetch-resume` | Pull the published resume from Sanity: `src/data/resume.<locale>.raw.json` (as returned, for the PDF) and `src/data/resume.<locale>.json` for the site, with rich text rendered to sanitised HTML and the corner luminance of every gallery image (`--strict` fails instead of keeping a stale file; `--locale es` for one language) |
 | `yarn build:pdf` | Build `public/resume.pdf` and `public/resume.es.pdf` from the same data with @react-pdf/renderer |
 | `yarn build:og` | Build `public/og.png` and `public/og.es.png` (1200×630 social cards) with satori + resvg |
 | `yarn dev` | Fetch the resume, build the PDF and the social card, then start the Vite dev server (`SITE_LOCALE=es yarn vite` for the Spanish page) |
@@ -57,7 +57,7 @@ Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set
 .
 ├── .github/workflows/   CI: lint, typecheck, unit tests, builds, e2e, Lighthouse
 ├── .storybook/          Storybook config, theme and viewports
-├── scripts/             fetch-resume.mjs, image-luminance.mjs, critical-icons.mjs, locales.mjs,
+├── scripts/             fetch-resume.mjs, rich-text.mjs, image-luminance.mjs, critical-icons.mjs, locales.mjs,
 │                        build-pdf.mjs, build-og.mjs, prerender.mjs, fonts/ (TTF for the PDF)
 ├── public/              Static assets served as-is (fonts, favicon, app icons, web manifest)
 ├── src/

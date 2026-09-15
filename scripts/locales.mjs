@@ -17,8 +17,10 @@ export const localeFile = (base, ext, locale) =>
 export const localeDist = (locale) =>
   locale === defaultLocale ? "dist" : `dist/${locale}`;
 
-/** The fetched resume for a language. */
+/** The site-ready resume for a language (rich text as HTML, image luminance). */
 export const resumeDataFile = (locale) => `src/data/resume.${locale}.json`;
+/** The raw Sanity result, with Portable Text intact, for the PDF. */
+export const resumeRawFile = (locale) => `src/data/resume.${locale}.raw.json`;
 
 /** Copy the PDF needs that the site's catalogue also carries. */
 export const pdfMessages = {

@@ -21,7 +21,6 @@
  */
 
 import { BodyCopy } from "@/stories/components/atoms/BodyCopy";
-import DOMPurify from "dompurify";
 import type { CSSProperties, FC } from "react";
 import { IconGallery, type IconGalleryProps } from "../IconGallery";
 import "./index.css";
@@ -49,8 +48,6 @@ export const TitleSection: FC<TitleSectionProps> = ({
 }: TitleSectionProps) => {
   const Header = header as keyof React.JSX.IntrinsicElements;
 
-  const sanitizedText = DOMPurify.sanitize(text);
-
   return (
     <div>
       <div className="flex items-center mb-0 lg:mb-6">
@@ -64,7 +61,7 @@ export const TitleSection: FC<TitleSectionProps> = ({
           style={styles}
           {...props}
         >
-          {sanitizedText}
+          {text}
         </Header>
       </div>
       {subtext !== "" && (
