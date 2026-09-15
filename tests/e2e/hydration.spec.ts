@@ -1,11 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { collectErrors } from "./helpers";
 
-const ignore = [/Swiper Loop Warning/];
 
 for (const scheme of ["light", "dark"] as const) {
   test(`hydrates without errors and keeps the ${scheme} theme`, async ({ page }) => {
-    const errors = collectErrors(page, ignore);
+    const errors = collectErrors(page);
     await page.addInitScript((value) => localStorage.setItem("theme", value), scheme);
     await page.goto("/");
     await page.waitForLoadState("networkidle");
@@ -24,7 +23,7 @@ for (const scheme of ["light", "dark"] as const) {
 }
 
 test("the Spanish page hydrates without errors", async ({ page }) => {
-  const errors = collectErrors(page, ignore);
+  const errors = collectErrors(page);
   await page.goto("/es/");
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(500);
