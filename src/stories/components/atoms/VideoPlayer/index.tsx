@@ -19,16 +19,8 @@
 import Loader from "@/stories/components/atoms/Loader";
 import type { FC } from "react";
 import { useState } from "react";
-import ReactPlayerImport from "react-player";
+import ReactPlayer from "react-player";
 import "./index.css";
-
-// react-player 2.x is a CommonJS module whose export is `{ default }` with an
-// __esModule flag. Bundlers disagree on the interop: Vite 8 (Rolldown) hands
-// the namespace object to the default import, which React rejects as an
-// invalid element type and unmounts the app. Unwrap it at runtime so both
-// shapes work.
-const ReactPlayer = ((ReactPlayerImport as unknown as { default?: unknown })
-  .default ?? ReactPlayerImport) as typeof ReactPlayerImport;
 
 interface VideoPlayerProps {
   videoUrl: string;
@@ -58,18 +50,15 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
         {loading && <Loader />}
         <ReactPlayer
           className="absolute top-0 left-0 w-full h-full"
-          url={videoUrl}
+          src={videoUrl}
           width="100%"
           height="100%"
           playing={isPlaying}
+          controls
           onEnded={onEnded}
           config={{
             youtube: {
-              playerVars: {
-                origin: window.location.origin,
-                showinfo: 0,
-                controls: 1,
-              },
+              origin: window.location.origin,
             },
           }}
           onReady={handlePlayerReady}

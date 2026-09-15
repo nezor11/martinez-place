@@ -32,10 +32,21 @@ test("loads, opens a project and plays videos under the production CSP", async (
     const play = page.locator(".popup-content button[class*=play], .popup-content .play").first();
     if (await play.count()) await play.click({ force: true });
     await page.waitForTimeout(3000);
-    const media = await page.evaluate(() => ({
-      iframes: [...document.querySelectorAll("iframe")].map((f) => f.src),
-      videos: [...document.querySelectorAll("video")].map((v) => v.currentSrc || v.src),
-    }));
+    // react-player 3 renders each provider as a custom element whose iframe
+    // or <video> lives in a shadow root, so walk shadow trees too.
+    const media = await page.evaluate(() => {
+      const iframes: string[] = [];
+      const videos: string[] = [];
+      const walk = (root: Document | ShadowRoot) => {
+        for (const el of root.querySelectorAll("*")) {
+          if (el instanceof HTMLIFrameElement) iframes.push(el.src);
+          if (el instanceof HTMLVideoElement) videos.push(el.currentSrc || el.src);
+          if (el.shadowRoot) walk(el.shadowRoot);
+        }
+      };
+      walk(document);
+      return { iframes, videos };
+    });
     if (kind === "youtube") expect(media.iframes.some((s) => /youtube/.test(s))).toBe(true);
     else expect(media.videos.length).toBeGreaterThan(0);
   }
