@@ -6,6 +6,7 @@
  */
 import { renderToString } from "react-dom/server";
 import App from "./App";
+import { preloadIcons } from "./stories/components/molecules/IconGallery/registry";
 import resumeEn from "./data/resume.en.json";
 import resumeEs from "./data/resume.es.json";
 import { type Locale, isLocale } from "./i18n";
@@ -28,10 +29,13 @@ const resumes: Record<Locale, Resume> = {
 
 export const resumeFor = (locale: Locale): Resume => resumes[locale];
 
-export const render = (locale: string): string => {
+export const render = async (locale: string): Promise<string> => {
   if (!isLocale(locale)) {
     throw new Error(`Unknown locale "${locale}"`);
   }
+  // Icons load lazily on the client; the string renderer cannot suspend, so
+  // have every icon module ready before rendering.
+  await preloadIcons();
   return renderToString(
     <ThemeProvider>
       <App locale={locale} resume={resumes[locale]} />

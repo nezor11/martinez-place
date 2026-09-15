@@ -4,6 +4,8 @@ import { resume } from "./data/resume";
 import { isLocale, defaultLocale } from "./i18n";
 import { ThemeProvider } from "./providers/index";
 import "./styles/index.css";
+// Registers the icons the prerendered HTML contains before hydration.
+import "virtual:critical-icons";
 
 // Each client bundle is built for one language (SITE_LOCALE in vite.config.js)
 // and ships that language's resume, so no runtime detection is needed.
