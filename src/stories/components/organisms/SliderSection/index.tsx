@@ -36,6 +36,7 @@ import {
 } from "@/stories/components/molecules/PortfolioFilter";
 import { TitleSection } from "@/stories/components/molecules/TitleSection";
 import { cn } from "@/utils";
+import { projectHash, slugFromHash, uniqueSlugs } from "@/utils/slug";
 import { iconLabel } from "@/utils/iconLabels";
 import {
   normalizeText,
@@ -91,6 +92,38 @@ export const SliderSection: FC<SliderSectionProps> = ({
   const swiperRef = useRef<SwiperClass | null>(null);
   const [query, setQuery] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
+
+  // Deep links: #project-<slug> opens that card and scrolls the slider to it.
+  const slugs = useMemo(
+    () => uniqueSlugs(slidesData.map((slide) => slide.name || slide.title)),
+    [slidesData]
+  );
+  const [linkedSlug, setLinkedSlug] = useState<string | null>(null);
+
+  useEffect(() => {
+    const read = () => setLinkedSlug(slugFromHash(window.location.hash));
+    read();
+    window.addEventListener("hashchange", read);
+    return () => window.removeEventListener("hashchange", read);
+  }, []);
+
+  useEffect(() => {
+    if (!linkedSlug) return;
+    const index = slugs.indexOf(linkedSlug);
+    if (index >= 0) swiperRef.current?.slideToLoop(index, 0);
+  }, [linkedSlug, slugs]);
+
+  const handleCardOpen = (slug: string) => {
+    window.history.replaceState(null, "", projectHash(slug));
+    setLinkedSlug(slug);
+  };
+  const handleCardClose = (slug: string) => {
+    if (slugFromHash(window.location.hash) === slug) {
+      const { pathname, search } = window.location;
+      window.history.replaceState(null, "", `${pathname}${search}`);
+    }
+    setLinkedSlug((current) => (current === slug ? null : current));
+  };
 
   // Text search and the tech icons share one filter: an icon click puts the
   // technology's label in the box (or clears it when already there).
@@ -248,6 +281,10 @@ export const SliderSection: FC<SliderSectionProps> = ({
                 dimmed={!matches[index]}
                 onIconClick={handleIconClick}
                 activeIcon={activeIcon}
+                slug={slugs[index]}
+                linkedOpen={linkedSlug === slugs[index]}
+                onOpen={handleCardOpen}
+                onClose={handleCardClose}
               />
             </SwiperSlide>
           ))}
