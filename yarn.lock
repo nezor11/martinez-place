@@ -2224,13 +2224,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sanity/image-url@npm:^1.0.2":
-  version: 1.1.0
-  resolution: "@sanity/image-url@npm:1.1.0"
-  checksum: 10c0/ae7bf95e79871f1d4673d74eab96e107bb60068878b80f0891b67708bd4683e525b8dfb5c97afdf6f0427529f1001acb2cb22b1d409315cce4a079d49f65e687
-  languageName: node
-  linkType: hard
-
 "@sentry-internal/tracing@npm:7.120.4":
   version: 7.120.4
   resolution: "@sentry-internal/tracing@npm:7.120.4"
@@ -6347,7 +6340,6 @@ __metadata:
     "@react-pdf/renderer": "npm:^4.9.0"
     "@resvg/resvg-js": "npm:^2.6.2"
     "@sanity/block-content-to-html": "npm:^2.0.0"
-    "@sanity/image-url": "npm:^1.0.2"
     "@storybook/addon-a11y": "npm:^10.6.0"
     "@storybook/addon-docs": "npm:^10.6.0"
     "@storybook/react-vite": "npm:^10.6.0"

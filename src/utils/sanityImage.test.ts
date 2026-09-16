@@ -19,6 +19,13 @@ describe("sanityImageUrl", () => {
     expect(url.pathname).toBe("/images/6zr8au58/production/abc-300x350.webp");
   });
 
+  it("crops to a box when both width and height are given", () => {
+    const url = new URL(sanityImageUrl(cdn, { width: 800, height: 600 }));
+    expect(url.searchParams.get("w")).toBe("800");
+    expect(url.searchParams.get("h")).toBe("600");
+    expect(url.searchParams.get("fit")).toBe("crop");
+  });
+
   it("leaves non-Sanity and empty URLs alone", () => {
     expect(sanityImageUrl("https://example.com/a.png", { width: 100 })).toBe("https://example.com/a.png");
     expect(sanityImageUrl("")).toBe("");
