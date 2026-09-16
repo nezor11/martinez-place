@@ -31,7 +31,7 @@
 }
 
 .portfolio-filter__count {
-  @apply ml-0.5 text-[10px] tabular-nums text-gray-600 dark:text-gray-400;
+  @apply ml-0.5 text-[11px] tabular-nums text-gray-600 dark:text-gray-400;
 }
 
 .portfolio-filter__search-toggle {

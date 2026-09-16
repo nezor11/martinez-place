@@ -84,6 +84,8 @@ export interface Messages {
   noData: string;
   lightMode: string;
   darkMode: string;
+  /** Skip link at the top of the tab order. */
+  skipToContent: string;
   slide: (index: number) => string;
   searchProjects: string;
   clearSearch: string;
@@ -134,6 +136,7 @@ export const messages: Record<Locale, Messages> = {
     noData: "No data available",
     lightMode: "Switch to light mode",
     darkMode: "Switch to dark mode",
+    skipToContent: "Skip to content",
     slide: (index) => `Slide ${index}`,
     searchProjects: "Search projects",
     clearSearch: "Clear search",
@@ -198,6 +201,7 @@ export const messages: Record<Locale, Messages> = {
     noData: "No hay datos disponibles",
     lightMode: "Cambiar a modo claro",
     darkMode: "Cambiar a modo oscuro",
+    skipToContent: "Saltar al contenido",
     slide: (index) => `Diapositiva ${index}`,
     searchProjects: "Buscar proyectos",
     clearSearch: "Borrar búsqueda",
