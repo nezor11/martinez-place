@@ -30,6 +30,11 @@ const buttonStyles = cva(
     "rounded-md",
     "font-medium",
     "focus:outline-hidden",
+    // outline-hidden sets --tw-outline-style: none, so the ring needs an explicit style.
+    "focus-visible:outline-solid",
+    "focus-visible:outline-2",
+    "focus-visible:outline-offset-2",
+    "focus-visible:outline-primary-500",
     "disabled:cursor-not-allowed",
   ],
   {

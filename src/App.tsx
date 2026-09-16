@@ -98,7 +98,7 @@ const ResumeContent = ({
     throw new Error(`Unknown project "${projectSlug}"`);
   }
   return (
-    <main key={`${latestResume._id}:${projectSlug ?? ""}`}>
+    <main id="main" tabIndex={-1} className="outline-none" key={`${latestResume._id}:${projectSlug ?? ""}`}>
       {project ? (
         <>
           <SectionRenderer section={latestResume.pageBuilder[0]} />
@@ -147,7 +147,7 @@ const LanguageSwitcher = ({
           hrefLang={other}
           lang={other}
           aria-label={messages[other].switchTo}
-          className="uppercase text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+          className="inline-flex min-h-6 min-w-6 items-center justify-center uppercase text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
         >
           {other}
         </a>
@@ -169,13 +169,16 @@ function App({ locale, resume, projectSlug }: AppProps) {
   return (
     <LocaleProvider locale={locale}>
       <div className="container py-10 mx-auto px-4 max-w-5xl relative">
+        <a href="#main" className="skip-link">
+          {t.skipToContent}
+        </a>
         <div className="site-controls absolute right-3 top-4 flex items-center gap-4">
           <LanguageSwitcher locale={locale} projectSlug={projectSlug} />
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={darkTheme ? t.lightMode : t.darkMode}
-            className={darkTheme ? "button-dark" : "button-light"}
+            className={`${darkTheme ? "button-dark" : "button-light"} inline-flex min-h-6 min-w-6 items-center justify-center`}
           >
             {darkTheme ? <MemoizedSunIcon /> : <MemoizedMoonIcon />}
           </button>

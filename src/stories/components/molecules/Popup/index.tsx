@@ -41,8 +41,9 @@ import { toneClasses } from "@/stories/components/atoms/ButtonClose";
 import { cn } from "@/utils";
 import { isLightColor, popupBackground } from "@/utils/color";
 import { isVisualTest } from "@/utils/visualTest";
+import type React from "react";
 import type { FC } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./index.css";
 
 export interface SanityImageData {
@@ -109,6 +110,44 @@ export const Popup: FC<PopupProps> = ({
 
   const handleClose = () => onClose();
 
+  // Keyboard: focus moves into the dialog on open, stays inside while it is
+  // open (Tab wraps), Escape closes it and focus returns to whatever opened
+  // it, typically the card button.
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    dialogRef.current?.focus();
+    return () => opener?.focus?.();
+  }, []);
+
+  const focusables = () =>
+    Array.from(
+      dialogRef.current?.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      ) ?? [],
+    ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      onClose();
+      return;
+    }
+    if (event.key !== "Tab") return;
+    const items = focusables();
+    if (items.length === 0) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    const active = document.activeElement;
+    if (event.shiftKey && (active === first || active === dialogRef.current)) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
+
   // A random image opens the gallery, except under visual testing, where the
   // snapshot must be the same on every build.
   const randomizedImages = useMemo(
@@ -135,10 +174,13 @@ export const Popup: FC<PopupProps> = ({
 
   return (
     <div
-      className="min-h-screen min-w-screen popup-content"
+      className="min-h-screen min-w-screen popup-content outline-none"
       role="dialog"
       aria-modal="true"
       aria-label={title}
+      ref={dialogRef}
+      tabIndex={-1}
+      onKeyDown={handleKeyDown}
     >
       <div className="fixed top-0 left-0 right-0 bottom-0 lg:flex lg:items-center lg:justify-center modal-wrapper z-50 bg-white dark:bg-slate-950">
         <ButtonCloseComponent onClick={handleClose} tone={tone} />
