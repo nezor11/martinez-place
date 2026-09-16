@@ -1,4 +1,4 @@
-import { type Locale, localePath } from "@/i18n";
+import { type Locale, localePath, projectSegment } from "@/i18n";
 import type { Resume } from "@/utils/types/resume";
 import type { InfoSlide, SlideDetails } from "@/utils/types/section";
 import { slugify, uniqueSlugs } from "./slug";
@@ -34,9 +34,9 @@ export const projectsFrom = (resume: Resume): Project[] =>
     }));
   });
 
-/** URL of a project page: /project/<slug>/ or /es/project/<slug>/. */
+/** URL of a project page: /project/<slug>/ or /es/proyecto/<slug>/. */
 export const projectPath = (locale: Locale, slug: string): string =>
-  `${localePath(locale)}project/${slug}/`;
+  `${localePath(locale)}${projectSegment[locale]}/${slug}/`;
 
 /** Home page of `locale` with the deep link that opens this project's card. */
 export const projectHashFor = (locale: Locale, slug: string): string =>
@@ -47,7 +47,7 @@ export const projectSlugFromPath = (
   pathname: string,
   locale: Locale,
 ): string | null => {
-  const prefix = `${localePath(locale)}project/`;
+  const prefix = `${localePath(locale)}${projectSegment[locale]}/`;
   if (!pathname.startsWith(prefix)) return null;
   const rest = pathname.slice(prefix.length).replace(/\/+$/, "");
   return rest && !rest.includes("/") ? decodeURIComponent(rest) : null;

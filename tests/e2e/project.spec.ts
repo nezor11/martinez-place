@@ -19,12 +19,12 @@ const slugOf = (name: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-for (const { locale, path } of locales) {
+for (const { locale, path, project: projectPrefix } of locales) {
   test(`the ${locale} project page is prerendered with its own head and hydrates`, async ({ page }) => {
     const errors = collectErrors(page);
     const slide = firstProject();
     const slug = slugOf(slide.slugSource || slide.name);
-    const url = `${path}project/${slug}/`;
+    const url = `${projectPrefix}${slug}/`;
     const localised = resumeData(locale);
     const localisedSlide = localised.pageBuilder
       .flatMap((s: { sliderDetails?: { slides: { slideDetails: { _id: string } }[] } }) => s.sliderDetails?.slides ?? [])
@@ -43,7 +43,7 @@ for (const { locale, path } of locales) {
     for (const other of locales) {
       await expect(page.locator(`link[rel="alternate"][hreflang="${other.locale}"]`)).toHaveAttribute(
         "href",
-        `https://martinez.place${other.path}project/${slug}/`,
+        `https://martinez.place${other.project}${slug}/`,
       );
     }
     expect(await page.locator('script[type="application/ld+json"]').last().textContent()).toContain('"CreativeWork"');
@@ -69,7 +69,7 @@ test("the sitemap lists every project page in both languages", async ({ request 
   const slide = firstProject();
   const slug = slugOf(slide.slugSource || slide.name);
   expect(xml).toContain(`<loc>https://martinez.place/project/${slug}/</loc>`);
-  expect(xml).toContain(`<loc>https://martinez.place/es/project/${slug}/</loc>`);
+  expect(xml).toContain(`<loc>https://martinez.place/es/proyecto/${slug}/</loc>`);
   const projects = resumeData("en").pageBuilder.flatMap(
     (s: { sliderDetails?: { slides: unknown[] } }) => s.sliderDetails?.slides ?? [],
   ).length;
@@ -80,5 +80,5 @@ test("the language switcher on a project page keeps the project", async ({ page 
   const slide = firstProject();
   const slug = slugOf(slide.slugSource || slide.name);
   await page.goto(`/project/${slug}/`);
-  await expect(page.locator(".language-switcher a").first()).toHaveAttribute("href", `/es/project/${slug}/`);
+  await expect(page.locator(".language-switcher a").first()).toHaveAttribute("href", `/es/proyecto/${slug}/`);
 });

@@ -35,11 +35,11 @@ for (const key of ["window", "document", "navigator", "HTMLElement", "Node"]) {
   });
 }
 
-const { render, resumeFor, projectsFor, locales, defaultLocale, localePath, localeFile, seo } =
+const { render, resumeFor, projectsFor, projectPath, locales, defaultLocale, localePath, localeFile, seo } =
   await import(resolve(root, "dist-ssr/entry-server.js"));
 
 const pageUrl = (locale) => `${siteUrl}${localePath(locale)}`;
-const projectUrl = (locale, slug) => `${siteUrl}${localePath(locale)}project/${slug}/`;
+const projectUrl = (locale, slug) => `${siteUrl}${projectPath(locale, slug)}`;
 
 /** Sanity CDN URL at the given width, as the site's sanityImageUrl does. */
 const cdnImage = (src, width) => {
@@ -191,7 +191,8 @@ for (const locale of locales) {
   let projectPages = 0;
   for (const project of projectsFor(locale)) {
     const projectHtml = await render(locale, project.slug);
-    const dir = resolve(root, localeDist(locale), "project", project.slug);
+    // Mirrors projectPath: dist/project/<slug>/ or dist/es/proyecto/<slug>/.
+    const dir = resolve(root, "dist", projectPath(locale, project.slug).slice(1));
     mkdirSync(dir, { recursive: true });
     writeFileSync(
       resolve(dir, "index.html"),
@@ -201,7 +202,7 @@ for (const locale of locales) {
     );
     projectPages += 1;
   }
-  console.log(`[prerender] wrote ${projectPages} project pages under ${localeDist(locale)}/project/`);
+  console.log(`[prerender] wrote ${projectPages} project pages under dist${projectPath(locale, "*")}`);
 }
 
 const lastModified = (resumeFor(defaultLocale)._updatedAt ?? new Date().toISOString()).slice(0, 10);

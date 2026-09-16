@@ -1,6 +1,6 @@
 /**
  * Standalone page of one portfolio project, prerendered at
- * /project/<slug>/ (and /es/project/<slug>/) so every project has its own
+ * /project/<slug>/ (and /es/proyecto/<slug>/) so every project has its own
  * URL, title, description and social image. Same data as the popup, laid
  * out as a document: summary, description, links, work done, tech icons
  * and the gallery or video.

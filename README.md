@@ -94,7 +94,7 @@ Every project card has a slug from its English Sanity name (`slugSource`, so bot
 
 ### Project pages
 
-Each project is also prerendered as its own page at `/project/<slug>/` and `/es/project/<slug>/` (`ProjectPage` inside the site header and footer), with its own title, description, social image (first gallery image), canonical, hreflang pair, `CreativeWork` JSON-LD and sitemap entry. The popup's link icon copies that URL. `main.tsx` detects the path, preloads the project's icons and hydrates the same app with `projectSlug`.
+Each project is also prerendered as its own page at `/project/<slug>/` and `/es/proyecto/<slug>/` (segment per language in `projectSegment`) (`ProjectPage` inside the site header and footer), with its own title, description, social image (first gallery image), canonical, hreflang pair, `CreativeWork` JSON-LD and sitemap entry. The popup's link icon copies that URL. `main.tsx` detects the path, preloads the project's icons and hydrates the same app with `projectSlug`.
 
 ### Printing
 

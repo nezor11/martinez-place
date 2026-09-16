@@ -51,9 +51,9 @@ describe("projectsFrom", () => {
 describe("projectPath / projectSlugFromPath", () => {
   it("builds and parses project URLs per language", () => {
     expect(projectPath("en", "revlon")).toBe("/project/revlon/");
-    expect(projectPath("es", "revlon")).toBe("/es/project/revlon/");
+    expect(projectPath("es", "revlon")).toBe("/es/proyecto/revlon/");
     expect(projectSlugFromPath("/project/revlon/", "en")).toBe("revlon");
-    expect(projectSlugFromPath("/es/project/fatro-iberica", "es")).toBe("fatro-iberica");
+    expect(projectSlugFromPath("/es/proyecto/fatro-iberica", "es")).toBe("fatro-iberica");
   });
 
   it("returns null for the home page and foreign paths", () => {
@@ -61,6 +61,7 @@ describe("projectPath / projectSlugFromPath", () => {
     expect(projectSlugFromPath("/es/", "es")).toBeNull();
     expect(projectSlugFromPath("/project/a/b/", "en")).toBeNull();
     expect(projectSlugFromPath("/es/project/x/", "en")).toBeNull();
+    expect(projectSlugFromPath("/es/project/x/", "es")).toBeNull();
   });
 });
 

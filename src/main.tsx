@@ -19,7 +19,7 @@ const locale = isLocale(__SITE_LOCALE__) ? __SITE_LOCALE__ : defaultLocale;
 
 const container = document.getElementById("root") as HTMLElement;
 
-// Project pages live at /project/<slug>/ (per language); anything else is
+// Project pages live at /project/<slug>/ (/es/proyecto/<slug>/); anything else is
 // the resume. Their tech icons are in the prerendered HTML, so load them
 // before hydrating (the header icons come registered from
 // virtual:critical-icons).

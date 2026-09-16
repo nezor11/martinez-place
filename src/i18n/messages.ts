@@ -18,6 +18,12 @@ export const isLocale = (value: unknown): value is Locale =>
 export const localePath = (locale: Locale): string =>
   locale === defaultLocale ? "/" : `/${locale}/`;
 
+/** URL segment of the project pages: /project/<slug>/ vs /es/proyecto/<slug>/. */
+export const projectSegment: Record<Locale, string> = {
+  en: "project",
+  es: "proyecto",
+};
+
 /** Per-language build artefact: resume.pdf / resume.es.pdf, og.png / og.es.png. */
 export const localeFile = (
   base: string,

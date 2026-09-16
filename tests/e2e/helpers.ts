@@ -17,8 +17,8 @@ export const productionCsp = (): string => {
 
 /** Languages the site is built in, with the path each one lives at. */
 export const locales = [
-  { locale: "en", path: "/", pdf: "/resume.pdf", og: "/og.png", lastUpdated: /last updated/i },
-  { locale: "es", path: "/es/", pdf: "/resume.es.pdf", og: "/og.es.png", lastUpdated: /última actualización/i },
+  { locale: "en", path: "/", project: "/project/", pdf: "/resume.pdf", og: "/og.png", lastUpdated: /last updated/i },
+  { locale: "es", path: "/es/", project: "/es/proyecto/", pdf: "/resume.es.pdf", og: "/og.es.png", lastUpdated: /última actualización/i },
 ] as const;
 
 /** The resume fetched at build time (src/data/resume.<locale>.json). */
