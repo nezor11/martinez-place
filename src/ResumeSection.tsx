@@ -5,7 +5,6 @@
  * It uses data from the Sanity CMS to dynamically generate the content.
  *
  * The utility functions in this file include:
- * - urlFor: A function to build the image URL from the Sanity image object.
  * - mapInfoSection: A function to map the section data to the expected structure.
  *
  * Props:
@@ -21,25 +20,13 @@
 import type { IconGalleryProps } from "@/stories/components/molecules/IconGallery";
 import { Resume } from "@/stories/components/templates/Resume";
 import type { Section } from "@/utils/types/section";
-import imageUrlBuilder from "@sanity/image-url";
-import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { sanityImageUrl } from "@/utils/sanityImage";
 import type { FC } from "react";
 import { type Messages, useMessages } from "@/i18n";
 
 interface Props {
   section: Section;
 }
-
-// Definir tu projectId y dataset
-const projectId = "6zr8au58";
-const dataset = "production";
-
-// Function to build the image URL from the Sanity image object
-const builder = imageUrlBuilder({ projectId, dataset });
-
-const urlFor = (source: SanityImageSource) => {
-  return builder.image(source);
-};
 
 export const mapInfoSection = (section: Section, t: Messages) => {
   const { titleSection, subtitleSection, sections, iconTitleDetails } = section;
@@ -92,13 +79,10 @@ export const mapInfoSection = (section: Section, t: Messages) => {
         dateText = startYear.toString();
       }
 
+      // 800x600 crop straight from the CDN URL; the image-url builder used
+      // here before threw on the `{ url }` shape fetch-resume produces.
       const imageUrl = imageDetails?.url
-        ? urlFor(imageDetails)
-            .width(800)
-            .height(600)
-            .auto("format")
-            .quality(80)
-            .url()
+        ? sanityImageUrl(imageDetails.url, { width: 800, height: 600 })
         : null;
 
       return {
