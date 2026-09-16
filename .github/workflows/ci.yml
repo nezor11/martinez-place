@@ -67,3 +67,32 @@ jobs:
           path: .lighthouseci
           include-hidden-files: true
           retention-days: 7
+
+  chromatic:
+    name: Visual regression (Chromatic)
+    runs-on: ubuntu-latest
+    # Dependabot PRs cannot read repository secrets.
+    if: github.actor != 'dependabot[bot]'
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Chromatic needs the history to find the baseline commit.
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Publish Storybook and compare snapshots
+        uses: chromaui/action@v13
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          # Changes on main become the new baseline; PRs report them for review.
+          autoAcceptChanges: main
+          exitZeroOnChanges: true
+          onlyChanged: true
