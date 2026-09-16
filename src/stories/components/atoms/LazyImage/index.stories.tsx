@@ -29,7 +29,7 @@ const meta: Meta<typeof LazyImage> = {
       description: "The image source from Unsplash.",
       table: {
         defaultValue: {
-          summary: "https://source.unsplash.com/random/600x400/?mountain",
+          summary: "https://picsum.photos/seed/mountain/600/400",
         },
       },
     },

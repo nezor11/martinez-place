@@ -175,22 +175,22 @@ export const Slider: Story = {
     title: "Modal Title",
     images: [
       {
-        src: "https://source.unsplash.com/random/600x400/?web-design",
+        src: "https://picsum.photos/seed/web-design/600/400",
         width: 600,
         height: 400,
       },
       {
-        src: "https://source.unsplash.com/random/600x400/?web-development",
+        src: "https://picsum.photos/seed/web-development/600/400",
         width: 600,
         height: 400,
       },
       {
-        src: "https://source.unsplash.com/random/600x400/?programming",
+        src: "https://picsum.photos/seed/programming/600/400",
         width: 600,
         height: 400,
       },
       {
-        src: "https://source.unsplash.com/random/600x400/?car",
+        src: "https://picsum.photos/seed/car/600/400",
         width: 600,
         height: 400,
       },
