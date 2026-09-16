@@ -11,9 +11,10 @@ import resumeEn from "./data/resume.en.json";
 import resumeEs from "./data/resume.es.json";
 import { type Locale, isLocale } from "./i18n";
 import { ThemeProvider } from "./providers/index";
-import { projectsFrom } from "./utils/projects";
+import { projectPath, projectsFrom } from "./utils/projects";
 import type { Resume } from "./utils/types/resume";
 
+export { projectPath };
 export {
   defaultLocale,
   localeFile,
