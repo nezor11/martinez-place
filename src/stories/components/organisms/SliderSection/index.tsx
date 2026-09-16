@@ -83,7 +83,8 @@ export interface SliderSectionProps {
 }
 
 export const SliderSection: FC<SliderSectionProps> = ({
-  slidesData,
+  // Defaults to empty so the hooks below stay safe before the guard renders null.
+  slidesData = [],
   icons,
   title,
 }) => {
