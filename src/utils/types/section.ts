@@ -77,6 +77,8 @@ export interface SlideDetails {
   slideDesc?: string;
   workDone?: string[];
   name: string;
+  /** English slide name, the source of the project slug in every language. */
+  slugSource?: string;
   company?: string;
   type: string;
   workDate: string;

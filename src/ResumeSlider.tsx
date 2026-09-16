@@ -21,6 +21,7 @@
 import type { SlideData } from "@/stories/components/organisms/SliderSection";
 import type { SliderSectionObject } from "@/stories/components/templates/Resume";
 import { Resume } from "@/stories/components/templates/Resume";
+import { projectSlugsFor } from "@/utils/projects";
 import { sanityImageUrl } from "@/utils/sanityImage";
 import type { Section } from "@/utils/types/section";
 import type { FC } from "react";
@@ -55,7 +56,8 @@ const mapSliderSection = (
     ? sliderDetails.slides
     : [];
 
-  const slidesData: SlideData[] = slides.map((slide) => {
+  const slugs = projectSlugsFor(slides);
+  const slidesData: SlideData[] = slides.map((slide, index) => {
     // Rich text arrives as sanitised HTML from fetch-resume.
     const consolidatedJobDescHtml = slide.slideDetails.slideDesc ?? "";
 
@@ -72,6 +74,7 @@ const mapSliderSection = (
         .toString(),
       title: slide.slideDetails.slideTitle || "",
       name: slide.slideDetails.name || "",
+      slug: slugs[index],
       iconsData: slide.slideDetails.icons
         ? slide.slideDetails.icons.map((icon) => ({
             name: icon.icon.name || "",

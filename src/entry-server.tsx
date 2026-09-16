@@ -11,6 +11,7 @@ import resumeEn from "./data/resume.en.json";
 import resumeEs from "./data/resume.es.json";
 import { type Locale, isLocale } from "./i18n";
 import { ThemeProvider } from "./providers/index";
+import { projectsFrom } from "./utils/projects";
 import type { Resume } from "./utils/types/resume";
 
 export {
@@ -29,7 +30,13 @@ const resumes: Record<Locale, Resume> = {
 
 export const resumeFor = (locale: Locale): Resume => resumes[locale];
 
-export const render = async (locale: string): Promise<string> => {
+/** Every project of a language with its slug, for the per-project pages. */
+export const projectsFor = (locale: Locale) => projectsFrom(resumes[locale]);
+
+export const render = async (
+  locale: string,
+  projectSlug?: string,
+): Promise<string> => {
   if (!isLocale(locale)) {
     throw new Error(`Unknown locale "${locale}"`);
   }
@@ -38,7 +45,7 @@ export const render = async (locale: string): Promise<string> => {
   await preloadIcons();
   return renderToString(
     <ThemeProvider>
-      <App locale={locale} resume={resumes[locale]} />
+      <App locale={locale} resume={resumes[locale]} projectSlug={projectSlug} />
     </ThemeProvider>,
   );
 };

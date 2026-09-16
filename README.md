@@ -90,7 +90,11 @@ Each technology icon is a component in `src/stories/components/molecules/IconGal
 
 ### Deep links
 
-Every project card has a slug from its Sanity name. Opening a card sets `#project-<slug>` in the URL, closing it clears it, and loading a page with that hash scrolls the slider to the card and opens it. The popup's link icon copies the absolute URL.
+Every project card has a slug from its English Sanity name (`slugSource`, so both languages share it). Opening a card sets `#project-<slug>` in the URL, closing it clears it, and loading a page with that hash scrolls the slider to the card and opens it.
+
+### Project pages
+
+Each project is also prerendered as its own page at `/project/<slug>/` and `/es/project/<slug>/` (`ProjectPage` inside the site header and footer), with its own title, description, social image (first gallery image), canonical, hreflang pair, `CreativeWork` JSON-LD and sitemap entry. The popup's link icon copies that URL. `main.tsx` detects the path, preloads the project's icons and hydrates the same app with `projectSlug`.
 
 ### Printing
 
