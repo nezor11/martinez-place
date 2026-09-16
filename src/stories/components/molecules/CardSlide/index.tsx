@@ -6,9 +6,9 @@ import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { Popup } from "@/stories/components/molecules/Popup";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import type { FC, SyntheticEvent } from "react";
-import { useMessages } from "@/i18n";
+import { useLocale, useMessages } from "@/i18n";
 import { cn } from "@/utils";
-import { projectHash } from "@/utils/slug";
+import { projectPath } from "@/utils/projects";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import "./index.css";
@@ -132,9 +132,12 @@ export const CardSlide: FC<CardSlideProps> = ({
     setShowModal(false);
     if (slug !== undefined) onClose?.(slug);
   };
+  // "Copy link" shares the project's own page, which carries its title,
+  // description and social image; the hash deep link stays for in-site use.
+  const locale = useLocale();
   const shareUrl =
     slug !== undefined && typeof window !== "undefined"
-      ? `${window.location.origin}${window.location.pathname}${projectHash(slug)}`
+      ? `${window.location.origin}${projectPath(locale, slug)}`
       : undefined;
 
   // The card is a plain wrapper: the opening control and the tech icon

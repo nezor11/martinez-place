@@ -47,7 +47,12 @@ test("the slider loops through all cards", async ({ page }) => {
     const swiper = (document.querySelector(".swiper") as HTMLElement & { swiper: { params: { loop: boolean }; slides: unknown[]; realIndex: number; slideNext: (speed: number) => void } }).swiper;
     const total = swiper.slides.length;
     for (let i = 0; i < total; i++) swiper.slideNext(0);
-    await new Promise((resolve) => setTimeout(resolve, 200));
+    // Swiper settles the loop asynchronously; under CPU load (CI, parallel
+    // builds) 200 ms was not always enough, so poll instead.
+    const deadline = Date.now() + 3000;
+    while (swiper.realIndex !== 0 && Date.now() < deadline) {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    }
     return { loop: swiper.params.loop, total, realIndex: swiper.realIndex };
   });
   expect(state.loop).toBe(true);

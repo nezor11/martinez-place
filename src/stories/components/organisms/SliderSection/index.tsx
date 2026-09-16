@@ -56,6 +56,8 @@ import "./index.css";
 export interface SlideData {
   /** Sanity slide name; unique even when two cards share a title. */
   name?: string;
+  /** URL slug of the project page and deep link (see src/utils/projects.ts). */
+  slug?: string;
   backgroundColor?: string;
   alt?: string;
   year?: string;
@@ -96,7 +98,10 @@ export const SliderSection: FC<SliderSectionProps> = ({
 
   // Deep links: #project-<slug> opens that card and scrolls the slider to it.
   const slugs = useMemo(
-    () => uniqueSlugs(slidesData.map((slide) => slide.name || slide.title)),
+    () =>
+      slidesData.every((slide) => slide.slug)
+        ? slidesData.map((slide) => slide.slug as string)
+        : uniqueSlugs(slidesData.map((slide) => slide.name || slide.title)),
     [slidesData]
   );
   const [linkedSlug, setLinkedSlug] = useState<string | null>(null);

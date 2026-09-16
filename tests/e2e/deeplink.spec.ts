@@ -24,7 +24,8 @@ test("opening a project sets a shareable hash that reopens it", async ({ page })
   await expect(share).toHaveAttribute("aria-label", "Copy link");
   await share.click();
   await expect(share).toHaveAttribute("aria-label", "Link copied");
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`http://localhost:4173/${hash}`);
+  // The copied link is the project's own page, not the hash.
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(`http://localhost:4173/project/${hash.replace("#project-", "")}/`);
 });
 
 test("the Spanish page deep-links with translated copy", async ({ page }) => {

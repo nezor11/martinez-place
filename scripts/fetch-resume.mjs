@@ -101,6 +101,7 @@ const buildQuery = (locale) => {
         "slideDetails": slides->{
           _id,
           ${l("name")},
+          "slugSource": coalesce(name.en, name),
           company,
           type,
           infoUrl,

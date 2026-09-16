@@ -91,6 +91,9 @@ export interface Messages {
   hideSearch: string;
   copyLink: string;
   linkCopied: string;
+  /** Link from a project page back to the portfolio slider. */
+  allProjects: string;
+  projectGallery: string;
   /** "fresh - Project", "Proyecto nuevo"… from the Sanity slide type. */
   project: (workType: string) => string;
   workDone: Record<WorkDoneKey, string>;
@@ -102,6 +105,8 @@ export interface Seo {
   /** Shorter title for social cards. */
   socialTitle: string;
   imageAlt: string;
+  /** <title> of a project page. */
+  projectTitle: (name: string, title: string) => string;
 }
 
 export const messages: Record<Locale, Messages> = {
@@ -134,6 +139,8 @@ export const messages: Record<Locale, Messages> = {
     hideSearch: "Hide search",
     copyLink: "Copy link",
     linkCopied: "Link copied",
+    allProjects: "All projects",
+    projectGallery: "Project images",
     project: (workType) =>
       `${{ fresh: "New", maintenance: "Maintenance" }[workType] ?? workType} - Project`,
     workDone: {
@@ -196,6 +203,8 @@ export const messages: Record<Locale, Messages> = {
     hideSearch: "Ocultar búsqueda",
     copyLink: "Copiar enlace",
     linkCopied: "Enlace copiado",
+    allProjects: "Todos los proyectos",
+    projectGallery: "Imágenes del proyecto",
     project: (workType) =>
       `Proyecto ${{ fresh: "nuevo", maintenance: "de mantenimiento" }[workType] ?? workType}`,
     workDone: {
@@ -239,6 +248,7 @@ export const seo: Record<Locale, Seo> = {
     description:
       "Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment.",
     imageAlt: "Jorge Martínez, Frontender in Barcelona",
+    projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
   es: {
     title:
@@ -248,6 +258,7 @@ export const seo: Record<Locale, Seo> = {
     description:
       "Diseñador, creador y desarrollador detallista, apasionado por la usabilidad y el frontend. Con experiencia en gestores de contenidos y comprometido con un entorno de trabajo positivo.",
     imageAlt: "Jorge Martínez, frontender en Barcelona",
+    projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
 };
 

@@ -25,6 +25,8 @@
 import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/MoonIcon";
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
+import { ProjectPage } from "@/stories/components/pages/ProjectPage";
+import { projectPath, projectsFrom } from "@/utils/projects";
 import { Analytics } from "@vercel/analytics/react";
 import type { Resume } from "@/utils/types/resume";
 import { useContext, useEffect } from "react";
@@ -81,16 +83,32 @@ const useTheme = () => {
 const ResumeContent = ({
   latestResume,
   locale,
+  projectSlug,
 }: {
   latestResume: Resume;
   locale: Locale;
+  projectSlug?: string;
 }) => {
   const t = useMessages();
+  // A project page keeps the site header and footer around the project.
+  const project = projectSlug
+    ? projectsFrom(latestResume).find((p) => p.slug === projectSlug)
+    : undefined;
+  if (projectSlug && !project) {
+    throw new Error(`Unknown project "${projectSlug}"`);
+  }
   return (
-    <main key={latestResume._id}>
-      {latestResume.pageBuilder.map((section) => (
-        <SectionRenderer key={section._key} section={section} />
-      ))}
+    <main key={`${latestResume._id}:${projectSlug ?? ""}`}>
+      {project ? (
+        <>
+          <SectionRenderer section={latestResume.pageBuilder[0]} />
+          <ProjectPage project={project} />
+        </>
+      ) : (
+        latestResume.pageBuilder.map((section) => (
+          <SectionRenderer key={section._key} section={section} />
+        ))
+      )}
       {latestResume.pageBuilder[0] && (
         <Footer
           copy_right_text={latestResume.title}
@@ -112,14 +130,20 @@ const ResumeContent = ({
  * Links to the same page in every other language. Plain anchors: each
  * language is its own prerendered page, so no client routing is involved.
  */
-const LanguageSwitcher = ({ locale }: { locale: Locale }) => (
+const LanguageSwitcher = ({
+  locale,
+  projectSlug,
+}: {
+  locale: Locale;
+  projectSlug?: string;
+}) => (
   <nav aria-label={messages[locale].languageName} className="language-switcher">
     {locales
       .filter((other) => other !== locale)
       .map((other) => (
         <a
           key={other}
-          href={localePath(other)}
+          href={projectSlug ? projectPath(other, projectSlug) : localePath(other)}
           hrefLang={other}
           lang={other}
           aria-label={messages[other].switchTo}
@@ -134,9 +158,11 @@ const LanguageSwitcher = ({ locale }: { locale: Locale }) => (
 interface AppProps {
   locale: Locale;
   resume: Resume;
+  /** Renders the page of one project instead of the resume sections. */
+  projectSlug?: string;
 }
 
-function App({ locale, resume }: AppProps) {
+function App({ locale, resume, projectSlug }: AppProps) {
   const { darkTheme, toggleTheme } = useTheme();
   const t = messages[locale];
 
@@ -144,7 +170,7 @@ function App({ locale, resume }: AppProps) {
     <LocaleProvider locale={locale}>
       <div className="container py-10 mx-auto px-4 max-w-5xl relative">
         <div className="site-controls absolute right-3 top-4 flex items-center gap-4">
-          <LanguageSwitcher locale={locale} />
+          <LanguageSwitcher locale={locale} projectSlug={projectSlug} />
           <button
             type="button"
             onClick={toggleTheme}
@@ -154,7 +180,11 @@ function App({ locale, resume }: AppProps) {
             {darkTheme ? <MemoizedSunIcon /> : <MemoizedMoonIcon />}
           </button>
         </div>
-        <ResumeContent latestResume={resume} locale={locale} />
+        <ResumeContent
+          latestResume={resume}
+          locale={locale}
+          projectSlug={projectSlug}
+        />
         {/* Cookieless page views, only on Vercel builds; served same-origin under /_vercel/insights. */}
         {__VERCEL__ && <Analytics />}
       </div>
