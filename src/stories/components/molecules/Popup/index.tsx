@@ -40,6 +40,7 @@ import type { ButtonTone } from "@/stories/components/atoms/ButtonClose";
 import { toneClasses } from "@/stories/components/atoms/ButtonClose";
 import { cn } from "@/utils";
 import { isLightColor, popupBackground } from "@/utils/color";
+import { isVisualTest } from "@/utils/visualTest";
 import type { FC } from "react";
 import { useEffect, useMemo, useState } from "react";
 import "./index.css";
@@ -108,8 +109,11 @@ export const Popup: FC<PopupProps> = ({
 
   const handleClose = () => onClose();
 
+  // A random image opens the gallery, except under visual testing, where the
+  // snapshot must be the same on every build.
   const randomizedImages = useMemo(
-    () => [...images].sort(() => Math.random() - 0.5),
+    () =>
+      isVisualTest() ? images : [...images].sort(() => Math.random() - 0.5),
     [images],
   );
 
