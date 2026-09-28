@@ -24,13 +24,32 @@ export const framedPhoto = async ({
     sharp(mask).resize(fit).ensureAlpha().png().toBuffer(),
     sharp(frame).resize(fit).ensureAlpha().png().toBuffer(),
   ]);
-  return sharp(photo)
+  const { data, info } = await sharp(photo)
     .resize(fit)
     .ensureAlpha()
     .composite([
       { input: maskLayer, blend: "dest-in" },
       { input: frameLayer, blend: "over" },
     ])
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+  // Only the geometry: passing info.premultiplied would make sharp
+  // unpremultiply the buffer and zero the colour under alpha 0 again.
+  const { width, height, channels } = info;
+  return sharp(whiteUnderTransparent(data), { raw: { width, height, channels } })
     .png()
     .toBuffer();
+};
+
+/**
+ * Fully transparent pixels come out black; PDF viewers interpolate colour
+ * and alpha separately when scaling, so that black bleeds into the light
+ * edge of the frame as a dark fringe. Painting them white (the page colour)
+ * removes the halo while keeping the transparency.
+ */
+export const whiteUnderTransparent = (rgba) => {
+  for (let i = 0; i < rgba.length; i += 4) {
+    if (rgba[i + 3] === 0) rgba[i] = rgba[i + 1] = rgba[i + 2] = 255;
+  }
+  return rgba;
 };
