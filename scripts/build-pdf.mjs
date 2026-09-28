@@ -15,6 +15,7 @@ import React from "react";
 import {
   Document,
   Font,
+  Image,
   Link,
   Page,
   StyleSheet,
@@ -23,6 +24,7 @@ import {
   renderToFile,
 } from "@react-pdf/renderer";
 import { localeFile, localePath, localesFromArgv, pdfMessages, resumeRawFile } from "./locales.mjs";
+import { framedPhoto } from "./photo-frame.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const siteUrl = "https://martinez.place";
@@ -122,6 +124,10 @@ const ink = "#111827";
 const muted = "#4b5563";
 const styles = StyleSheet.create({
   page: { fontFamily: family, fontSize: 9.5, color: ink, paddingTop: 40, paddingBottom: 48, paddingHorizontal: 44, lineHeight: 1.4 },
+  header: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
+  headerMain: { flex: 1, paddingRight: 16 },
+  // The polaroid frame as on the site: the tape overlaps the top margin.
+  photo: { width: 112, height: 112, marginTop: -16, marginRight: -12 },
   name: { fontSize: 24, fontWeight: 700, letterSpacing: 0.5, lineHeight: 1.15 },
   role: { fontSize: 12, color: rose, textTransform: "uppercase", marginTop: 6, letterSpacing: 1 },
   contact: { marginTop: 6, color: muted, fontSize: 9 },
@@ -232,6 +238,8 @@ const Portfolio = ({ section, t }) => {
 };
 
 const generated = new Date().toISOString().slice(0, 10);
+// Composed once: the same header photo, mask and frame the site renders.
+const photo = await framedPhoto();
 
 const buildPdf = async (locale) => {
   const t = pdfMessages[locale];
@@ -254,14 +262,23 @@ const buildPdf = async (locale) => {
     h(
       Page,
       { size: "A4", style: styles.page },
-      h(Text, { style: styles.name }, header.name),
-      h(Text, { style: styles.role }, header.jobDescHeader),
       h(
-        Text,
-        { style: styles.contact },
-        [contact.email, contact.phone, contact.address].filter(Boolean).join("   ·   "),
-        "   ·   ",
-        h(Link, { src: pageUrl, style: styles.link }, "martinez.place")
+        View,
+        { style: styles.header },
+        h(
+          View,
+          { style: styles.headerMain },
+          h(Text, { style: styles.name }, header.name),
+          h(Text, { style: styles.role }, header.jobDescHeader),
+          h(
+            Text,
+            { style: styles.contact },
+            [contact.email, contact.phone, contact.address].filter(Boolean).join("   ·   "),
+            "   ·   ",
+            h(Link, { src: pageUrl, style: styles.link }, "martinez.place")
+          )
+        ),
+        h(Image, { src: photo, style: styles.photo })
       ),
       skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, t.skills), h(Text, { style: styles.skills }, skills.join("  ·  "))) : null,
       ...resume.pageBuilder.map((section) =>
