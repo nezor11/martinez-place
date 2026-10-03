@@ -81,6 +81,17 @@ const blocksToParagraphs = (blocks) =>
     }))
     .filter((p) => p.runs.some((r) => r.text.trim()));
 
+/** The site shows the whole profile; the PDF keeps its opening paragraphs. */
+const profileParagraphs = 3;
+const isProfile = (section) => (section.sections || []).every((item) => !item.company);
+const profileItems = (section) => {
+  const blocks = (section.sections || [])
+    .flatMap((item) => (Array.isArray(item.jobDesc) ? item.jobDesc : []))
+    .filter((block) => block?._type === "block" && (block.children || []).some((c) => (c.text || "").trim()))
+    .slice(0, profileParagraphs);
+  return [{ _key: "profile", jobDesc: blocks }];
+};
+
 /** The profile subtitle is stored as HTML lines; turn it into bullets. */
 const htmlToLines = (html) =>
   String(html || "")
@@ -183,7 +194,7 @@ const InfoSection = ({ section, t }) =>
     { style: styles.section },
     h(Text, { style: styles.sectionTitle }, section.titleSection),
     section.subtitleSection ? h(View, { style: { marginBottom: 6 } }, h(Bullets, { lines: htmlToLines(section.subtitleSection) })) : null,
-    ...(section.sections || []).map((item) =>
+    ...(isProfile(section) ? profileItems(section) : section.sections || []).map((item) =>
       h(
         View,
         { key: item._key, style: styles.item, wrap: false },
