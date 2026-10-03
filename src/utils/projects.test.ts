@@ -10,7 +10,6 @@ const resume = {
   _id: "r",
   title: "Resume",
   _updatedAt: "",
-  pdfResumeUrl: "",
   slug: "",
   pageBuilder: [
     { _type: "header", _key: "h" },

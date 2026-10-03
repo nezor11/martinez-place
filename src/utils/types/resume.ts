@@ -5,6 +5,5 @@ export interface Resume {
   title: string;
   _updatedAt: string;
   pageBuilder: Section[];
-  pdfResumeUrl: string;
   slug: string;
 }
