@@ -279,7 +279,9 @@ const Portfolio = ({ section, t }) => {
         h(
           Text,
           null,
-          h(Text, { style: styles.bold }, s.slideTitle || s.name),
+          s.infoUrl
+            ? h(Link, { src: s.infoUrl, style: [styles.bold, styles.link] }, s.slideTitle || s.name)
+            : h(Text, { style: styles.bold }, s.slideTitle || s.name),
           s.company ? h(Text, { style: { color: muted } }, `  ·  ${titleCase(s.company)}`) : null
         ),
         s.slideSummary ? h(Text, { style: { color: muted, fontSize: 8.5 } }, s.slideSummary) : null
