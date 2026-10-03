@@ -135,7 +135,6 @@ const buildQuery = (locale) => {
       }
     }
   },
-  "pdfResumeUrl": pdfResume.asset->url,
   slug
 }`;
 };

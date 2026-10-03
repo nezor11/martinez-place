@@ -198,42 +198,56 @@ const Runs = ({ runs }) =>
     )
   );
 
-const Paragraphs = ({ blocks }) =>
-  h(
-    View,
-    null,
-    ...blocksToParagraphs(blocks).map((p, i) =>
-      p.bullet
-        ? h(View, { key: i, style: styles.bullet }, h(Text, { style: styles.bulletDot }, "•"), h(View, { style: { flex: 1 } }, h(Runs, { runs: p.runs })))
-        : h(View, { key: i, style: styles.paragraph }, h(Runs, { runs: p.runs }))
-    )
-  );
+/** One paragraph or bullet; it never splits across pages. */
+const Paragraph = (p, i) =>
+  p.bullet
+    ? h(View, { key: i, style: styles.bullet, wrap: false }, h(Text, { style: styles.bulletDot }, "•"), h(View, { style: { flex: 1 } }, h(Runs, { runs: p.runs })))
+    : h(View, { key: i, style: styles.paragraph, wrap: false }, h(Runs, { runs: p.runs }));
 
 const Bullets = ({ lines }) =>
   h(View, null, ...lines.map((line, i) => h(View, { key: i, style: styles.bullet }, h(Text, { style: styles.bulletDot }, "•"), h(Text, { style: { flex: 1 } }, line))));
+
+/** Short bullets side by side: the profile traits take half the height. */
+const BulletColumns = ({ lines }) => {
+  const half = Math.ceil(lines.length / 2);
+  return h(
+    View,
+    { style: styles.columns },
+    h(View, { style: styles.column }, h(Bullets, { lines: lines.slice(0, half) })),
+    h(View, { style: styles.column }, h(Bullets, { lines: lines.slice(half) }))
+  );
+};
 
 const InfoSection = ({ section, t }) =>
   h(
     View,
     { style: styles.section },
-    h(Text, { style: styles.sectionTitle }, section.titleSection),
-    section.subtitleSection ? h(View, { style: { marginBottom: 6 } }, h(Bullets, { lines: htmlToLines(section.subtitleSection) })) : null,
-    ...(isProfile(section) ? profileItems(section) : section.sections || []).map((item) =>
-      h(
+    h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, section.titleSection),
+    section.subtitleSection ? h(View, { style: { marginBottom: 6 } }, h(BulletColumns, { lines: htmlToLines(section.subtitleSection) })) : null,
+    // An item may continue on the next page, but only between paragraphs,
+    // and its heading always stays with the first one.
+    ...(isProfile(section) ? profileItems(section) : section.sections || []).map((item) => {
+      const [first, ...rest] = blocksToParagraphs(item.jobDesc);
+      return h(
         View,
-        { key: item._key, style: styles.item, wrap: false },
-        item.company
-          ? h(
-              View,
-              { style: styles.itemHead },
-              item.infoUrl ? h(Link, { src: item.infoUrl, style: [styles.company, styles.link] }, item.company) : h(Text, { style: styles.company }, item.company),
-              h(Text, { style: styles.date }, dateRange(item.startDate, item.finishDate, t))
-            )
-          : null,
-        item.jobTitle ? h(Text, { style: styles.jobTitle }, item.jobTitle) : null,
-        h(Paragraphs, { blocks: item.jobDesc })
-      )
-    )
+        { key: item._key, style: styles.item },
+        h(
+          View,
+          { wrap: false },
+          item.company
+            ? h(
+                View,
+                { style: styles.itemHead },
+                item.infoUrl ? h(Link, { src: item.infoUrl, style: [styles.company, styles.link] }, item.company) : h(Text, { style: styles.company }, item.company),
+                h(Text, { style: styles.date }, dateRange(item.startDate, item.finishDate, t))
+              )
+            : null,
+          item.jobTitle ? h(Text, { style: styles.jobTitle }, item.jobTitle) : null,
+          first ? Paragraph(first, 0) : null
+        ),
+        ...rest.map((p, i) => Paragraph(p, i + 1))
+      );
+    })
   );
 
 const Portfolio = ({ section, t }) => {
@@ -241,7 +255,13 @@ const Portfolio = ({ section, t }) => {
     .map((s) => s.slideDetails)
     .filter(Boolean)
     .sort((a, b) => String(b.workDate || "").localeCompare(String(a.workDate || "")));
-  const half = Math.ceil(slides.length / 2);
+  // Split where both columns are about as tall: long titles wrap, so an
+  // even count left the first column a project longer than the page.
+  const lines = (s) =>
+    Math.ceil(`${s.slideTitle || s.name}  ·  ${titleCase(s.company)}`.length / 40) + Math.ceil(String(s.slideSummary || "").length / 48);
+  const total = slides.reduce((sum, s) => sum + lines(s), 0);
+  let half = 0;
+  for (let sum = 0; half < slides.length && sum + lines(slides[half]) / 2 <= total / 2; half += 1) sum += lines(slides[half]);
   const Project = (s) =>
     h(
       View,
@@ -262,7 +282,7 @@ const Portfolio = ({ section, t }) => {
   return h(
     View,
     { style: styles.section },
-    h(Text, { style: styles.sectionTitle }, section.titleSection || t.portfolio),
+    h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, section.titleSection || t.portfolio),
     h(
       View,
       { style: styles.columns },
@@ -316,7 +336,7 @@ const buildPdf = async (locale) => {
         ),
         h(Image, { src: photo, style: styles.photo })
       ),
-      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, t.skills), h(Text, { style: styles.skills }, skillsLine(skills))) : null,
+      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, t.skills), h(Text, { style: styles.skills }, skillsLine(skills))) : null,
       ...resume.pageBuilder.map((section) =>
         section._type === "infoSection"
           ? h(InfoSection, { key: section._key, section, t })
