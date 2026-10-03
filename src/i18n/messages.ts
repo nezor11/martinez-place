@@ -255,7 +255,7 @@ export const seo: Record<Locale, Seo> = {
     title: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     socialTitle: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     description:
-      "Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment.",
+      "Frontend & Mobile Developer with 18 years building for the web, the last six at Novicell as frontend developer and Technical Project Lead. React, Next.js, TypeScript, React Native, Android (Kotlin), WordPress and PHP.",
     imageAlt: "Jorge Martínez, Frontend & Mobile Developer in Valencia",
     projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
@@ -263,7 +263,7 @@ export const seo: Record<Locale, Seo> = {
     title: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     socialTitle: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     description:
-      "Diseñador, creador y desarrollador detallista, apasionado por la usabilidad y el frontend. Con experiencia en gestores de contenidos y comprometido con un entorno de trabajo positivo.",
+      "Frontend & Mobile Developer con 18 años construyendo para la web, los últimos seis en Novicell como desarrollador frontend y Technical Project Lead. React, Next.js, TypeScript, React Native, Android (Kotlin), WordPress y PHP.",
     imageAlt: "Jorge Martínez, Frontend & Mobile Developer en Valencia",
     projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
