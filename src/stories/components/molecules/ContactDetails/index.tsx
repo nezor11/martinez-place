@@ -52,7 +52,11 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
         .replace(/^-+|-+$/g, "");
 
     const classContactDetail = slugify(contactDetail.title);
-    const addresUrlEncoded = (contactDetail.address ?? "").replace(/ /g, "+");
+    // Only the place goes to the map: "Valencia · remote" searches "Valencia".
+    const addresUrlEncoded = (contactDetail.address ?? "")
+      .split("·")[0]
+      .trim()
+      .replace(/ /g, "+");
 
     return (
       <div

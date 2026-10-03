@@ -43,10 +43,10 @@ export const Default: Story = {
       rel: "noreferrer noopener",
     },
     contact_details: {
-      title: "Casa Barcelona",
+      title: "Valencia",
       phone: "+3468080202",
       email: "hola@micorreo.es",
-      address: "08025 Barcelona",
+      address: "Valencia · remote",
     },
   },
 };

@@ -43,17 +43,17 @@ export const Default: Story = {
     dataHeaderObject: [
       {
         name: "Jane Doe",
-        jobTitle: "Frontender",
+        jobTitle: "Frontend & Mobile Developer",
         iconsData: [
           { name: "CSS3Icon", width: "1em", height: "1em" },
           { name: "ViteIcon", width: "1em", height: "1em" },
           { name: "GitBranchIcon", width: "1em", height: "1em" },
         ],
         contactDetail: {
-          title: "Casa Barcelona",
+          title: "Valencia",
           phone: "+3468080202",
           email: "hola@micorreo.es",
-          address: "08025 Barcelona",
+          address: "Valencia · remote",
         },
         imageDetail: {
           image: "https://placehold.co/300x300", // Imagen inicial placeholder
@@ -155,10 +155,10 @@ export const Default: Story = {
         rel: "noreferrer noopener",
       },
       contact_details: {
-        title: "Casa Barcelona",
+        title: "Valencia",
         phone: "+3468080202",
         email: "hola@micorreo.es",
-        address: "08025 Barcelona",
+        address: "Valencia · remote",
       },
     },
   },

@@ -33,10 +33,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     contactDetail: {
-      title: "Casa Barcelona",
+      title: "Valencia",
       phone: "+3468080202",
       email: "hola@micorreo.es",
-      address: "08025 Barcelona",
+      address: "Valencia · remote",
     },
   },
 };

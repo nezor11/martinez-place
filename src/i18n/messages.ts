@@ -252,22 +252,19 @@ export const messages: Record<Locale, Messages> = {
 
 export const seo: Record<Locale, Seo> = {
   en: {
-    title:
-      "Jorge Martínez Ortiz - Frontend Developer, Designer, Creator, Frontender, Trainer",
-    socialTitle: "Jorge Martínez Ortiz - Designer, Creator, Developer, Trainer",
+    title: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
+    socialTitle: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     description:
       "Detail-oriented designer, creator, and developer with a passion for usability and frontend. Skilled in content management systems and committed to creating a positive work environment.",
-    imageAlt: "Jorge Martínez, Frontender in Barcelona",
+    imageAlt: "Jorge Martínez, Frontend & Mobile Developer in Valencia",
     projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
   es: {
-    title:
-      "Jorge Martínez Ortiz - Desarrollador frontend, diseñador, creador, formador",
-    socialTitle:
-      "Jorge Martínez Ortiz - Diseñador, creador, desarrollador, formador",
+    title: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
+    socialTitle: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
     description:
       "Diseñador, creador y desarrollador detallista, apasionado por la usabilidad y el frontend. Con experiencia en gestores de contenidos y comprometido con un entorno de trabajo positivo.",
-    imageAlt: "Jorge Martínez, frontender en Barcelona",
+    imageAlt: "Jorge Martínez, Frontend & Mobile Developer en Valencia",
     projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
   },
 };

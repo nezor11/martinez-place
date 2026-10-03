@@ -148,6 +148,11 @@ const projectJsonLd = (locale, project) => {
 const jsonLdFor = (locale) => {
   const resume = resumeFor(locale);
   const header = resume.pageBuilder.find((s) => s._type === "header") ?? {};
+  // The city alone: no postal code, no note after the dot ("Valencia · remote").
+  const locality = (header.contactDetails?.address ?? "")
+    .replace(/^\d+\s*/, "")
+    .split("·")[0]
+    .trim();
   // Structured data for search engines. Contact details stay out on purpose:
   // the page obfuscates them to keep scrapers away.
   const jsonLd = {
@@ -157,8 +162,8 @@ const jsonLdFor = (locale) => {
     jobTitle: header.jobDescHeader,
     url: pageUrl(locale),
     image: header.imageDetails?.url,
-    address: header.contactDetails?.address
-      ? { "@type": "PostalAddress", addressLocality: "Barcelona", addressCountry: "ES" }
+    address: locality
+      ? { "@type": "PostalAddress", addressLocality: locality, addressCountry: "ES" }
       : undefined,
   };
   return `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>`;
