@@ -155,7 +155,7 @@ const ink = "#111827";
 const muted = "#4b5563";
 const styles = StyleSheet.create({
   // No ligatures: some text extractors drop the fi/fl glyphs ("workfows").
-  page: { fontFamily: family, fontFeatureSettings: { liga: false }, fontSize: 9.5, color: ink, paddingTop: 40, paddingBottom: 48, paddingHorizontal: 44, lineHeight: 1.4 },
+  page: { fontFamily: family, fontFeatureSettings: { liga: false }, fontSize: 9.5, color: ink, paddingTop: 40, paddingBottom: 48, paddingHorizontal: 44, lineHeight: 1.35 },
   header: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
   headerMain: { flex: 1, paddingRight: 16 },
   // The polaroid frame as on the site: the tape overlaps the top margin.
@@ -164,8 +164,7 @@ const styles = StyleSheet.create({
   role: { fontSize: 12, color: rose, textTransform: "uppercase", marginTop: 6, letterSpacing: 1 },
   contact: { marginTop: 6, color: muted, fontSize: 9 },
   contactLinks: { marginTop: 2, color: muted, fontSize: 9 },
-  section: { marginTop: 16 },
-  sectionTitle: { fontSize: 11, fontWeight: 700, color: rose, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 6, paddingBottom: 3, borderBottomWidth: 0.8, borderBottomColor: "#fecdd3" },
+  sectionTitle: { marginTop: 16, fontSize: 11, fontWeight: 700, color: rose, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 6, paddingBottom: 3, borderBottomWidth: 0.8, borderBottomColor: "#fecdd3" },
   item: { marginBottom: 8 },
   itemHead: { flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" },
   company: { fontSize: 10.5, fontWeight: 700 },
@@ -187,6 +186,13 @@ const styles = StyleSheet.create({
 });
 
 // --- components ------------------------------------------------------------
+/**
+ * Room a section title wants below it, or it moves to the next page with
+ * its content. Titles and items are direct children of the page so the
+ * rule applies between them.
+ */
+const titlePresence = 80;
+
 const Runs = ({ runs }) =>
   h(
     Text,
@@ -220,9 +226,9 @@ const BulletColumns = ({ lines }) => {
 
 const InfoSection = ({ section, t }) =>
   h(
-    View,
-    { style: styles.section },
-    h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, section.titleSection),
+    React.Fragment,
+    null,
+    h(Text, { style: styles.sectionTitle, minPresenceAhead: titlePresence }, section.titleSection),
     section.subtitleSection ? h(View, { style: { marginBottom: 6 } }, h(BulletColumns, { lines: htmlToLines(section.subtitleSection) })) : null,
     // An item may continue on the next page, but only between paragraphs,
     // and its heading always stays with the first one.
@@ -280,9 +286,11 @@ const Portfolio = ({ section, t }) => {
       )
     );
   return h(
-    View,
-    { style: styles.section },
-    h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, section.titleSection || t.portfolio),
+    React.Fragment,
+    null,
+    // The portfolio starts its own page: the columns below break on their
+    // own, so the title could otherwise stay behind at the foot of a page.
+    h(Text, { style: styles.sectionTitle, break: true }, section.titleSection || t.portfolio),
     h(
       View,
       { style: styles.columns },
@@ -336,7 +344,7 @@ const buildPdf = async (locale) => {
         ),
         h(Image, { src: photo, style: styles.photo })
       ),
-      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle, minPresenceAhead: 48 }, t.skills), h(Text, { style: styles.skills }, skillsLine(skills))) : null,
+      skills.length ? h(React.Fragment, null, h(Text, { style: styles.sectionTitle, minPresenceAhead: titlePresence }, t.skills), h(Text, { style: styles.skills }, skillsLine(skills))) : null,
       ...resume.pageBuilder.map((section) =>
         section._type === "infoSection"
           ? h(InfoSection, { key: section._key, section, t })
