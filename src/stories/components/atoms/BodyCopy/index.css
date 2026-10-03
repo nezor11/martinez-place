@@ -7,9 +7,32 @@
     @apply mt-2;
   }
 
+  /* Lists in rich text: Tailwind's reset leaves them without markers. */
+  > div > ul {
+    @apply list-disc pl-5 marker:text-primary-600 dark:marker:text-primary-400;
+
+    > li + li {
+      @apply mt-1;
+    }
+  }
+
+  > div > p + ul,
+  > div > ul + p {
+    @apply mt-2;
+  }
+
   &.main-text {
     > div > p + p {
       @apply mt-8;
+    }
+
+    > div > ul > li + li {
+      @apply mt-2;
+    }
+
+    > div > p + ul,
+    > div > ul + p {
+      @apply mt-4;
     }
   }
 }
