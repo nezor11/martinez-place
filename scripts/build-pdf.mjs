@@ -154,7 +154,8 @@ const rose = "#e11d48";
 const ink = "#111827";
 const muted = "#4b5563";
 const styles = StyleSheet.create({
-  page: { fontFamily: family, fontSize: 9.5, color: ink, paddingTop: 40, paddingBottom: 48, paddingHorizontal: 44, lineHeight: 1.4 },
+  // No ligatures: some text extractors drop the fi/fl glyphs ("workfows").
+  page: { fontFamily: family, fontFeatureSettings: { liga: false }, fontSize: 9.5, color: ink, paddingTop: 40, paddingBottom: 48, paddingHorizontal: 44, lineHeight: 1.4 },
   header: { flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start" },
   headerMain: { flex: 1, paddingRight: 16 },
   // The polaroid frame as on the site: the tape overlaps the top margin.
