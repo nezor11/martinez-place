@@ -90,17 +90,26 @@ export const ContentSlider: FC<ContentSliderProps> = ({
         <div>
           <div className="content-wrapper">
             <div className="w-full xl:max-w-5xl xl:ml-auto">
-              <div className="flex">
-                <SubtitleCopy
-                  text={formatCompanyName(company)}
-                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
-                  subtitle="h4"
-                />
-                <SubtitleCopy
-                  text={year ?? ""}
-                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
-                  subtitle="h4"
-                />
+              {/* Below lg the close and share buttons sit over the top right
+                  corner, so the row keeps clear of them and the icons wrap. */}
+              <div className="flex flex-wrap items-center gap-x-3 pr-24 lg:pr-0">
+                <div className="flex">
+                  <SubtitleCopy
+                    text={formatCompanyName(company)}
+                    mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
+                    subtitle="h4"
+                  />
+                  <SubtitleCopy
+                    text={year ?? ""}
+                    mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
+                    subtitle="h4"
+                  />
+                </div>
+                {iconsData && iconsData.length > 0 && (
+                  <div className="content-slider__icons min-h-6 text-lg [&_svg]:mx-0.5">
+                    <SuspenseIconGallery iconsData={iconsData} />
+                  </div>
+                )}
               </div>
               <TitleCopy
                 text={title}
@@ -151,9 +160,6 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 </ul>
               </div>
             )}
-            <div className="logos-wrapper w-full xl:max-w-5xl xl:ml-auto mt-8 mb-8 lg:mb-4 text-3xl [&_svg]:mx-1">
-              <SuspenseIconGallery iconsData={iconsData} />
-            </div>
           </div>
         </div>
       </div>
