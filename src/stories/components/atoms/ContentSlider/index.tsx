@@ -106,7 +106,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                   />
                 </div>
                 {iconsData && iconsData.length > 0 && (
-                  <div className="content-slider__icons min-h-6 text-lg [&_svg]:mx-0.5">
+                  <div className="content-slider__icons min-h-6 translate-y-px text-lg [&_svg]:mx-[3px]">
                     <SuspenseIconGallery iconsData={iconsData} />
                   </div>
                 )}
