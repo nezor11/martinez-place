@@ -22,18 +22,29 @@
   }
 }
 
+/* The icons always sit on one line: the font size is their largest size and
+   they shrink together when the row is narrower than that. */
 .header__aux-gallery-details {
   div.flex.items-center {
-    @apply text-base;
+    @apply text-2xl;
     @apply justify-start;
+    @apply flex-nowrap;
 
     @media (width >= theme(--breakpoint-lg)) {
-      @apply text-4xl;
+      @apply text-3xl;
     }
   }
   svg {
-    @apply mx-0.5;
+    @apply mx-px;
     @apply my-0.5;
+    flex: 0 1 1em;
+    min-width: 0;
+    height: auto;
+    aspect-ratio: 1;
+
+    @media (width >= theme(--breakpoint-lg)) {
+      @apply mx-0.5;
+    }
   }
 }
 
