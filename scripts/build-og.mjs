@@ -50,7 +50,7 @@ const resume = JSON.parse(readFileSync(dataFile, "utf8"));
 const header = resume.pageBuilder.find((s) => s._type === "header") ?? {};
 const name = header.name ?? "Jorge Martínez";
 const role = header.jobDescHeader ?? "";
-const city = (header.contactDetails?.address ?? "").replace(/^\d+\s*/, "") || "Barcelona";
+const city = (header.contactDetails?.address ?? "").replace(/^\d+\s*/, "") || "Valencia";
 const skills = (header.icons ?? [])
   .map((i) => i.iconDetails?.name ?? "")
   .map((n) => ({ HTML5Icon: "HTML5", CSS3Icon: "CSS3", JavaScriptIcon: "JavaScript", TypeScriptIcon: "TypeScript", NodeJSIcon: "Node.js", WebPackIcon: "Webpack", NextJSIcon: "Next.js", VueIcon: "Vue", ViteIcon: "Vite", NuxtIcon: "Nuxt", ReactIcon: "React", WordpressIcon: "WordPress", PhpIcon: "PHP", GitBranchIcon: "Git", CommercetoolsIcon: "commercetools", KotlinIcon: "Kotlin", ReactNativeIcon: "React Native", AndroidIcon: "Android", JetpackComposeIcon: "Jetpack Compose", TailwindIcon: "Tailwind CSS", ExpoIcon: "Expo" })[n] ?? n.replace(/Icon$/, ""))
