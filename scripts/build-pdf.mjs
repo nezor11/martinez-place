@@ -67,7 +67,9 @@ const dateRange = (start, finish, t) => {
   return a === b ? `${a}` : `${a} > ${b}`;
 };
 
-/** Portable text blocks -> [{ bullet, runs: [{ text, bold, italic }] }]. */
+const linkDefs = (block) => (block?.markDefs || []).filter((def) => def._type === "link" && def.href);
+
+/** Portable text blocks -> [{ bullet, runs: [{ text, bold, italic, href }] }]. */
 const blocksToParagraphs = (blocks) =>
   (Array.isArray(blocks) ? blocks : [])
     .filter((block) => block?._type === "block")
@@ -77,20 +79,35 @@ const blocksToParagraphs = (blocks) =>
         text: child.text || "",
         bold: (child.marks || []).includes("strong"),
         italic: (child.marks || []).includes("em"),
+        href: linkDefs(block).find((def) => (child.marks || []).includes(def._key))?.href,
       })),
     }))
     .filter((p) => p.runs.some((r) => r.text.trim()));
 
 /** The site shows the whole profile; the PDF keeps its opening paragraphs. */
 const profileParagraphs = 3;
-const isProfile = (section) => (section.sections || []).every((item) => !item.company);
-const profileItems = (section) => {
-  const blocks = (section.sections || [])
+const isProfile = (section) => section._type === "infoSection" && (section.sections || []).every((item) => !item.company);
+const profileBlocks = (section) =>
+  (section.sections || [])
     .flatMap((item) => (Array.isArray(item.jobDesc) ? item.jobDesc : []))
-    .filter((block) => block?._type === "block" && (block.children || []).some((c) => (c.text || "").trim()))
-    .slice(0, profileParagraphs);
-  return [{ _key: "profile", jobDesc: blocks }];
-};
+    .filter((block) => block?._type === "block" && (block.children || []).some((c) => (c.text || "").trim()));
+const profileItems = (section) => [{ _key: "profile", jobDesc: profileBlocks(section).slice(0, profileParagraphs) }];
+/**
+ * Paragraphs past the summary that carry links (LinkedIn, GitHub...) go
+ * under the contact line, where the photo leaves room for them.
+ */
+const profileLinks = (resume) =>
+  resume.pageBuilder
+    .filter(isProfile)
+    .flatMap((section) => profileBlocks(section).slice(profileParagraphs))
+    .filter((block) => linkDefs(block).length > 0);
+
+/**
+ * Skills on one flowing line. Non-breaking spaces keep a name such as
+ * "React Native" whole and its separator beside it, so no line starts
+ * with a dot.
+ */
+const skillsLine = (skills) => skills.map((skill) => skill.replace(/ /g, "\u00A0")).join("\u00A0\u00A0·\u00A0 ");
 
 /** The profile subtitle is stored as HTML lines; turn it into bullets. */
 const htmlToLines = (html) =>
@@ -127,6 +144,9 @@ const iconLabel = (name) =>
     JetpackComposeIcon: "Jetpack Compose",
     TailwindIcon: "Tailwind CSS",
     ExpoIcon: "Expo",
+    StorybookIcon: "Storybook",
+    SanityIcon: "Sanity",
+    GraphqlIcon: "GraphQL",
   })[name] || name.replace(/Icon$/, "");
 
 // --- styles ----------------------------------------------------------------
@@ -142,6 +162,7 @@ const styles = StyleSheet.create({
   name: { fontSize: 24, fontWeight: 700, letterSpacing: 0.5, lineHeight: 1.15 },
   role: { fontSize: 12, color: rose, textTransform: "uppercase", marginTop: 6, letterSpacing: 1 },
   contact: { marginTop: 6, color: muted, fontSize: 9 },
+  contactLinks: { marginTop: 2, color: muted, fontSize: 9 },
   section: { marginTop: 16 },
   sectionTitle: { fontSize: 11, fontWeight: 700, color: rose, textTransform: "uppercase", letterSpacing: 1.2, marginBottom: 6, paddingBottom: 3, borderBottomWidth: 0.8, borderBottomColor: "#fecdd3" },
   item: { marginBottom: 8 },
@@ -170,7 +191,9 @@ const Runs = ({ runs }) =>
     Text,
     null,
     ...runs.map((run, i) =>
-      h(Text, { key: i, style: [run.bold && styles.bold, run.italic && styles.italic].filter(Boolean) }, run.text)
+      run.href
+        ? h(Link, { key: i, src: run.href, style: [styles.link, run.bold && styles.bold, run.italic && styles.italic].filter(Boolean) }, run.text)
+        : h(Text, { key: i, style: [run.bold && styles.bold, run.italic && styles.italic].filter(Boolean) }, run.text)
     )
   );
 
@@ -287,11 +310,12 @@ const buildPdf = async (locale) => {
             [contact.email, contact.phone, contact.address].filter(Boolean).join("   ·   "),
             "   ·   ",
             h(Link, { src: pageUrl, style: styles.link }, "martinez.place")
-          )
+          ),
+          ...blocksToParagraphs(profileLinks(resume)).map((p, i) => h(View, { key: i, style: styles.contactLinks }, h(Runs, { runs: p.runs })))
         ),
         h(Image, { src: photo, style: styles.photo })
       ),
-      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, t.skills), h(Text, { style: styles.skills }, skills.join("  ·  "))) : null,
+      skills.length ? h(View, { style: styles.section }, h(Text, { style: styles.sectionTitle }, t.skills), h(Text, { style: styles.skills }, skillsLine(skills))) : null,
       ...resume.pageBuilder.map((section) =>
         section._type === "infoSection"
           ? h(InfoSection, { key: section._key, section, t })

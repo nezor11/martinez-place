@@ -145,8 +145,10 @@ const strict = process.argv.includes("--strict");
 const fetchLocale = async (locale) => {
   const outFile = resolve(root, resumeDataFile(locale));
   const rawFile = resolve(root, resumeRawFile(locale));
+  // The live API, not apicdn: a build triggered by a publish must not bake
+  // a cached answer (it once left one language on the previous content).
   const url = new URL(
-    `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}`
+    `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}`
   );
   url.searchParams.set("query", buildQuery(locale));
   url.searchParams.set("$id", JSON.stringify(resumeId));
