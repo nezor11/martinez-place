@@ -105,6 +105,15 @@ export interface Messages {
   /** "fresh - Project", "Proyecto nuevo"… from the Sanity slide type. */
   project: (workType: string) => string;
   workDone: Record<WorkDoneKey, string>;
+  /** Consent banner for Google Analytics and the footer link that reopens it. */
+  consent: {
+    title: string;
+    text: string;
+    details: string;
+    accept: string;
+    reject: string;
+    settings: string;
+  };
 }
 
 export interface Seo {
@@ -182,6 +191,15 @@ export const messages: Record<Locale, Messages> = {
       analytics_metrics: "Analytics & Metrics",
       security: "Security",
     },
+    consent: {
+      title: "Cookies",
+      text: "This site uses Google Analytics to count visits and see which projects get opened. It only loads if you accept.",
+      details:
+        "If you accept, Google Analytics stores the cookies _ga and _ga_<id> (analytics, up to two years). There are no advertising cookies. You can change your choice at any time from “Cookie settings” at the bottom of the page.",
+      accept: "Accept",
+      reject: "Reject",
+      settings: "Cookie settings",
+    },
   },
   es: {
     dateLocale: "es-ES",
@@ -246,6 +264,15 @@ export const messages: Record<Locale, Messages> = {
       seo: "Soporte SEO",
       analytics_metrics: "Analítica y métricas",
       security: "Seguridad",
+    },
+    consent: {
+      title: "Cookies",
+      text: "Esta web usa Google Analytics para contar visitas y saber qué proyectos se abren. Solo se carga si aceptas.",
+      details:
+        "Si aceptas, Google Analytics guarda las cookies _ga y _ga_<id> (analítica, hasta dos años). No hay cookies publicitarias. Puedes cambiar tu elección cuando quieras en «Configurar cookies», al final de la página.",
+      accept: "Aceptar",
+      reject: "Rechazar",
+      settings: "Configurar cookies",
     },
   },
 };

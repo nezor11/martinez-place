@@ -67,12 +67,12 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
         <ul className="[&_a]:transition-colors [&_a:hover]:text-primary-600 dark:[&_a:hover]:text-primary-400">
           {contactDetail.phone && (
             <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
-              <Obfuscate tel={contactDetail.phone} />
+              <Obfuscate tel={contactDetail.phone} data-contact="phone" />
             </li>
           )}
           {contactDetail.email && (
             <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
-              <Obfuscate email={contactDetail.email} />
+              <Obfuscate email={contactDetail.email} data-contact="email" />
             </li>
           )}
           {contactDetail.address && (
@@ -81,6 +81,7 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
                 href={`https://maps.google.com/maps?q=${addresUrlEncoded}`}
                 target="_blank"
                 rel="noreferrer"
+                data-contact="map"
               >
                 {contactDetail.address}
               </a>

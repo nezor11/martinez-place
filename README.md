@@ -26,13 +26,14 @@ yarn storybook  # Storybook at http://localhost:6006
 
 ## Environment variables
 
-Only Storybook uses one, and it is optional:
+Both are optional:
 
 | Variable | Used by | Purpose |
 | --- | --- | --- |
+| `GTM_ID` | site build | Google Tag Manager container (`GTM-XXXXXXX`). Without it the site has no consent banner and no tracking. See [Analytics](#analytics). |
 | `STORYBOOK_UNSPLASH_ACCESS_KEY` | stories | Fetches sample photos from Unsplash. Without it the stories show placeholder images. |
 
-Copy `.env.example` to `.env` to set it locally. For the deployed Storybook, set it in the Vercel project `martinez-place-storybook`.
+`GTM_ID` is read when the site is built: set it in the Vercel project `martinez-place`, or in the shell for a local build (`GTM_ID=GTM-CITEST yarn build`). Copy `.env.example` to `.env` to set the Storybook key locally; for the deployed Storybook, set it in the Vercel project `martinez-place-storybook`.
 
 ## Scripts
 
@@ -103,6 +104,14 @@ Each project is also prerendered as its own page at `/project/<slug>/` and `/es/
 ## Analytics
 
 Page views go to [Vercel Web Analytics](https://vercel.com/docs/analytics), which is cookieless and needs no consent banner. `App.tsx` renders `<Analytics />` only when the bundle was built on Vercel (`__VERCEL__`, from the `VERCEL` build variable), so local and CI builds request nothing; on Vercel the script and beacons are same-origin under `/_vercel/insights/`, already allowed by the CSP.
+
+Interaction events go to Google Analytics 4 through **Google Tag Manager**, behind consent (`src/utils/analytics.ts`):
+
+- A build with `GTM_ID` shows `ConsentBanner` on the first visit. Nothing is requested from Google until the visitor accepts: the GTM script is injected then, and `track()` drops events while consent is missing or denied. The choice is kept in `localStorage` (`analytics-consent`) and can be changed from "Cookie settings" in the footer; rejecting later also removes the `_ga` cookies. Only `analytics_storage` is granted; the advertising signals of Consent Mode stay denied.
+- Events pushed to the data layer: `project_open` (`project`, `source`), `portfolio_filter` (`technology`), `portfolio_search` (`search_term`, `results`), `video_play` and `copy_link` (`project`), `contact_click` (`method`: phone, email or map, never the value), `cv_download` (`file_name`), `outbound_click` (`link_domain`, `link_url` without query string), `language_switch` (`site_language`) and `theme_toggle` (`theme`). Link clicks are caught by one listener on the document; the tags and triggers that forward them to GA4 live in the GTM container.
+- The GTM container (`GTM-P585TC7L`, GA4 property `G-2Y5TLT4KLL`) is described in `gtm/`: `node gtm/build-container.mjs` writes `gtm/GTM-P585TC7L.json` with the Google tag, one GA4 event tag and one trigger per event, and a data-layer variable per parameter. Import it in GTM (Admin > Import container, merge) and publish. In the GA4 web stream, enhanced measurement has outbound clicks, file downloads and history-based page views turned off so they do not duplicate these events.
+- The CSP in `vercel.json` allows Google Tag Manager, Google Analytics and GTM's preview mode. Only built-in GA4 tags fit it: Custom HTML tags and Custom JavaScript variables would need `unsafe-inline` or `unsafe-eval`.
+- CI builds with a placeholder container (`GTM-CITEST`) so `tests/e2e/consent.spec.ts` covers the banner and the events with the GTM request stubbed. The other specs start with the choice already stored so the banner never covers what they click.
 
 ## Dependency updates
 

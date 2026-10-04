@@ -9,3 +9,6 @@ declare const __SITE_LOCALE__: string;
 
 /** True when the bundle was built on Vercel (`define` in vite.config.js). */
 declare const __VERCEL__: boolean;
+
+/** Google Tag Manager container id from the GTM_ID build variable, or "". */
+declare const __GTM_ID__: string;
