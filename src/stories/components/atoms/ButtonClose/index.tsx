@@ -16,8 +16,10 @@ import type { FC } from "react";
 export type ButtonTone = "onLight" | "onDark";
 
 export const toneClasses: Record<ButtonTone, string> = {
-  onLight: "bg-gray-900/80 text-white hover:bg-gray-900",
-  onDark: "bg-white/90 text-gray-900 hover:bg-white",
+  onLight:
+    "bg-gray-900/80 text-white transition-colors hover:bg-gray-900 hover:text-primary-400",
+  onDark:
+    "bg-white/90 text-gray-900 transition-colors hover:bg-white hover:text-primary-600",
 };
 
 interface ButtonCloseProps {

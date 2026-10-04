@@ -178,7 +178,7 @@ function App({ locale, resume, projectSlug }: AppProps) {
             type="button"
             onClick={toggleTheme}
             aria-label={darkTheme ? t.lightMode : t.darkMode}
-            className={`${darkTheme ? "button-dark" : "button-light"} inline-flex min-h-6 min-w-6 items-center justify-center`}
+            className={`${darkTheme ? "button-dark" : "button-light"} inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center`}
           >
             {darkTheme ? <MemoizedSunIcon /> : <MemoizedMoonIcon />}
           </button>
