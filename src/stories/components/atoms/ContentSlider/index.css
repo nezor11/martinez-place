@@ -143,3 +143,79 @@
     }
   }
 }
+
+/*
+ * layout="page": the same two columns in the flow of a document instead of a
+ * full-screen dialog. The text column sets the height and the media panel
+ * stretches beside it; below lg the panel follows the text.
+ */
+.intro.intro--page {
+  height: auto;
+  overflow: visible;
+
+  .left {
+    float: none;
+    display: block;
+    width: auto;
+    height: auto;
+  }
+
+  .left > div {
+    display: block;
+  }
+
+  .slider {
+    float: none;
+    width: auto;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    @apply mt-10;
+  }
+
+  /* Stacked: there is no gutter beside the panel for the vertical caption
+     and dots, so they go under it, caption on the left and dots on the
+     right. */
+  @media (width < theme(--breakpoint-lg)) {
+    /* Room for them; padding, because a margin would collapse. */
+    @apply pb-12;
+
+    .center-y,
+    .slider nav {
+      top: 100%;
+      bottom: auto;
+      transform: none;
+      width: auto;
+      height: auto;
+      @apply mt-2;
+    }
+
+    .center-y {
+      left: 0;
+      right: auto;
+      display: block;
+      overflow: visible;
+
+      .slide-caption {
+        @apply mb-0;
+      }
+    }
+
+    .slider nav {
+      left: auto;
+      right: 0;
+      display: block;
+    }
+  }
+
+  @media (width >= theme(--breakpoint-lg)) {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    @apply gap-x-12;
+
+    .slider {
+      aspect-ratio: auto;
+      min-height: 30rem;
+      @apply mt-0;
+    }
+  }
+}
