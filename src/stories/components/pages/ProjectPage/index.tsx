@@ -36,9 +36,11 @@ export const ProjectPage: FC<ProjectPageProps> = ({ project }) => {
     height: "1em",
   }));
 
+  // The negative margin takes back half of the site header's bottom margin,
+  // so the back link sits closer to it.
   return (
-    <article className="project-page mt-8 mb-12 lg:mt-0 lg:mb-16">
-      <nav className="mb-8">
+    <article className="project-page mt-4 mb-12 lg:-mt-8 lg:mb-16">
+      <nav className="mb-6">
         <a
           href={projectHashFor(locale, slug)}
           className="text-sm uppercase font-medium text-primary-600 dark:text-primary-400 hover:underline"
