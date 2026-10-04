@@ -29,14 +29,14 @@ describe("linkEvent", () => {
 
   it("reports the language of a language switcher link", () => {
     expect(linkEvent({ href: `${origin}/es/`, language: "es" }, origin)).toEqual(
-      ["language_switch", { language: "es" }],
+      ["language_switch", { site_language: "es" }],
     );
   });
 
   it("reports PDF downloads on the site", () => {
     expect(linkEvent({ href: `${origin}/resume.es.pdf` }, origin)).toEqual([
       "cv_download",
-      { file: "/resume.es.pdf" },
+      { file_name: "/resume.es.pdf" },
     ]);
   });
 

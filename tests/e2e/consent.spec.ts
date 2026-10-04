@@ -133,7 +133,7 @@ test("clicks on contact, CV and outbound links are reported without personal dat
     expect.arrayContaining([
       { event: "contact_click", method: "email" },
       { event: "contact_click", method: "map" },
-      { event: "cv_download", file: "/resume.pdf" },
+      { event: "cv_download", file_name: "/resume.pdf" },
       {
         event: "outbound_click",
         link_domain: "example.org",

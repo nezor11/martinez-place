@@ -156,7 +156,11 @@ export type LinkEvent = [
  */
 export const linkEvent = (link: LinkInfo, origin: string): LinkEvent | null => {
   if (link.contact) return ["contact_click", { method: link.contact }];
-  if (link.language) return ["language_switch", { language: link.language }];
+  // Named apart from GA4's own `language` (the browser's) and in line with
+  // its built-in `file_name`, `link_domain` and `link_url` parameters.
+  if (link.language) {
+    return ["language_switch", { site_language: link.language }];
+  }
   let url: URL;
   try {
     url = new URL(link.href, origin);
@@ -168,7 +172,7 @@ export const linkEvent = (link: LinkInfo, origin: string): LinkEvent | null => {
   if (url.protocol !== "http:" && url.protocol !== "https:") return null;
   if (url.origin === origin) {
     return url.pathname.toLowerCase().endsWith(".pdf")
-      ? ["cv_download", { file: url.pathname }]
+      ? ["cv_download", { file_name: url.pathname }]
       : null;
   }
   return [
