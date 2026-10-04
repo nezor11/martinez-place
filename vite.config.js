@@ -62,6 +62,9 @@ export default defineConfig({
     // Vercel sets VERCEL=1 while building; local and CI builds leave the
     // analytics script out so nothing is requested from a missing endpoint.
     __VERCEL__: JSON.stringify(Boolean(process.env.VERCEL)),
+    // Google Tag Manager container (GTM-XXXXXXX). Builds without it have no
+    // consent banner and no tracking; see src/utils/analytics.ts.
+    __GTM_ID__: JSON.stringify(process.env.GTM_ID ?? ""),
   },
   json: {
     // resume.json is large; JSON.parse is faster than an object literal

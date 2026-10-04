@@ -9,6 +9,7 @@ import { IconGallery } from "@/stories/components/molecules/IconGallery";
 import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import { useLocale, useMessages, workDoneLabel } from "@/i18n";
+import { currentProject, track } from "@/utils/analytics";
 import { popupBackground } from "@/utils/color";
 import { nanoid } from "nanoid";
 import type { FC } from "react";
@@ -84,7 +85,10 @@ export const ContentSlider: FC<ContentSliderProps> = ({
   }, [videoUrl]);
 
   const handleReady = () => setLoading(false);
-  const handlePlayClick = () => setIsPlaying(true);
+  const handlePlayClick = () => {
+    track("video_play", { project: currentProject() });
+    setIsPlaying(true);
+  };
 
   const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";
 

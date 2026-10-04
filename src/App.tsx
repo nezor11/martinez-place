@@ -26,6 +26,12 @@ import MemoizedMoonIcon from "@/stories/components/molecules/IconGallery/Icons/M
 import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/SunIcon";
 import { Footer } from "@/stories/components/organisms/Footer";
 import { ProjectPage } from "@/stories/components/pages/ProjectPage";
+import { ConsentBanner } from "@/stories/components/molecules/ConsentBanner";
+import {
+  analyticsEnabled,
+  openConsentBanner,
+  track,
+} from "@/utils/analytics";
 import { projectPath, projectsFrom } from "@/utils/projects";
 import { Analytics } from "@vercel/analytics/react";
 import type { Resume } from "@/utils/types/resume";
@@ -120,6 +126,7 @@ const ResumeContent = ({
             target: "_blank",
             rel: "noopener noreferrer",
           }}
+          onCookieSettings={analyticsEnabled() ? openConsentBanner : undefined}
         />
       )}
     </main>
@@ -176,7 +183,10 @@ function App({ locale, resume, projectSlug }: AppProps) {
           <LanguageSwitcher locale={locale} projectSlug={projectSlug} />
           <button
             type="button"
-            onClick={toggleTheme}
+            onClick={() => {
+              track("theme_toggle", { theme: darkTheme ? "light" : "dark" });
+              toggleTheme();
+            }}
             aria-label={darkTheme ? t.lightMode : t.darkMode}
             className={`${darkTheme ? "button-dark" : "button-light"} inline-flex min-h-6 min-w-6 cursor-pointer items-center justify-center`}
           >
@@ -188,6 +198,7 @@ function App({ locale, resume, projectSlug }: AppProps) {
           locale={locale}
           projectSlug={projectSlug}
         />
+        <ConsentBanner />
         {/* Cookieless page views, only on Vercel builds; served same-origin under /_vercel/insights. */}
         {__VERCEL__ && <Analytics />}
       </div>

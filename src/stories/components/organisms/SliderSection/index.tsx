@@ -44,6 +44,7 @@ import {
   slideSearchTokens,
 } from "@/utils/portfolioSearch";
 import type { FC } from "react";
+import { track } from "@/utils/analytics";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Swiper as SwiperClass } from "swiper";
 import "swiper/css";
@@ -109,6 +110,8 @@ export const SliderSection: FC<SliderSectionProps> = ({
   useEffect(() => {
     const read = () => setLinkedSlug(slugFromHash(window.location.hash));
     read();
+    const linked = slugFromHash(window.location.hash);
+    if (linked) track("project_open", { project: linked, source: "link" });
     window.addEventListener("hashchange", read);
     return () => window.removeEventListener("hashchange", read);
   }, []);
@@ -122,6 +125,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
   const handleCardOpen = (slug: string) => {
     window.history.replaceState(null, "", projectHash(slug));
     setLinkedSlug(slug);
+    track("project_open", { project: slug, source: "card" });
   };
   const handleCardClose = (slug: string) => {
     if (slugFromHash(window.location.hash) === slug) {
@@ -180,10 +184,25 @@ export const SliderSection: FC<SliderSectionProps> = ({
 
   const handleIconClick = (name: string) => {
     const label = iconLabel(name);
+    if (normalizeText(query.trim()) !== normalizeText(label)) {
+      track("portfolio_filter", { technology: label });
+    }
     setQuery((current) =>
       normalizeText(current.trim()) === normalizeText(label) ? "" : label
     );
   };
+
+  // A typed search counts once the visitor pauses; a technology picked from
+  // the icons is reported as a filter instead.
+  useEffect(() => {
+    const term = normalizeText(query.trim());
+    if (term.length < 3 || activeIcon) return;
+    const timer = window.setTimeout(
+      () => track("portfolio_search", { search_term: term, results: matchCount }),
+      1500
+    );
+    return () => window.clearTimeout(timer);
+  }, [query, activeIcon, matchCount]);
 
   // Bring the first matching card into view when the active one is dimmed.
   useEffect(() => {

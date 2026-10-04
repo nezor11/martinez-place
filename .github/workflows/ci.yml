@@ -13,6 +13,10 @@ jobs:
   check:
     name: Lint, typecheck and build
     runs-on: ubuntu-latest
+    env:
+      # Placeholder Google Tag Manager container: the build gets the consent
+      # banner and the e2e tests cover it without touching the real one.
+      GTM_ID: GTM-CITEST
     steps:
       - uses: actions/checkout@v7
 

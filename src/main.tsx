@@ -9,6 +9,7 @@ import {
   projectsFrom,
 } from "./utils/projects";
 import { ThemeProvider } from "./providers/index";
+import { initAnalytics } from "./utils/analytics";
 import "./styles/index.css";
 // Registers the icons the prerendered HTML contains before hydration.
 import "virtual:critical-icons";
@@ -16,6 +17,10 @@ import "virtual:critical-icons";
 // Each client bundle is built for one language (SITE_LOCALE in vite.config.js)
 // and ships that language's resume, so no runtime detection is needed.
 const locale = isLocale(__SITE_LOCALE__) ? __SITE_LOCALE__ : defaultLocale;
+
+// Before hydration, so the consent defaults reach the data layer ahead of any
+// event a component sends on mount. A no-op without consent or container id.
+initAnalytics();
 
 const container = document.getElementById("root") as HTMLElement;
 

@@ -33,6 +33,8 @@ export interface FooterProps {
   last_updated?: Date | string;
   my_link?: LinkProps;
   contact_details?: ContactDetailTexts;
+  /** Shows a "Cookie settings" button that calls this. */
+  onCookieSettings?: () => void;
 }
 
 export const Footer: FC<FooterProps> = ({
@@ -41,6 +43,7 @@ export const Footer: FC<FooterProps> = ({
   contact_details = { title: "", email: "", phone: "" },
   last_updated = "",
   mods = "",
+  onCookieSettings,
   ...props
 }: FooterProps) => {
   const t = useMessages();
@@ -83,6 +86,15 @@ export const Footer: FC<FooterProps> = ({
             <p className="text-sm text-gray-600 dark:text-gray-400">
               &copy; {currentYear} {copy_right_text}
             </p>
+            {onCookieSettings && (
+              <button
+                type="button"
+                onClick={onCookieSettings}
+                className="footer__cookies mt-1 min-h-6 cursor-pointer text-sm text-gray-600 underline transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+              >
+                {t.consent.settings}
+              </button>
+            )}
           </div>
         </div>
         <div className="flex-none mt-10 lg:mt-0">

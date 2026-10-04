@@ -39,6 +39,7 @@ import { useMessages } from "@/i18n";
 import type { ButtonTone } from "@/stories/components/atoms/ButtonClose";
 import { toneClasses } from "@/stories/components/atoms/ButtonClose";
 import { cn } from "@/utils";
+import { currentProject, track } from "@/utils/analytics";
 import { isLightColor, popupBackground } from "@/utils/color";
 import { isVisualTest } from "@/utils/visualTest";
 import type React from "react";
@@ -103,6 +104,7 @@ export const Popup: FC<PopupProps> = ({
     try {
       await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
+      track("copy_link", { project: currentProject() });
     } catch {
       window.prompt(t.copyLink, shareUrl);
     }
