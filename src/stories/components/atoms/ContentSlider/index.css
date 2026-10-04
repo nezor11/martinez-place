@@ -25,7 +25,9 @@
 
   ul.list-arrows {
     & li {
-      @apply flex items-center relative pr-[18px];
+      /* The arrow sits on the right here, so the left padding the Popup
+         list sets for it would only narrow the columns. */
+      @apply flex items-center relative pl-0 pr-[18px];
 
       &:before {
         content: "";

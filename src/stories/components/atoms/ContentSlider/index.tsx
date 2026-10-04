@@ -148,7 +148,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
             )}
             {mappedWorkDone.length > 0 && (
               <div className="workdone-wrapper mt-2 text-right w-full xl:max-w-3xl xl:ml-auto">
-                <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-8 xl:grid-rows-4 md:grid-flow-col gap-1 justify-items-start rtl-grid">
+                <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-[repeat(8,auto)] xl:grid-cols-none xl:grid-rows-[repeat(4,auto)] md:grid-flow-col gap-x-4 gap-y-1 justify-items-start rtl-grid">
                   {mappedWorkDone.map((item) => (
                     <li
                       key={nanoid()}
