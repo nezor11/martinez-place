@@ -86,12 +86,19 @@
     z-index: 10;
     transform: rotate(-90deg) translateX(50%);
     display: inline-table;
+    /* Fixed, so a long caption is cut at the box width instead of widening it. */
+    table-layout: fixed;
     overflow: hidden;
     width: 300px;
     height: 20px;
 
     .slide-caption {
       display: none;
+      /* A caption longer than the box ends in an ellipsis instead of
+         wrapping into a second line that the box would clip. */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       &.current {
         display: block;
@@ -132,6 +139,10 @@
     transform: scale(1.2);
   }
 
+  /* Stacked: there is no gutter beside the panel for the vertical caption
+     and dots (the dots ended up half off screen), so they go under it,
+     caption on the left and dots on the right. The page layout repeats
+     these rules below for its own breakpoint. */
   @media screen and (max-width: 768px) {
     .left {
       width: 100%;
@@ -140,6 +151,33 @@
     .slider {
       width: 100%;
       height: 70%;
+      @apply mb-10;
+    }
+
+    .center-y,
+    .slider nav {
+      top: 100%;
+      bottom: auto;
+      transform: none;
+      height: auto;
+      @apply mt-2;
+    }
+
+    .center-y {
+      left: 0;
+      right: 3rem;
+      display: block;
+      width: auto;
+
+      .slide-caption {
+        @apply mb-0;
+      }
+    }
+
+    .slider nav {
+      left: auto;
+      right: 0;
+      display: block;
     }
   }
 }
@@ -172,28 +210,29 @@
     @apply mt-10;
   }
 
-  /* Stacked: there is no gutter beside the panel for the vertical caption
-     and dots, so they go under it, caption on the left and dots on the
-     right. */
+  /* Stacked, as in the popup: caption and dots under the panel. */
   @media (width < theme(--breakpoint-lg)) {
     /* Room for them; padding, because a margin would collapse. */
     @apply pb-12;
+
+    .slider {
+      @apply mb-0;
+    }
 
     .center-y,
     .slider nav {
       top: 100%;
       bottom: auto;
       transform: none;
-      width: auto;
       height: auto;
       @apply mt-2;
     }
 
     .center-y {
       left: 0;
-      right: auto;
+      right: 3rem;
       display: block;
-      overflow: visible;
+      width: auto;
 
       .slide-caption {
         @apply mb-0;
