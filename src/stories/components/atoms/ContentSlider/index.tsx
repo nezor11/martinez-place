@@ -5,6 +5,7 @@ import { SubtitleCopy } from "@/stories/components/atoms/SubtitleCopy";
 import { TitleCopy } from "@/stories/components/atoms/TitleCopy";
 import { VideoPlayer } from "@/stories/components/atoms/VideoPlayer";
 import type { IconData } from "@/stories/components/molecules/CardSlide";
+import { IconGallery } from "@/stories/components/molecules/IconGallery";
 import type { SanityImageData } from "@/stories/components/molecules/Modal";
 import { SuspenseIconGallery } from "@/stories/components/molecules/SuspenseIconGallery";
 import { useLocale, useMessages, workDoneLabel } from "@/i18n";
@@ -28,6 +29,13 @@ interface ContentSliderProps {
   iconsData?: IconData[];
   className?: string;
   backgroundColor?: string;
+  /**
+   * "popup" (default) fills the full-screen dialog. "page" is the same two
+   * columns in the flow of a document: the project page uses it, so the
+   * title is an h2, the icons and the first image are in the prerendered
+   * HTML and nothing is reserved for the dialog buttons.
+   */
+  layout?: "popup" | "page";
 }
 
 export const ContentSlider: FC<ContentSliderProps> = ({
@@ -43,7 +51,9 @@ export const ContentSlider: FC<ContentSliderProps> = ({
   videoUrl,
   className,
   backgroundColor,
+  layout = "popup",
 }) => {
+  const isPage = layout === "page";
   const sliderRef = useRef<HTMLDivElement | null>(null);
   const [, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -85,33 +95,44 @@ export const ContentSlider: FC<ContentSliderProps> = ({
 
 
   return (
-    <section className="intro overflow-y-scroll p-6 lg:p-0">
-      <div className="left md:px-8 2xl:px-16">
+    <section
+      className={
+        isPage ? "intro intro--page" : "intro overflow-y-scroll p-6 lg:p-0"
+      }
+    >
+      <div className={isPage ? "left" : "left md:px-8 2xl:px-16"}>
         <div>
           <div className="content-wrapper">
             <div className="w-full xl:max-w-5xl xl:ml-auto">
               {/* Below lg the close and share buttons sit over the top right
                   corner, so the row keeps clear of them and the icons wrap. */}
-              <div className="flex flex-wrap items-center gap-x-3 pr-24 lg:pr-0">
+              <div
+                className={`flex flex-wrap items-center gap-x-3 ${isPage ? "" : "pr-24 lg:pr-0"}`}
+              >
                 <div className="flex">
                   <SubtitleCopy
                     text={formatCompanyName(company)}
                     mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
-                    subtitle="h4"
+                    subtitle={isPage ? "p" : "h4"}
                   />
                   <SubtitleCopy
                     text={year ?? ""}
                     mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
-                    subtitle="h4"
+                    subtitle={isPage ? "p" : "h4"}
                   />
                 </div>
                 {iconsData && iconsData.length > 0 && (
                   <div className="content-slider__icons min-h-6 translate-y-[3px] text-lg [&_svg]:mx-[3px]">
-                    <SuspenseIconGallery iconsData={iconsData} />
+                    {isPage ? (
+                      <IconGallery iconsData={iconsData} />
+                    ) : (
+                      <SuspenseIconGallery iconsData={iconsData} />
+                    )}
                   </div>
                 )}
               </div>
               <TitleCopy
+                as={isPage ? "h2" : undefined}
                 text={title}
                 align="left"
                 mods="text-4xl md:text-5xl dark:text-white mb-4 lg:mb-8"
@@ -148,7 +169,9 @@ export const ContentSlider: FC<ContentSliderProps> = ({
             )}
             {mappedWorkDone.length > 0 && (
               <div className="workdone-wrapper mt-2 text-right w-full xl:max-w-3xl xl:ml-auto">
-                <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-[repeat(8,auto)] xl:grid-cols-none xl:grid-rows-[repeat(4,auto)] md:grid-flow-col gap-x-4 gap-y-1 justify-items-start rtl-grid">
+                <ul
+                  className={`text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-[repeat(8,auto)] ${isPage ? "" : "xl:grid-cols-none xl:grid-rows-[repeat(4,auto)]"} md:grid-flow-col gap-x-4 gap-y-1 justify-items-start rtl-grid`}
+                >
                   {mappedWorkDone.map((item) => (
                     <li
                       key={nanoid()}
@@ -203,9 +226,10 @@ export const ContentSlider: FC<ContentSliderProps> = ({
         ) : (
           <>
             <ul className="slider-images">
-              {images.map((image) => (
+              {images.map((image, index) => (
                 <li
                   key={nanoid()}
+                  className={isPage && index === 0 ? "current" : undefined}
                   style={{
                     backgroundImage: `url(${image.src})`,
                   }}
@@ -213,16 +237,19 @@ export const ContentSlider: FC<ContentSliderProps> = ({
               ))}
             </ul>
             <div className="center-y">
-              {images.map((imageProperties) => (
+              {images.map((imageProperties, index) => (
                 <SubtitleCopy
                   key={nanoid()}
                   text={`${imageProperties.alt}`}
-                  mods="slide-caption text-xs uppercase text-primary-600 dark:text-primary-400 font-medium -mb-4"
+                  mods={`slide-caption text-xs uppercase text-primary-600 dark:text-primary-400 font-medium -mb-4 ${isPage && index === 0 ? "current" : ""}`}
                   subtitle="p"
                 />
               ))}
             </div>
-            <nav className={`${images.length === 1 ? "invisible" : ""}`}>
+            <nav
+              aria-label={t.projectGallery}
+              className={`${images.length === 1 ? "invisible" : ""}`}
+            >
               {images.map((_, index) => (
                 <a
                   key={nanoid()}
