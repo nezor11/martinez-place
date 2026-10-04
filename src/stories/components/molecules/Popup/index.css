@@ -28,13 +28,3 @@ ul.list-arrows {
     }
   }
 }
-
-.logos-wrapper {
-  & > div {
-    @apply text-3xl;
-
-    svg {
-      @apply mx-2 my-1;
-    }
-  }
-}

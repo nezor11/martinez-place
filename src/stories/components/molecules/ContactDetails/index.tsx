@@ -64,7 +64,7 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
         className={`${cn("m-0 p-0")} ${classContactDetail}`}
         {...props}
       >
-        <ul>
+        <ul className="[&_a]:transition-colors [&_a:hover]:text-primary-600 dark:[&_a:hover]:text-primary-400">
           {contactDetail.phone && (
             <li className="mb-0 text-gray-600 dark:text-gray-400 text-sm">
               <Obfuscate tel={contactDetail.phone} />

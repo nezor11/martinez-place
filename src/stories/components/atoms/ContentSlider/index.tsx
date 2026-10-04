@@ -90,17 +90,26 @@ export const ContentSlider: FC<ContentSliderProps> = ({
         <div>
           <div className="content-wrapper">
             <div className="w-full xl:max-w-5xl xl:ml-auto">
-              <div className="flex">
-                <SubtitleCopy
-                  text={formatCompanyName(company)}
-                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
-                  subtitle="h4"
-                />
-                <SubtitleCopy
-                  text={year ?? ""}
-                  mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
-                  subtitle="h4"
-                />
+              {/* Below lg the close and share buttons sit over the top right
+                  corner, so the row keeps clear of them and the icons wrap. */}
+              <div className="flex flex-wrap items-center gap-x-3 pr-24 lg:pr-0">
+                <div className="flex">
+                  <SubtitleCopy
+                    text={formatCompanyName(company)}
+                    mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
+                    subtitle="h4"
+                  />
+                  <SubtitleCopy
+                    text={year ?? ""}
+                    mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
+                    subtitle="h4"
+                  />
+                </div>
+                {iconsData && iconsData.length > 0 && (
+                  <div className="content-slider__icons min-h-6 translate-y-[3px] text-lg [&_svg]:mx-[3px]">
+                    <SuspenseIconGallery iconsData={iconsData} />
+                  </div>
+                )}
               </div>
               <TitleCopy
                 text={title}
@@ -139,7 +148,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
             )}
             {mappedWorkDone.length > 0 && (
               <div className="workdone-wrapper mt-2 text-right w-full xl:max-w-3xl xl:ml-auto">
-                <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-8 xl:grid-rows-4 md:grid-flow-col gap-1 justify-items-start rtl-grid">
+                <ul className="text-workdone mb-2 list-arrows grid md:grid-cols-2 md:grid-rows-[repeat(8,auto)] xl:grid-cols-none xl:grid-rows-[repeat(4,auto)] md:grid-flow-col gap-x-4 gap-y-1 justify-items-start rtl-grid">
                   {mappedWorkDone.map((item) => (
                     <li
                       key={nanoid()}
@@ -151,9 +160,6 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                 </ul>
               </div>
             )}
-            <div className="logos-wrapper w-full xl:max-w-5xl xl:ml-auto mt-8 mb-8 lg:mb-4 text-3xl [&_svg]:mx-1">
-              <SuspenseIconGallery iconsData={iconsData} />
-            </div>
           </div>
         </div>
       </div>

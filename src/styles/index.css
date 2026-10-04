@@ -107,6 +107,22 @@ html.dark {
   }
 }
 
+/* Theme toggle: the sun and the moon take the link colour on hover. */
+.button-light,
+.button-dark {
+  svg path {
+    transition: fill 150ms;
+  }
+}
+
+.button-light:hover svg path {
+  @apply fill-primary-600;
+}
+
+.button-dark:hover svg path {
+  @apply fill-primary-400;
+}
+
 /*
  * Only the faces the site actually renders are shipped: 400, 400 italic, 500
  * and 700 (the 700 slot deliberately uses the ExtraBold cut, which is what the

@@ -47,19 +47,17 @@ export const Header: FC<HeaderProps> = ({ user }) => {
   const defaultJobTitle = "Papaar papaar";
 
   return (
-    <header className="flex place-content-between lg:mb-16">
-      <div className="header__main flex flex-col items-start justify-center basis-2/3 lg:basis-3/4">
+    <header className="grid grid-cols-[2fr_1fr] lg:grid-cols-[3fr_1fr] lg:mb-16">
+      <div className="header__main col-start-1 row-start-1 flex flex-col items-start justify-end lg:justify-center">
         {renderTitle(user?.name || defaultName)}
-        <div className="flex flex-col lg:flex-row flex-wrap lg:items-center">
-          {renderSubtitle(user?.jobTitle || defaultJobTitle)}
-          {user?.iconsData && (
-            <div className="header__aux-gallery-details">
-              <IconGallery iconsData={user.iconsData} />
-            </div>
-          )}
-        </div>
+        {renderSubtitle(user?.jobTitle || defaultJobTitle)}
       </div>
-      <div className="header__aux flex items-start justify-end basis-1/3 lg:basis-1/4 lg:items-center">
+      {user?.iconsData && (
+        <div className="header__aux-gallery-details col-span-2 row-start-2 mt-2 min-w-0 lg:col-span-1 lg:col-start-1 lg:mt-0">
+          <IconGallery iconsData={user.iconsData} />
+        </div>
+      )}
+      <div className="header__aux col-start-2 row-start-1 flex items-start justify-end lg:row-span-2 lg:items-center">
         {user?.imageDetail && (
           <div className="header__aux-image-details flex items-end justify-end">
             <FrameImage image={user.imageDetail.image} />
