@@ -47,7 +47,7 @@ export const ProjectPage: FC<ProjectPageProps> = ({ project }) => {
   });
 
   return (
-    <article className="project-page mt-16 lg:mt-24">
+    <article className="project-page mt-8 lg:mt-0">
       <nav className="mb-8">
         <a
           href={projectHashFor(locale, slug)}
