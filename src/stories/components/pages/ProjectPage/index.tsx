@@ -2,8 +2,8 @@
  * Standalone page of one portfolio project, prerendered at
  * /project/<slug>/ (and /es/proyecto/<slug>/) so every project has its own
  * URL, title, description and social image. Same data as the popup, laid
- * out as a document: summary, description, links, work done, tech icons
- * and the gallery or video.
+ * out as a document: tech icons beside the company and year, summary,
+ * description, links, work done and the gallery or video.
  */
 import { useLocale, useMessages, workDoneLabel } from "@/i18n";
 import { BodyCopy } from "@/stories/components/atoms/BodyCopy";
@@ -58,17 +58,24 @@ export const ProjectPage: FC<ProjectPageProps> = ({ project }) => {
       </nav>
 
       <header className="mb-8">
-        <div className="flex">
-          <SubtitleCopy
-            text={company}
-            mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
-            subtitle="p"
-          />
-          <SubtitleCopy
-            text={year}
-            mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
-            subtitle="p"
-          />
+        <div className="flex flex-wrap items-center gap-x-3">
+          <div className="flex">
+            <SubtitleCopy
+              text={company}
+              mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium"
+              subtitle="p"
+            />
+            <SubtitleCopy
+              text={year}
+              mods="text-base uppercase text-primary-600 dark:text-primary-400 font-medium ml-2"
+              subtitle="p"
+            />
+          </div>
+          {iconsData.length > 0 && (
+            <div className="project-page__icons min-h-6 translate-y-[3px] text-lg [&_svg]:mx-[3px]">
+              <IconGallery iconsData={iconsData} />
+            </div>
+          )}
         </div>
         <TitleCopy
           as="h2"
@@ -126,11 +133,6 @@ export const ProjectPage: FC<ProjectPageProps> = ({ project }) => {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          )}
-          {iconsData.length > 0 && (
-            <div className="mt-6 text-3xl [&_svg]:mx-1">
-              <IconGallery iconsData={iconsData} />
-            </div>
           )}
         </aside>
       </div>
