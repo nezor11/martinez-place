@@ -36,6 +36,43 @@ body.modal-open {
     @apply bg-white;
   }
 
+  /* Phones: the card shrinks with the viewport so the whole of it, plus the
+     filter above, fits on one screen while the neighbours still peek in.
+     The image scales with the card at its own ratio (not every card image
+     is 300x350, and forcing one ratio would crop text out of the others);
+     the title band keeps overhanging the border evenly on both sides. */
+  @media (width < 769px) {
+    width: clamp(220px, 100vw - 7rem, 300px);
+
+    img {
+      width: 100%;
+      height: auto !important;
+    }
+
+    /* Long titles and summaries are clamped so every card is about the same
+       height: the slider is as tall as its tallest card, and the full text
+       is in the popup anyway. */
+    & h4 {
+      width: calc(100% + 1rem);
+      margin-left: -0.5rem;
+      @apply text-lg py-3 line-clamp-2;
+    }
+
+    div.card-meta {
+      width: 100%;
+
+      p {
+        @apply px-4 line-clamp-3;
+      }
+    }
+
+    .card-slide__icons-wrapper {
+      @apply px-4;
+      /* The icons sit 30px above their box; give most of that back. */
+      margin-bottom: -1.25rem;
+    }
+  }
+
   img {
     margin: 0 auto;
     position: relative;

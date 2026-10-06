@@ -25,6 +25,7 @@ import {
   type ContactDetailTexts,
 } from "@/stories/components/molecules/ContactDetails";
 import { useMessages } from "@/i18n";
+import { cn } from "@/utils";
 import type { FC } from "react";
 
 export interface FooterProps {
@@ -64,47 +65,49 @@ export const Footer: FC<FooterProps> = ({
   const lastUpdated = last_updated ? formatDate(last_updated.toString()) : null;
 
   return (
-    <footer {...props}>
-      <div className="flex items-center pb-6">
+    // Phones: the PDF button comes right after the rule, before the contact
+    // details. Desktop keeps it at the right of the copyright row. The order
+    // utilities arrange the same four blocks for both layouts.
+    <footer
+      {...props}
+      className={cn("flex flex-col lg:grid lg:grid-cols-[1fr_auto] lg:items-start", mods)}
+    >
+      <div className="order-1 flex items-center pb-6 lg:col-span-2">
         <div className="grow border-b border-gray-600" />
       </div>
+      {my_link ? (
+        <div className="footer__pdf order-2 mb-8 lg:order-4 lg:mb-0 lg:justify-self-end">
+          <Link
+            {...my_link}
+            mods={buttonStyles({ variant: "outline", size: "sm" })}
+          />
+        </div>
+      ) : null}
       {contact_details && (
-        <div className="contact-wrapper mt-0 mb-6">
+        <div className="contact-wrapper order-3 mt-0 mb-6 lg:order-2 lg:col-span-2">
           <ContactDetail contactDetail={contact_details} />{" "}
         </div>
       )}
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between">
-        <div className="flex flex-row lg:flex-col items-center lg:items-start justify-between">
-          <div>
-            {last_updated && (
-              <p className="text-sm">
-                <em className="text-gray-600 dark:text-gray-400">
-                  {t.lastUpdated}: {lastUpdated}
-                </em>
-              </p>
-            )}
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              &copy; {currentYear} {copy_right_text}
-            </p>
-            {onCookieSettings && (
-              <button
-                type="button"
-                onClick={onCookieSettings}
-                className="footer__cookies mt-1 min-h-6 cursor-pointer text-sm text-gray-600 underline transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
-              >
-                {t.consent.settings}
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="flex-none mt-10 lg:mt-0">
-          {my_link ? (
-            <Link
-              {...my_link}
-              mods={buttonStyles({ variant: "outline", size: "sm" })}
-            />
-          ) : null}
-        </div>
+      <div className="order-4 lg:order-3">
+        {last_updated && (
+          <p className="text-sm">
+            <em className="text-gray-600 dark:text-gray-400">
+              {t.lastUpdated}: {lastUpdated}
+            </em>
+          </p>
+        )}
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          &copy; {currentYear} {copy_right_text}
+        </p>
+        {onCookieSettings && (
+          <button
+            type="button"
+            onClick={onCookieSettings}
+            className="footer__cookies mt-1 min-h-6 cursor-pointer text-sm text-gray-600 underline transition-colors hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
+          >
+            {t.consent.settings}
+          </button>
+        )}
       </div>
     </footer>
   );
