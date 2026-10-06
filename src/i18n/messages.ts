@@ -284,7 +284,8 @@ export const seo: Record<Locale, Seo> = {
     description:
       "Frontend & Mobile Developer with 18 years building for the web, the last six at Novicell as frontend developer and Technical Project Lead. React, Next.js, TypeScript, React Native, Android (Kotlin), WordPress and PHP.",
     imageAlt: "Jorge Martínez, Frontend & Mobile Developer in Valencia",
-    projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
+    projectTitle: (name, title) =>
+      `${name === title || !title ? name : `${name} – ${title}`} | Jorge Martínez Ortiz`,
   },
   es: {
     title: "Jorge Martínez Ortiz - Frontend & Mobile Developer",
@@ -292,7 +293,8 @@ export const seo: Record<Locale, Seo> = {
     description:
       "Frontend & Mobile Developer con 18 años construyendo para la web, los últimos seis en Novicell como desarrollador frontend y Technical Project Lead. React, Next.js, TypeScript, React Native, Android (Kotlin), WordPress y PHP.",
     imageAlt: "Jorge Martínez, Frontend & Mobile Developer en Valencia",
-    projectTitle: (name, title) => `${name} – ${title} | Jorge Martínez Ortiz`,
+    projectTitle: (name, title) =>
+      `${name === title || !title ? name : `${name} – ${title}`} | Jorge Martínez Ortiz`,
   },
 };
 
