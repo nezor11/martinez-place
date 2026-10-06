@@ -285,9 +285,12 @@ export const SliderSection: FC<SliderSectionProps> = ({
               momentumBounceRatio: 1,
             },
           })}
+          // Phones centre the active card with its neighbours peeking in
+          // evenly; the staggered layout in index.css starts at the same
+          // width as the desktop parameters.
           breakpoints={{
-            0: { spaceBetween: 8 },
-            769: { slidesOffsetBefore: 300, centeredSlides: true },
+            0: { spaceBetween: 12, centeredSlides: true },
+            769: { spaceBetween: 32, slidesOffsetBefore: 300, centeredSlides: true },
           }}
         >
           {slidesData.map((slide, index) => (

@@ -36,6 +36,38 @@ body.modal-open {
     @apply bg-white;
   }
 
+  /* Phones: the card shrinks with the viewport so the whole of it, plus the
+     filter above, fits on one screen while the neighbours still peek in.
+     The image keeps the 300x350 card ratio and the title band keeps
+     overhanging the border by the same amount on both sides. */
+  @media (width < 769px) {
+    width: clamp(220px, 100vw - 7rem, 300px);
+
+    img {
+      width: 100%;
+      height: auto !important;
+      aspect-ratio: 300 / 350;
+    }
+
+    & h4 {
+      width: calc(100% + 1rem);
+      margin-left: -0.5rem;
+      @apply text-lg py-3;
+    }
+
+    div.card-meta {
+      width: 100%;
+
+      p {
+        @apply px-4;
+      }
+    }
+
+    .card-slide__icons-wrapper {
+      @apply px-4;
+    }
+  }
+
   img {
     margin: 0 auto;
     position: relative;
