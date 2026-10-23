@@ -14,8 +14,13 @@ const audit = async (page: Page) => {
 };
 
 for (const scheme of ["light", "dark"] as const) {
-  test(`the page has no accessibility violations in ${scheme} mode`, async ({ page }) => {
-    await page.addInitScript((value) => localStorage.setItem("theme", value), scheme);
+  test(`the page has no accessibility violations in ${scheme} mode`, async ({
+    page,
+  }) => {
+    await page.addInitScript(
+      (value) => localStorage.setItem("theme", value),
+      scheme,
+    );
     await page.goto("/");
     await page.waitForLoadState("networkidle");
     expect(await audit(page)).toEqual([]);
@@ -28,7 +33,9 @@ test("the Spanish page has no accessibility violations", async ({ page }) => {
   expect(await audit(page)).toEqual([]);
 });
 
-test("an open project modal has no accessibility violations", async ({ page }) => {
+test("an open project modal has no accessibility violations", async ({
+  page,
+}) => {
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   expect(await openCard(page)).toBe(true);
