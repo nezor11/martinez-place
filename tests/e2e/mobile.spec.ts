@@ -11,25 +11,46 @@ test.use({ ...devices["iPhone 13"], browserName: "chromium" });
 const rect = (page: import("@playwright/test").Page, selector: string) =>
   page.evaluate((sel) => {
     const r = document.querySelector(sel)?.getBoundingClientRect();
-    return r ? { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height } : null;
+    return r
+      ? {
+          left: r.left,
+          right: r.right,
+          top: r.top,
+          bottom: r.bottom,
+          width: r.width,
+          height: r.height,
+        }
+      : null;
   }, selector);
 
-test("the active card is centred with level neighbours on a phone", async ({ page }) => {
+test("the active card is centred with level neighbours on a phone", async ({
+  page,
+}) => {
   await page.goto("/");
   const section = page.locator(".slider-section").first();
   await section.evaluate((el) => el.scrollIntoView({ block: "start" }));
   await page.waitForTimeout(500);
 
   const viewport = page.viewportSize() as { width: number; height: number };
-  const card = (await rect(page, ".swiper-slide-active .card-slide")) as { left: number; right: number; bottom: number; width: number };
+  const card = (await rect(page, ".swiper-slide-active .card-slide")) as {
+    left: number;
+    right: number;
+    bottom: number;
+    width: number;
+  };
   expect(card.width).toBeLessThan(300);
-  expect(Math.abs(card.left - (viewport.width - card.right))).toBeLessThanOrEqual(1);
+  expect(
+    Math.abs(card.left - (viewport.width - card.right)),
+  ).toBeLessThanOrEqual(1);
   expect(card.left).toBeGreaterThan(24);
 
   const transforms = await page.evaluate(() =>
     [".swiper-slide-prev", ".swiper-slide-active", ".swiper-slide-next"].map(
-      (s) => getComputedStyle(document.querySelector(`${s} .portfolio__slide-content`) as Element).transform
-    )
+      (s) =>
+        getComputedStyle(
+          document.querySelector(`${s} .portfolio__slide-content`) as Element,
+        ).transform,
+    ),
   );
   expect(transforms).toEqual(["none", "none", "none"]);
 
@@ -39,9 +60,14 @@ test("the active card is centred with level neighbours on a phone", async ({ pag
   expect(filter.top).toBeGreaterThanOrEqual(0);
 });
 
-test("the neighbouring cards peek in from both sides on a phone", async ({ page }) => {
+test("the neighbouring cards peek in from both sides on a phone", async ({
+  page,
+}) => {
   await page.goto("/");
-  await page.locator(".slider-section").first().evaluate((el) => el.scrollIntoView({ block: "start" }));
+  await page
+    .locator(".slider-section")
+    .first()
+    .evaluate((el) => el.scrollIntoView({ block: "start" }));
   await page.waitForTimeout(500);
   const viewport = page.viewportSize() as { width: number };
   const prev = (await rect(page, ".swiper-slide-prev")) as { right: number };

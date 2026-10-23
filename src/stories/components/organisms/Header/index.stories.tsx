@@ -33,7 +33,7 @@ export default meta;
 const fetchFaceImage = async () => {
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query: "face" })
+      unsplashUrl("photos/random", { query: "face" }),
     );
     const data = await response.json();
     return {
@@ -43,7 +43,10 @@ const fetchFaceImage = async () => {
       height: 300,
     };
   } catch (error) {
-    console.error("Error al obtener la imagen de Unsplash:", error instanceof Error ? error.message : error);
+    console.error(
+      "Error al obtener la imagen de Unsplash:",
+      error instanceof Error ? error.message : error,
+    );
     // Retornamos una imagen por defecto en caso de error
     return {
       image: "https://placehold.co/300x300",

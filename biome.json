@@ -29,9 +29,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/IconGallery/Icons/**"
-      ],
+      "includes": ["**/IconGallery/Icons/**"],
       "linter": {
         "rules": {
           "a11y": {

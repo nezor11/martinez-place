@@ -96,7 +96,7 @@ type Story = StoryObj<typeof meta>;
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query, count })
+      unsplashUrl("photos/random", { query, count }),
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 
@@ -108,7 +108,7 @@ const fetchImagesFromUnsplash = async (query: string, count = 3) => {
         src: `${img.urls.raw}&w=1200&h=800&fit=crop`,
         width: 800,
         height: 1200,
-      })
+      }),
     );
   } catch (error) {
     console.error("Error fetching images:", error);

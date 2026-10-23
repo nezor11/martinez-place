@@ -44,7 +44,7 @@ interface UnsplashImage {
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query, count })
+      unsplashUrl("photos/random", { query, count }),
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 
@@ -110,7 +110,7 @@ export const Default: Story = {
       const loadImages = async () => {
         const unsplashImages = await fetchImagesFromUnsplash(
           "web-development",
-          3
+          3,
         );
         setImages(unsplashImages);
       };
@@ -164,7 +164,7 @@ export const Video: Story = {
       const loadImages = async () => {
         const unsplashImages = await fetchImagesFromUnsplash(
           "web-development",
-          1
+          1,
         );
         setImages(unsplashImages);
       };

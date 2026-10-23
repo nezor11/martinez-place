@@ -1,11 +1,6 @@
 // ThemeContext.tsx
 import type { ReactNode } from "react";
-import {
-  createContext,
-  startTransition,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, startTransition, useEffect, useState } from "react";
 import type { ThemeContextInterface } from "../utils/types/theme";
 
 const ThemeContext = createContext<ThemeContextInterface | null>(null);

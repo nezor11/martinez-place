@@ -43,5 +43,5 @@ export const Page = forwardRef<HTMLDivElement, PageProps>(
         <Footer {...dataFooterObject} />
       </div>
     );
-  }
+  },
 );

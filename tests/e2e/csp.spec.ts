@@ -15,7 +15,10 @@ const ignore = [
   /^\{target: .*, data: 1[05]\d\}$/,
 ];
 
-test("loads, opens a project and plays videos under the production CSP", async ({ page, baseURL }) => {
+test("loads, opens a project and plays videos under the production CSP", async ({
+  page,
+  baseURL,
+}) => {
   const errors = collectErrors(page, ignore);
   await enforceCsp(page, baseURL as string);
   await reportCspViolations(page);
@@ -23,7 +26,11 @@ test("loads, opens a project and plays videos under the production CSP", async (
   await page.waitForLoadState("networkidle");
 
   expect(await openCard(page)).toBe(true);
-  await page.locator(".popup-content button").first().click({ force: true }).catch(() => {});
+  await page
+    .locator(".popup-content button")
+    .first()
+    .click({ force: true })
+    .catch(() => {});
   await page.waitForTimeout(500);
 
   for (const [pattern, kind] of [
@@ -34,8 +41,13 @@ test("loads, opens a project and plays videos under the production CSP", async (
     if (!title) continue;
     await page.goto("/");
     await page.waitForLoadState("networkidle");
-    expect(await openCard(page, title), `card for ${kind} slide "${title}"`).toBe(true);
-    const play = page.locator(".popup-content button[class*=play], .popup-content .play").first();
+    expect(
+      await openCard(page, title),
+      `card for ${kind} slide "${title}"`,
+    ).toBe(true);
+    const play = page
+      .locator(".popup-content button[class*=play], .popup-content .play")
+      .first();
     if (await play.count()) await play.click({ force: true });
     await page.waitForTimeout(3000);
     // react-player 3 renders each provider as a custom element whose iframe
@@ -46,14 +58,16 @@ test("loads, opens a project and plays videos under the production CSP", async (
       const walk = (root: Document | ShadowRoot) => {
         for (const el of root.querySelectorAll("*")) {
           if (el instanceof HTMLIFrameElement) iframes.push(el.src);
-          if (el instanceof HTMLVideoElement) videos.push(el.currentSrc || el.src);
+          if (el instanceof HTMLVideoElement)
+            videos.push(el.currentSrc || el.src);
           if (el.shadowRoot) walk(el.shadowRoot);
         }
       };
       walk(document);
       return { iframes, videos };
     });
-    if (kind === "youtube") expect(media.iframes.some((s) => /youtube/.test(s))).toBe(true);
+    if (kind === "youtube")
+      expect(media.iframes.some((s) => /youtube/.test(s))).toBe(true);
     else expect(media.videos.length).toBeGreaterThan(0);
   }
 

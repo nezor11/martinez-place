@@ -32,13 +32,21 @@ const techs: TechCount[] = [
   { name: "NextJSIcon", count: 1 },
 ];
 
-const Playground = (props: Partial<React.ComponentProps<typeof PortfolioFilter>>) => {
+const Playground = (
+  props: Partial<React.ComponentProps<typeof PortfolioFilter>>,
+) => {
   const [query, setQuery] = useState(props.query ?? "");
   const [searchOpen, setSearchOpen] = useState(props.searchOpen ?? false);
-  const active = techs.find((tech) => tech.name.replace(/Icon$/, "").toLowerCase() === query.toLowerCase())?.name;
+  const active = techs.find(
+    (tech) =>
+      tech.name.replace(/Icon$/, "").toLowerCase() === query.toLowerCase(),
+  )?.name;
   return (
     <PortfolioFilter
-      techs={techs.map((tech) => ({ ...tech, dimmed: Boolean(query) && tech.name !== active }))}
+      techs={techs.map((tech) => ({
+        ...tech,
+        dimmed: Boolean(query) && tech.name !== active,
+      }))}
       activeIcon={active}
       onIconClick={(name) => {
         const label = name.replace(/Icon$/, "");
@@ -48,7 +56,9 @@ const Playground = (props: Partial<React.ComponentProps<typeof PortfolioFilter>>
       onQueryChange={setQuery}
       searchOpen={searchOpen}
       onSearchToggle={setSearchOpen}
-      matchCount={active ? (techs.find((t) => t.name === active)?.count ?? 0) : 34}
+      matchCount={
+        active ? (techs.find((t) => t.name === active)?.count ?? 0) : 34
+      }
       total={34}
     />
   );

@@ -120,5 +120,5 @@ export const InfoItem = forwardRef<HTMLDivElement, InfoItemProps>(
         </div>
       </div>
     );
-  }
+  },
 );

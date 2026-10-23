@@ -27,11 +27,7 @@ import MemoizedSunIcon from "@/stories/components/molecules/IconGallery/Icons/Su
 import { Footer } from "@/stories/components/organisms/Footer";
 import { ProjectPage } from "@/stories/components/pages/ProjectPage";
 import { ConsentBanner } from "@/stories/components/molecules/ConsentBanner";
-import {
-  analyticsEnabled,
-  openConsentBanner,
-  track,
-} from "@/utils/analytics";
+import { analyticsEnabled, openConsentBanner, track } from "@/utils/analytics";
 import { projectPath, projectsFrom } from "@/utils/projects";
 import { Analytics } from "@vercel/analytics/react";
 import type { Resume } from "@/utils/types/resume";
@@ -51,7 +47,7 @@ import type { ThemeContextInterface } from "./utils/types/theme";
 
 const useTheme = () => {
   const { darkTheme, toggleTheme } = useContext(
-    ThemeContext
+    ThemeContext,
   ) as ThemeContextInterface;
 
   useEffect(() => {
@@ -104,7 +100,12 @@ const ResumeContent = ({
     throw new Error(`Unknown project "${projectSlug}"`);
   }
   return (
-    <main id="main" tabIndex={-1} className="outline-none" key={`${latestResume._id}:${projectSlug ?? ""}`}>
+    <main
+      id="main"
+      tabIndex={-1}
+      className="outline-none"
+      key={`${latestResume._id}:${projectSlug ?? ""}`}
+    >
       {project ? (
         <>
           <SectionRenderer section={latestResume.pageBuilder[0]} />
@@ -150,7 +151,9 @@ const LanguageSwitcher = ({
       .map((other) => (
         <a
           key={other}
-          href={projectSlug ? projectPath(other, projectSlug) : localePath(other)}
+          href={
+            projectSlug ? projectPath(other, projectSlug) : localePath(other)
+          }
           hrefLang={other}
           lang={other}
           aria-label={`${other.toUpperCase()}: ${messages[other].switchTo}`}

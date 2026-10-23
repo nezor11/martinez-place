@@ -47,5 +47,5 @@ export const Resume = forwardRef<HTMLElement, ResumeProps>(
         })}
       </article>
     );
-  }
+  },
 );

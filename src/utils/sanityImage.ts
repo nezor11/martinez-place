@@ -15,7 +15,7 @@ export interface SanityImageOptions {
 
 export const sanityImageUrl = (
   url: string,
-  { width, height, quality = 80 }: SanityImageOptions = {}
+  { width, height, quality = 80 }: SanityImageOptions = {},
 ): string => {
   if (!url || !/^https:\/\/cdn\.sanity\.io\/images\//.test(url)) {
     return url;

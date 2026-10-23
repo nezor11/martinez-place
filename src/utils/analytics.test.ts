@@ -13,10 +13,9 @@ const origin = "https://martinez.place";
 
 describe("linkEvent", () => {
   it("reports tagged contact links by method, never by value", () => {
-    expect(linkEvent({ href: "obfuscated", contact: "phone" }, origin)).toEqual([
-      "contact_click",
-      { method: "phone" },
-    ]);
+    expect(linkEvent({ href: "obfuscated", contact: "phone" }, origin)).toEqual(
+      ["contact_click", { method: "phone" }],
+    );
     expect(linkEvent({ href: "mailto:someone@example.com" }, origin)).toEqual([
       "contact_click",
       { method: "email" },
@@ -28,9 +27,9 @@ describe("linkEvent", () => {
   });
 
   it("reports the language of a language switcher link", () => {
-    expect(linkEvent({ href: `${origin}/es/`, language: "es" }, origin)).toEqual(
-      ["language_switch", { site_language: "es" }],
-    );
+    expect(
+      linkEvent({ href: `${origin}/es/`, language: "es" }, origin),
+    ).toEqual(["language_switch", { site_language: "es" }]);
   });
 
   it("reports PDF downloads on the site", () => {
@@ -42,7 +41,10 @@ describe("linkEvent", () => {
 
   it("reports outbound links without query string or www", () => {
     expect(
-      linkEvent({ href: "https://www.github.com/nezor11/fetro-app?tab=readme" }, origin),
+      linkEvent(
+        { href: "https://www.github.com/nezor11/fetro-app?tab=readme" },
+        origin,
+      ),
     ).toEqual([
       "outbound_click",
       {

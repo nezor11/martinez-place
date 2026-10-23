@@ -92,9 +92,7 @@ export const mapInfoSection = (section: Section, t: Messages) => {
           date: dateText,
           jobTitle,
           jobDesc: jobDesc ?? "",
-          imageDetails: imageUrl
-            ? { src: imageUrl, alt: company ?? "" }
-            : null,
+          imageDetails: imageUrl ? { src: imageUrl, alt: company ?? "" } : null,
         },
       };
     }),

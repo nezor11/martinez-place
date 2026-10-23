@@ -27,7 +27,7 @@ const fetchCardImage = async () => {
   const height = getRandomHeight();
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query: "river" })
+      unsplashUrl("photos/random", { query: "river" }),
     );
     if (!response.ok) throw new Error(`Error de red: ${response.status}`);
 
@@ -49,7 +49,7 @@ const fetchCardImage = async () => {
 const fetchImagesFromUnsplash = async (query: string, count = 3) => {
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query, count })
+      unsplashUrl("photos/random", { query, count }),
     );
     if (!response.ok) throw new Error("Error al obtener imágenes de Unsplash");
 
@@ -60,7 +60,7 @@ const fetchImagesFromUnsplash = async (query: string, count = 3) => {
         src: `${img.urls.raw}&w=800&h=1200&fit=crop`,
         width: 1200,
         height: 800,
-      })
+      }),
     );
   } catch (error) {
     console.error("Error fetching images:", error);
@@ -98,7 +98,7 @@ export const Default = () => {
               { name: "ReactIcon", width: "1em", height: "1em" },
             ],
           };
-        })
+        }),
       );
 
       setSlidesData(slides);

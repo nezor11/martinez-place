@@ -55,7 +55,7 @@ export default meta;
 // Función para buscar un array de imágenes de montañas utilizando el endpoint de búsqueda
 const fetchMountainImages = async () => {
   const response = await fetch(
-    unsplashUrl("search/photos", { query: "mountain", per_page: 5 })
+    unsplashUrl("search/photos", { query: "mountain", per_page: 5 }),
   );
   const data = await response.json();
 
@@ -64,11 +64,11 @@ const fetchMountainImages = async () => {
     // Forzamos las imágenes a tener el tamaño de 1200x800 usando `urls.raw`
     return data.results.map(
       (image: { urls: { raw: string }; alt_description?: string }) => ({
-      src: `${image.urls.raw}&w=1200&h=800&fit=crop`, // Forzamos el tamaño de la imagen
-      width: 1200,
-      height: 800,
+        src: `${image.urls.raw}&w=1200&h=800&fit=crop`, // Forzamos el tamaño de la imagen
+        width: 1200,
+        height: 800,
         alt: image.alt_description || "Mountain image",
-      })
+      }),
     );
   }
   throw new Error("No se encontraron imágenes de montañas.");
@@ -87,7 +87,7 @@ export const Default = () => {
       } catch (error) {
         console.error(
           "Error al cargar las imágenes de Unsplash:",
-          error instanceof Error ? error.message : error
+          error instanceof Error ? error.message : error,
         );
         // Puedes agregar imágenes por defecto si ocurre un error
         setImages([

@@ -4,15 +4,26 @@ import { locales } from "./helpers";
 const site = "https://martinez.place";
 
 for (const { locale, path } of locales) {
-  test(`the ${locale} page declares its language and links every alternate`, async ({ page }) => {
+  test(`the ${locale} page declares its language and links every alternate`, async ({
+    page,
+  }) => {
     await page.goto(path);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `${site}${path}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      "href",
+      `${site}${path}`,
+    );
     for (const other of locales) {
-      await expect(page.locator(`link[rel="alternate"][hreflang="${other.locale}"]`)).toHaveAttribute("href", `${site}${other.path}`);
+      await expect(
+        page.locator(`link[rel="alternate"][hreflang="${other.locale}"]`),
+      ).toHaveAttribute("href", `${site}${other.path}`);
     }
-    await expect(page.locator('link[rel="alternate"][hreflang="x-default"]')).toHaveAttribute("href", `${site}/`);
-    const jsonLd = await page.locator('script[type="application/ld+json"]').textContent();
+    await expect(
+      page.locator('link[rel="alternate"][hreflang="x-default"]'),
+    ).toHaveAttribute("href", `${site}/`);
+    const jsonLd = await page
+      .locator('script[type="application/ld+json"]')
+      .textContent();
     expect(JSON.parse(jsonLd ?? "{}").url).toBe(`${site}${path}`);
   });
 }
@@ -33,7 +44,9 @@ test("the language switcher moves between the two pages", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
 });
 
-test("the sitemap lists both pages with their alternates", async ({ request }) => {
+test("the sitemap lists both pages with their alternates", async ({
+  request,
+}) => {
   const response = await request.get("/sitemap.xml");
   expect(response.status()).toBe(200);
   const xml = await response.text();

@@ -73,7 +73,12 @@ const loadGtm = () => {
 /** Removes the Google Analytics cookies after consent is withdrawn. */
 const clearAnalyticsCookies = () => {
   const host = window.location.hostname;
-  const domains = ["", host, `.${host}`, `.${host.split(".").slice(-2).join(".")}`];
+  const domains = [
+    "",
+    host,
+    `.${host}`,
+    `.${host.split(".").slice(-2).join(".")}`,
+  ];
   for (const cookie of document.cookie.split(";")) {
     const name = cookie.split("=")[0].trim();
     if (!name.startsWith("_ga")) continue;
@@ -144,10 +149,7 @@ export interface LinkInfo {
   language?: string | null;
 }
 
-export type LinkEvent = [
-  AnalyticsEvent,
-  Record<string, string | undefined>,
-];
+export type LinkEvent = [AnalyticsEvent, Record<string, string | undefined>];
 
 /**
  * Which event a clicked link stands for, if any. Contact links are tagged in

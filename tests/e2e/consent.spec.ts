@@ -23,11 +23,17 @@ const stubGtm = async (page: import("@playwright/test").Page) => {
 const events = (page: import("@playwright/test").Page) =>
   page.evaluate(() =>
     (window.dataLayer ?? [])
-      .filter((entry): entry is Record<string, unknown> => !!entry && typeof entry === "object" && "event" in entry)
+      .filter(
+        (entry): entry is Record<string, unknown> =>
+          !!entry && typeof entry === "object" && "event" in entry,
+      )
       .map((entry) => entry.event as string),
   );
 
-test("nothing is requested from Google until the visitor accepts", async ({ page, baseURL }) => {
+test("nothing is requested from Google until the visitor accepts", async ({
+  page,
+  baseURL,
+}) => {
   const errors = collectErrors(page);
   const requests = await stubGtm(page);
   await enforceCsp(page, baseURL as string);
@@ -48,14 +54,18 @@ test("nothing is requested from Google until the visitor accepts", async ({ page
   await expect(banner).toBeHidden();
   await expect.poll(() => requests.length).toBe(1);
   expect(requests[0]).toContain(`gtm.js?id=${process.env.GTM_ID}`);
-  expect(await page.evaluate(() => localStorage.getItem("analytics-consent"))).toBe("granted");
+  expect(
+    await page.evaluate(() => localStorage.getItem("analytics-consent")),
+  ).toBe("granted");
 
   await page.locator(".site-controls button").click();
   expect(await events(page)).toContain("theme_toggle");
   expect(errors).toEqual([]);
 });
 
-test("rejecting keeps Google out and the choice is remembered", async ({ page }) => {
+test("rejecting keeps Google out and the choice is remembered", async ({
+  page,
+}) => {
   const requests = await stubGtm(page);
   await page.goto("/es/");
   const banner = page.locator(".consent-banner");
@@ -70,7 +80,9 @@ test("rejecting keeps Google out and the choice is remembered", async ({ page })
   expect(await page.evaluate(() => window.dataLayer)).toBeUndefined();
 });
 
-test("a returning visitor who accepted is tracked, and can withdraw from the footer", async ({ page }) => {
+test("a returning visitor who accepted is tracked, and can withdraw from the footer", async ({
+  page,
+}) => {
   const requests = await stubGtm(page);
   await page.addInitScript(() => {
     if (!sessionStorage.getItem("seeded")) {
@@ -84,7 +96,9 @@ test("a returning visitor who accepted is tracked, and can withdraw from the foo
   expect(requests.length).toBe(1);
 
   // The deep link is the first event, after the consent defaults.
-  expect(await events(page)).toEqual(expect.arrayContaining(["gtm.js", "project_open"]));
+  expect(await events(page)).toEqual(
+    expect.arrayContaining(["gtm.js", "project_open"]),
+  );
   const first = await page.evaluate(() => {
     const entry = window.dataLayer?.[0] as ArrayLike<unknown> | undefined;
     return entry ? [entry[0], entry[1]] : null;
@@ -96,16 +110,22 @@ test("a returning visitor who accepted is tracked, and can withdraw from the foo
   const banner = page.locator(".consent-banner");
   await expect(banner).toBeVisible();
   await banner.getByRole("button", { name: "Reject" }).click();
-  expect(await page.evaluate(() => localStorage.getItem("analytics-consent"))).toBe("denied");
+  expect(
+    await page.evaluate(() => localStorage.getItem("analytics-consent")),
+  ).toBe("denied");
 
   const before = (await events(page)).length;
   await page.locator(".site-controls button").click();
   expect((await events(page)).length).toBe(before);
 });
 
-test("clicks on contact, CV and outbound links are reported without personal data", async ({ page }) => {
+test("clicks on contact, CV and outbound links are reported without personal data", async ({
+  page,
+}) => {
   await stubGtm(page);
-  await page.addInitScript(() => localStorage.setItem("analytics-consent", "granted"));
+  await page.addInitScript(() =>
+    localStorage.setItem("analytics-consent", "granted"),
+  );
   await page.goto("/");
   await page.waitForLoadState("networkidle");
   // Keep the page where it is: the test only needs the click to be seen.
@@ -126,7 +146,8 @@ test("clicks on contact, CV and outbound links are reported without personal dat
 
   const pushed = await page.evaluate(() =>
     (window.dataLayer ?? []).filter(
-      (entry): entry is Record<string, unknown> => !!entry && typeof entry === "object" && "event" in entry,
+      (entry): entry is Record<string, unknown> =>
+        !!entry && typeof entry === "object" && "event" in entry,
     ),
   );
   expect(pushed).toEqual(

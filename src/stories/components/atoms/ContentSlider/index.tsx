@@ -65,7 +65,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
 
   const mappedWorkDone = useMemo(
     () => workDone.map((item) => workDoneLabel(locale, item)),
-    [workDone, locale]
+    [workDone, locale],
   );
 
   useEffect(() => {
@@ -96,7 +96,6 @@ export const ContentSlider: FC<ContentSliderProps> = ({
     videoUrl,
     imageCount: images.length,
   });
-
 
   return (
     <section

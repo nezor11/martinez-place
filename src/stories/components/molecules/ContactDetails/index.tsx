@@ -90,5 +90,5 @@ export const ContactDetail = forwardRef<HTMLDivElement, ContactDetailProps>(
         </ul>
       </div>
     );
-  }
+  },
 );

@@ -142,5 +142,5 @@ export const InfoSection = forwardRef<HTMLElement, InfoSectionProps>(
         )}
       </section>
     );
-  }
+  },
 );
