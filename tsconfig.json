@@ -26,11 +26,7 @@
   "include": ["src", "globals.d.ts", "declarations.d.ts", ".storybook", "tests", "playwright.config.ts"],
   "exclude": [
     "**/dist",
-    "**/test.*",
     "node_modules",
-    "**/node_modules",
-    "**/*.spec.ts",
-    "**/__tests__",
-    "**/*.test.ts"
+    "**/node_modules"
   ]
 }
