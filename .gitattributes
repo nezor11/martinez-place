@@ -1,0 +1,2 @@
+# Keep every text file on LF; the repo mixed CRLF and LF until Oct 2026.
+* text=auto eol=lf
