@@ -1,10 +1,10 @@
 import { AxeBuilder } from "@axe-core/playwright";
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
 import { openCard } from "./helpers";
 
 const tags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"];
 
-const audit = async (page: Parameters<typeof AxeBuilder>[0]["page"]) => {
+const audit = async (page: Page) => {
   const results = await new AxeBuilder({ page }).withTags(tags).analyze();
   return results.violations.map((v) => ({
     id: v.id,
