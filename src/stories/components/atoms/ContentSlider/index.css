@@ -248,7 +248,9 @@
 
   @media (width >= theme(--breakpoint-lg)) {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    /* minmax(0, …): a wide child (the video player) must not stretch its
+       column and squeeze the text beside it. */
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     @apply gap-x-12;
 
     .slider {

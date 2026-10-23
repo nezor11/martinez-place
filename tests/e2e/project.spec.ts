@@ -128,3 +128,36 @@ test("the language switcher on a project page keeps the project", async ({
     `/es/proyecto/${slug}/`,
   );
 });
+
+/** First project that carries a video, by slug. */
+const firstProjectWithVideo = () => {
+  for (const section of resumeData("en").pageBuilder) {
+    for (const slide of section.sliderDetails?.slides ?? []) {
+      const d = slide.slideDetails;
+      if (d?.videoUrl) return slugOf(d.slugSource || d.name);
+    }
+  }
+  throw new Error("the resume has no project with a video");
+};
+
+test("playing the video on a project page keeps the two columns as they were", async ({
+  page,
+}) => {
+  await page.goto(`/project/${firstProjectWithVideo()}/`);
+  await page.waitForLoadState("networkidle");
+  const text = page.locator(".intro--page .left");
+  const panel = page.locator(".intro--page .slider");
+  const before = await text.boundingBox();
+  const panelBefore = await panel.boundingBox();
+  await panel.locator("button").click();
+  const video = page.locator(".intro--page .video-wrapper");
+  await video.waitFor();
+  const after = await text.boundingBox();
+  const videoBox = await video.boundingBox();
+  // The player was sized for the popup (600 to 1200px) and used to stretch
+  // its grid column, leaving the text a few words wide.
+  expect(Math.abs((after?.width ?? 0) - (before?.width ?? 0))).toBeLessThan(2);
+  expect(videoBox?.width ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(
+    (panelBefore?.width ?? 0) + 1,
+  );
+});

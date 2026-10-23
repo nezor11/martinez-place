@@ -6,6 +6,8 @@
  * - onReady: A callback function to be called when the video is ready to play.
  * - isPlaying: A boolean indicating whether the video should be playing or paused.
  * - onEnded?: A callback function to be called when the video ends.
+ * - className?: Sizing classes for the wrapper. The default is the popup's
+ *   fixed widths; a page that lays the player out itself passes "w-full".
  *
  * Example usage:
  * <VideoPlayer
@@ -27,6 +29,7 @@ interface VideoPlayerProps {
   onReady: () => void;
   isPlaying: boolean;
   onEnded?: () => void;
+  className?: string;
 }
 
 export const VideoPlayer: FC<VideoPlayerProps> = ({
@@ -34,6 +37,7 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
   onReady,
   isPlaying,
   onEnded,
+  className = "mt-8 lg:mt-0 lg:w-[600px] xl:w-[900px] 2xl:w-[1200px] mb-8 lg:mb-0",
 }) => {
   const [loading, setLoading] = useState(true);
 
@@ -43,7 +47,9 @@ export const VideoPlayer: FC<VideoPlayerProps> = ({
   };
 
   return (
-    <div className="video-wrapper mt-8 lg:mt-0 overflow-hidden relative w-full lg:w-[600px] xl:w-[900px] 2xl:w-[1200px] mb-8 lg:mb-0 max-w-full">
+    <div
+      className={`video-wrapper overflow-hidden relative w-full max-w-full ${className}`}
+    >
       <div
         className={`player-wrapper ${loading ? "loading" : ""} relative pt-[56.25%]`}
       >

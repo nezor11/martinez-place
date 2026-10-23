@@ -203,6 +203,7 @@ export const ContentSlider: FC<ContentSliderProps> = ({
                   videoUrl={videoUrl}
                   onReady={handleReady}
                   isPlaying={true}
+                  className="w-full"
                   onEnded={() => setIsPlaying(false)} // Aquí se reinicia el estado
                 />
               </div>
