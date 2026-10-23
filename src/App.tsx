@@ -153,7 +153,7 @@ const LanguageSwitcher = ({
           href={projectSlug ? projectPath(other, projectSlug) : localePath(other)}
           hrefLang={other}
           lang={other}
-          aria-label={messages[other].switchTo}
+          aria-label={`${other.toUpperCase()}: ${messages[other].switchTo}`}
           className="inline-flex min-h-6 min-w-6 items-center justify-center uppercase text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
         >
           {other}
