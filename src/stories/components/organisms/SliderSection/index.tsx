@@ -103,7 +103,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
       slidesData.every((slide) => slide.slug)
         ? slidesData.map((slide) => slide.slug as string)
         : uniqueSlugs(slidesData.map((slide) => slide.name || slide.title)),
-    [slidesData]
+    [slidesData],
   );
   const [linkedSlug, setLinkedSlug] = useState<string | null>(null);
 
@@ -139,11 +139,11 @@ export const SliderSection: FC<SliderSectionProps> = ({
   // technology's label in the box (or clears it when already there).
   const searchTokens = useMemo(
     () => slidesData.map((slide) => slideSearchTokens(slide, locale, t)),
-    [slidesData, locale, t]
+    [slidesData, locale, t],
   );
   const matches = useMemo(
     () => searchTokens.map((tokens) => slideMatches(tokens, query)),
-    [searchTokens, query]
+    [searchTokens, query],
   );
   const matchCount = matches.filter(Boolean).length;
   const activeIcon = useMemo(() => {
@@ -151,7 +151,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
     if (!wanted) return undefined;
     for (const slide of slidesData) {
       const icon = slide.iconsData?.find(
-        ({ name }) => normalizeText(iconLabel(name)) === wanted
+        ({ name }) => normalizeText(iconLabel(name)) === wanted,
       );
       if (icon) return icon.name;
     }
@@ -178,7 +178,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
       .sort(
         (a, b) =>
           b.count - a.count ||
-          iconLabel(a.name).localeCompare(iconLabel(b.name))
+          iconLabel(a.name).localeCompare(iconLabel(b.name)),
       );
   }, [slidesData, matches, query]);
 
@@ -188,7 +188,7 @@ export const SliderSection: FC<SliderSectionProps> = ({
       track("portfolio_filter", { technology: label });
     }
     setQuery((current) =>
-      normalizeText(current.trim()) === normalizeText(label) ? "" : label
+      normalizeText(current.trim()) === normalizeText(label) ? "" : label,
     );
   };
 
@@ -198,8 +198,9 @@ export const SliderSection: FC<SliderSectionProps> = ({
     const term = normalizeText(query.trim());
     if (term.length < 3 || activeIcon) return;
     const timer = window.setTimeout(
-      () => track("portfolio_search", { search_term: term, results: matchCount }),
-      1500
+      () =>
+        track("portfolio_search", { search_term: term, results: matchCount }),
+      1500,
     );
     return () => window.clearTimeout(timer);
   }, [query, activeIcon, matchCount]);
@@ -218,7 +219,6 @@ export const SliderSection: FC<SliderSectionProps> = ({
     console.error("SliderSection requires slidesData prop");
     return null;
   }
-
 
   // Only affects Swiper parameters, not the markup, so it is safe to decide
   // synchronously; the prerender (SSR) simply assumes a pointer device.
@@ -290,7 +290,11 @@ export const SliderSection: FC<SliderSectionProps> = ({
           // width as the desktop parameters.
           breakpoints={{
             0: { spaceBetween: 12, centeredSlides: true },
-            769: { spaceBetween: 32, slidesOffsetBefore: 300, centeredSlides: true },
+            769: {
+              spaceBetween: 32,
+              slidesOffsetBefore: 300,
+              centeredSlides: true,
+            },
           }}
         >
           {slidesData.map((slide, index) => (

@@ -5,7 +5,9 @@ describe("slugify", () => {
   it("lower-cases, strips accents and joins words with dashes", () => {
     expect(slugify("Fatro Ibérica")).toBe("fatro-iberica");
     expect(slugify("Arrels Fundació")).toBe("arrels-fundacio");
-    expect(slugify("Easy Xtream Football Web")).toBe("easy-xtream-football-web");
+    expect(slugify("Easy Xtream Football Web")).toBe(
+      "easy-xtream-football-web",
+    );
   });
 
   it("collapses punctuation and trims leading or trailing dashes", () => {

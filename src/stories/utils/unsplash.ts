@@ -14,11 +14,11 @@ type UnsplashEndpoint = "photos/random" | "search/photos";
 
 export const unsplashUrl = (
   endpoint: UnsplashEndpoint,
-  params: Record<string, string | number>
+  params: Record<string, string | number>,
 ): string => {
   if (!accessKey) {
     throw new Error(
-      "STORYBOOK_UNSPLASH_ACCESS_KEY is not set; using placeholder images"
+      "STORYBOOK_UNSPLASH_ACCESS_KEY is not set; using placeholder images",
     );
   }
   const url = new URL(`https://api.unsplash.com/${endpoint}`);

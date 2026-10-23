@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 const fetchRandomFaceImage = async () => {
   try {
     const response = await fetch(
-      unsplashUrl("photos/random", { query: "face" })
+      unsplashUrl("photos/random", { query: "face" }),
     );
     const data = await response.json();
     return {
@@ -28,7 +28,10 @@ const fetchRandomFaceImage = async () => {
       height: 300,
     };
   } catch (error) {
-    console.error("Error fetching image from Unsplash:", error instanceof Error ? error.message : error);
+    console.error(
+      "Error fetching image from Unsplash:",
+      error instanceof Error ? error.message : error,
+    );
     return {
       image: "https://placehold.co/300x300",
       alt: "Placeholder image",

@@ -36,11 +36,7 @@ const CommercetoolsIcon = forwardRef<SVGSVGElement, IconProps>(
             fill="#6359ff"
             stroke="#6359ff"
           />
-          <path
-            d="M230 244l148 84-148 84Z"
-            fill="#0bbfbf"
-            stroke="#0bbfbf"
-          />
+          <path d="M230 244l148 84-148 84Z" fill="#0bbfbf" stroke="#0bbfbf" />
         </g>
       </svg>
     );

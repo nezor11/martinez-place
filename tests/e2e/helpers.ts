@@ -8,22 +8,38 @@ const root = resolve(import.meta.dirname, "../..");
 export const productionCsp = (): string => {
   const vercel = JSON.parse(readFileSync(resolve(root, "vercel.json"), "utf8"));
   const rule = vercel.headers.find((h: { headers: { key: string }[] }) =>
-    h.headers.some((x) => x.key === "Content-Security-Policy")
+    h.headers.some((x) => x.key === "Content-Security-Policy"),
   );
   return rule.headers.find(
-    (x: { key: string }) => x.key === "Content-Security-Policy"
+    (x: { key: string }) => x.key === "Content-Security-Policy",
   ).value;
 };
 
 /** Languages the site is built in, with the path each one lives at. */
 export const locales = [
-  { locale: "en", path: "/", project: "/project/", pdf: "/resume.pdf", og: "/og.png", lastUpdated: /last updated/i },
-  { locale: "es", path: "/es/", project: "/es/proyecto/", pdf: "/resume.es.pdf", og: "/og.es.png", lastUpdated: /última actualización/i },
+  {
+    locale: "en",
+    path: "/",
+    project: "/project/",
+    pdf: "/resume.pdf",
+    og: "/og.png",
+    lastUpdated: /last updated/i,
+  },
+  {
+    locale: "es",
+    path: "/es/",
+    project: "/es/proyecto/",
+    pdf: "/resume.es.pdf",
+    og: "/og.es.png",
+    lastUpdated: /última actualización/i,
+  },
 ] as const;
 
 /** The resume fetched at build time (src/data/resume.<locale>.json). */
 export const resumeData = (locale = "en") =>
-  JSON.parse(readFileSync(resolve(root, `src/data/resume.${locale}.json`), "utf8"));
+  JSON.parse(
+    readFileSync(resolve(root, `src/data/resume.${locale}.json`), "utf8"),
+  );
 
 /** Slide titles that carry a video URL matching the pattern. */
 export const slideTitlesWithVideo = (pattern: RegExp): string[] => {
@@ -71,7 +87,7 @@ export const reportCspViolations = (page: Page) =>
   page.addInitScript(() => {
     document.addEventListener("securitypolicyviolation", (event) => {
       console.error(
-        `CSP violation: ${event.violatedDirective} blocked ${event.blockedURI}`
+        `CSP violation: ${event.violatedDirective} blocked ${event.blockedURI}`,
       );
     });
   });
@@ -82,8 +98,9 @@ export const openCard = async (page: Page, title?: string) => {
     const cards = [...document.querySelectorAll<HTMLElement>(".card-slide")];
     const card = wanted
       ? cards.find((c) => (c.textContent || "").includes(wanted))
-      : document.querySelector<HTMLElement>(".swiper-slide-active .card-slide") ||
-        cards[0];
+      : document.querySelector<HTMLElement>(
+          ".swiper-slide-active .card-slide",
+        ) || cards[0];
     if (!card) return false;
     card.scrollIntoView({ block: "center" });
     (card.querySelector<HTMLElement>(".card-slide__open") ?? card).click();

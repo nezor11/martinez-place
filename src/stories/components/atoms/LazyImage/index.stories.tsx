@@ -68,7 +68,7 @@ export default meta;
 // Función para buscar una imagen de montaña utilizando el endpoint correcto de búsqueda
 const fetchMountainImage = async () => {
   const response = await fetch(
-    unsplashUrl("search/photos", { query: "mountain", per_page: 1 })
+    unsplashUrl("search/photos", { query: "mountain", per_page: 1 }),
   );
   const data = await response.json();
 
@@ -88,7 +88,10 @@ export const Default = () => {
         const imgSrc = await fetchMountainImage();
         setImageSrc(imgSrc);
       } catch (error) {
-        console.error("Error al cargar la imagen de Unsplash:", error instanceof Error ? error.message : error);
+        console.error(
+          "Error al cargar la imagen de Unsplash:",
+          error instanceof Error ? error.message : error,
+        );
         setImageSrc("https://placehold.co/600x400?text=Image"); // Imagen de reemplazo
       }
     };

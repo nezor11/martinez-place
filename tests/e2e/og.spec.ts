@@ -2,7 +2,10 @@ import { expect, test } from "@playwright/test";
 import { locales } from "./helpers";
 
 for (const { locale, path, og } of locales) {
-  test(`the ${locale} social card is a 1200x630 PNG referenced by the meta tags`, async ({ page, request }) => {
+  test(`the ${locale} social card is a 1200x630 PNG referenced by the meta tags`, async ({
+    page,
+    request,
+  }) => {
     const response = await request.get(og);
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("image/png");
@@ -13,7 +16,13 @@ for (const { locale, path, og } of locales) {
     expect(body.readUInt32BE(20)).toBe(630);
 
     await page.goto(path);
-    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", `https://martinez.place${og}`);
-    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute("content", "summary_large_image");
+    await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      `https://martinez.place${og}`,
+    );
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
+      "content",
+      "summary_large_image",
+    );
   });
 }

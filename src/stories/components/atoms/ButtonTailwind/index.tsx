@@ -77,7 +77,7 @@ const buttonStyles = cva(
       size: "md",
       colorscheme: "primary",
     },
-  }
+  },
 );
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
@@ -93,5 +93,5 @@ export const ButtonTailwind = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       />
     );
-  }
+  },
 );

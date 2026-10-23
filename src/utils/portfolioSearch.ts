@@ -4,24 +4,21 @@ import { iconLabel } from "./iconLabels";
 
 /** Lower-case, accent-free text so "Diseño" matches "diseno" and "DISEÑO". */
 export const normalizeText = (value: string): string =>
-  value
-    .normalize("NFD")
-    .replace(/[̀-ͯ]/g, "")
-    .toLowerCase();
+  value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
 const stripHtml = (html: string): string => html.replace(/<[^>]+>/g, " ");
 
 /** Words of a text: letters and digits, keeping "next.js", "c#" or "e-commerce". */
 const tokenize = (value: string): string[] =>
   (normalizeText(value).match(/[\p{L}\p{N}][\p{L}\p{N}.#+-]*/gu) ?? []).map(
-    (word) => word.replace(/[.-]+$/, "")
+    (word) => word.replace(/[.-]+$/, ""),
   );
 
 /** Everything a project can be found by, as words, in the page's language. */
 export const slideSearchTokens = (
   slide: SlideData,
   locale: Locale,
-  t: Messages
+  t: Messages,
 ): string[] =>
   tokenize(
     [
@@ -33,7 +30,7 @@ export const slideSearchTokens = (
       slide.workType ? t.project(slide.workType) : "",
       ...(slide.workDone ?? []).map((key) => workDoneLabel(locale, key)),
       ...(slide.iconsData ?? []).map((icon) => iconLabel(icon.name)),
-    ].join(" ")
+    ].join(" "),
   );
 
 /**
@@ -44,6 +41,6 @@ export const slideSearchTokens = (
 export const slideMatches = (tokens: string[], query: string): boolean => {
   const words = tokenize(query);
   return words.every((word) =>
-    tokens.some((token) => token === word || token.startsWith(word))
+    tokens.some((token) => token === word || token.startsWith(word)),
   );
 };

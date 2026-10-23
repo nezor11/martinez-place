@@ -1,11 +1,15 @@
 import { expect, test } from "@playwright/test";
 import { collectErrors } from "./helpers";
 
-
 for (const scheme of ["light", "dark"] as const) {
-  test(`hydrates without errors and keeps the ${scheme} theme`, async ({ page }) => {
+  test(`hydrates without errors and keeps the ${scheme} theme`, async ({
+    page,
+  }) => {
     const errors = collectErrors(page);
-    await page.addInitScript((value) => localStorage.setItem("theme", value), scheme);
+    await page.addInitScript(
+      (value) => localStorage.setItem("theme", value),
+      scheme,
+    );
     await page.goto("/");
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(500);
@@ -44,7 +48,16 @@ test("the slider loops through all cards", async ({ page }) => {
   await page.goto("/");
   await page.locator(".swiper").waitFor();
   const state = await page.evaluate(async () => {
-    const swiper = (document.querySelector(".swiper") as HTMLElement & { swiper: { params: { loop: boolean }; slides: unknown[]; realIndex: number; slideNext: (speed: number) => void } }).swiper;
+    const swiper = (
+      document.querySelector(".swiper") as HTMLElement & {
+        swiper: {
+          params: { loop: boolean };
+          slides: unknown[];
+          realIndex: number;
+          slideNext: (speed: number) => void;
+        };
+      }
+    ).swiper;
     const total = swiper.slides.length;
     for (let i = 0; i < total; i++) swiper.slideNext(0);
     // Swiper settles the loop asynchronously; under CPU load (CI, parallel

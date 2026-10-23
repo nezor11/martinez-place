@@ -68,7 +68,7 @@ export const TitleCopy: FC<TitleCopyProps> = ({
           italic,
           underline,
           align,
-        })
+        }),
       )}
       style={styles}
       {...props}

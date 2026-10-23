@@ -105,7 +105,7 @@ export const BodyCopy: FC<BodyCopyProps> = ({
       italic,
       underline,
       align,
-    })
+    }),
   );
   return (
     <Tag

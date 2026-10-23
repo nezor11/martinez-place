@@ -89,14 +89,13 @@ export const Modal: FC<ModalProps> = ({
   const [, setIsHovered] = useState(false);
   const [, setLoading] = useState(true);
   const [highlightedElements, setHighlightedElements] = useState<Set<Element>>(
-    new Set()
+    new Set(),
   );
-
 
   const locale = useLocale();
   const mappedWorkDone = useMemo(
     () => workDone.map((item) => workDoneLabel(locale, item)),
-    [workDone, locale]
+    [workDone, locale],
   );
 
   const domain = link?.href?.match(/https?:\/\/(www\.)?([^/]+)/)?.[2] || "";
@@ -124,7 +123,7 @@ export const Modal: FC<ModalProps> = ({
             }
           }
         },
-        { threshold: 0.5 }
+        { threshold: 0.5 },
       );
 
       const elements = document.querySelectorAll(".absolute-element");
@@ -246,7 +245,7 @@ export const Modal: FC<ModalProps> = ({
           // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           <div
             className="workdone-wrapper w-full mt-8 lg:absolute top-[10%] right-14 z-10 bg-white p-8 rounded-sm border absolute-element lg:max-w-max"
-          onMouseDown={handleMouseDown}
+            onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -265,7 +264,7 @@ export const Modal: FC<ModalProps> = ({
           // biome-ignore lint/a11y/noStaticElementInteractions: mouse-only drag handle for a floating panel; the content stays readable in place
           <div
             className="worktype-wrapper w-full mt-8 lg:absolute bottom-32 right-14 z-10 bg-white p-4 rounded-sm border absolute-element lg:max-w-max lg:min-h-14 lg:max-h-14"
-          onMouseDown={handleMouseDown}
+            onMouseDown={handleMouseDown}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

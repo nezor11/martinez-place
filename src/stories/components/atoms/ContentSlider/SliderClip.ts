@@ -13,7 +13,9 @@ class SliderClip {
   constructor(el: HTMLElement) {
     this.el = el;
     this.Slides = Array.from(this.el.querySelectorAll("li"));
-    this.Title = Array.from(this.el.querySelectorAll(".center-y .slide-caption"));
+    this.Title = Array.from(
+      this.el.querySelectorAll(".center-y .slide-caption"),
+    );
     this.Nav = Array.from(this.el.querySelectorAll("nav a"));
     this.totalSlides = this.Slides.length;
     this.current = 0;

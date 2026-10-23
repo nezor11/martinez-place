@@ -27,7 +27,9 @@ describe("sanityImageUrl", () => {
   });
 
   it("leaves non-Sanity and empty URLs alone", () => {
-    expect(sanityImageUrl("https://example.com/a.png", { width: 100 })).toBe("https://example.com/a.png");
+    expect(sanityImageUrl("https://example.com/a.png", { width: 100 })).toBe(
+      "https://example.com/a.png",
+    );
     expect(sanityImageUrl("")).toBe("");
   });
 });

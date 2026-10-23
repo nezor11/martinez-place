@@ -1,10 +1,16 @@
 import { expect, test } from "@playwright/test";
 
-test("the web manifest is linked, served as JSON and its icons exist", async ({ page, request }) => {
+test("the web manifest is linked, served as JSON and its icons exist", async ({
+  page,
+  request,
+}) => {
   await page.goto("/");
   const href = await page.locator('link[rel="manifest"]').getAttribute("href");
   expect(href).toBe("/site.webmanifest");
-  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute("href", "/apple-touch-icon.png");
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    "href",
+    "/apple-touch-icon.png",
+  );
 
   const manifest = await request.get("/site.webmanifest");
   expect(manifest.ok()).toBe(true);

@@ -52,17 +52,8 @@ export const FrameImage: FC<FrameImageProps> = ({
 
   return (
     <div className="frame-wrapper-image">
-      <LazyImage
-        placeholderSrc={frameImage}
-        src={frameImage}
-        alt=""
-      />
-      <img
-        className="content-image"
-        src={imageURL}
-        alt=""
-        style={maskStyle}
-      />
+      <LazyImage placeholderSrc={frameImage} src={frameImage} alt="" />
+      <img className="content-image" src={imageURL} alt="" style={maskStyle} />
     </div>
   );
 };

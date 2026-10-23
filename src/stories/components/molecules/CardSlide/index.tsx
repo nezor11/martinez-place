@@ -147,7 +147,7 @@ export const CardSlide: FC<CardSlideProps> = ({
       <div
         className={cn(
           "card-slide portfolio__slide-content",
-          dimmed && "card-slide--dimmed"
+          dimmed && "card-slide--dimmed",
         )}
         data-dimmed={dimmed || undefined}
         style={{
@@ -156,48 +156,48 @@ export const CardSlide: FC<CardSlideProps> = ({
       >
         <button type="button" className="card-slide__open" onClick={openModal}>
           <article>
-          <img
-            src={
-              cardImage ||
-              `https://placehold.co/300x${Math.round(cardImageHeight)}`
-            }
-            width={cardImageWidth}
-            height={cardImageHeight}
-            loading="lazy"
-            decoding="async"
-            onLoad={handleImageLoad}
-            style={{
-              height: `${containerHeight}px`,
-              objectFit: "cover",
-            }}
-            alt={cardImageAlt || t.cardImage}
-            onError={(e) => {
-              e.currentTarget.src = "path/to/fallback/image.png";
-            }}
-          />
-          <div className="card-meta w-80" ref={figcaptionRef}>
-            <div className="card-meta__date-wrapper">
-              <BodyCopy
-                tag="span"
-                text={year}
-                size="sm"
-                mods="relative bg-gray-50 text-gray-950 px-2 py-1 rounded-sm z-10 opacity-50 date-wrapper"
+            <img
+              src={
+                cardImage ||
+                `https://placehold.co/300x${Math.round(cardImageHeight)}`
+              }
+              width={cardImageWidth}
+              height={cardImageHeight}
+              loading="lazy"
+              decoding="async"
+              onLoad={handleImageLoad}
+              style={{
+                height: `${containerHeight}px`,
+                objectFit: "cover",
+              }}
+              alt={cardImageAlt || t.cardImage}
+              onError={(e) => {
+                e.currentTarget.src = "path/to/fallback/image.png";
+              }}
+            />
+            <div className="card-meta w-80" ref={figcaptionRef}>
+              <div className="card-meta__date-wrapper">
+                <BodyCopy
+                  tag="span"
+                  text={year}
+                  size="sm"
+                  mods="relative bg-gray-50 text-gray-950 px-2 py-1 rounded-sm z-10 opacity-50 date-wrapper"
+                />
+              </div>
+              <TitleCopy
+                text={title}
+                as="h4"
+                align="center"
+                mods="dark:text-white text-xl mb-0 uppercase py-4 bg:white"
               />
+              <BodyCopy
+                tag="p"
+                text={summary ?? ""}
+                mods="dark:text-white mb-4 px-8"
+                align="center"
+              />
+              <span className="sr-only">{t.viewDetails}</span>
             </div>
-            <TitleCopy
-              text={title}
-              as="h4"
-              align="center"
-              mods="dark:text-white text-xl mb-0 uppercase py-4 bg:white"
-            />
-            <BodyCopy
-              tag="p"
-              text={summary ?? ""}
-              mods="dark:text-white mb-4 px-8"
-              align="center"
-            />
-            <span className="sr-only">{t.viewDetails}</span>
-          </div>
           </article>
         </button>
         <div className="card-slide__icons-wrapper text-xl mb-0 px-8">
@@ -226,7 +226,7 @@ export const CardSlide: FC<CardSlideProps> = ({
             onClose={closeModal}
             ButtonCloseComponent={ButtonClose}
           />,
-          document.querySelector("body") || document.createElement("div")
+          document.querySelector("body") || document.createElement("div"),
         )}
     </>
   );

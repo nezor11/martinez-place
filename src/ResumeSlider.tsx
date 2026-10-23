@@ -32,7 +32,7 @@ import { type Messages, useMessages } from "@/i18n";
 // Mapea los datos de `slider` a la estructura `SliderSectionObject`
 const mapSliderSection = (
   slider: Section,
-  t: Messages
+  t: Messages,
 ): SliderSectionObject => {
   const { titleSection, sliderDetails, iconTitleDetails } = slider;
 
@@ -69,9 +69,7 @@ const mapSliderSection = (
       imageWidth: slide.slideDetails.slideImage?.width || undefined,
       imageHeight: slide.slideDetails.slideImage?.height || undefined,
       imageAltText: slide.slideDetails.slideImage?.alt || "",
-      year: new Date(slide.slideDetails.workDate)
-        .getUTCFullYear()
-        .toString(),
+      year: new Date(slide.slideDetails.workDate).getUTCFullYear().toString(),
       title: slide.slideDetails.slideTitle || "",
       name: slide.slideDetails.name || "",
       slug: slugs[index],

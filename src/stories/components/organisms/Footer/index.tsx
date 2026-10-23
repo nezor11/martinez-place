@@ -70,7 +70,10 @@ export const Footer: FC<FooterProps> = ({
     // utilities arrange the same four blocks for both layouts.
     <footer
       {...props}
-      className={cn("flex flex-col lg:grid lg:grid-cols-[1fr_auto] lg:items-start", mods)}
+      className={cn(
+        "flex flex-col lg:grid lg:grid-cols-[1fr_auto] lg:items-start",
+        mods,
+      )}
     >
       <div className="order-1 flex items-center pb-6 lg:col-span-2">
         <div className="grow border-b border-gray-600" />
