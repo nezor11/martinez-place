@@ -128,3 +128,46 @@ test("the language switcher on a project page keeps the project", async ({
     `/es/proyecto/${slug}/`,
   );
 });
+
+/** First project whose video URL matches the pattern, by slug. */
+const firstProjectWithVideo = (pattern: RegExp) => {
+  for (const section of resumeData("en").pageBuilder) {
+    for (const slide of section.sliderDetails?.slides ?? []) {
+      const d = slide.slideDetails;
+      if (d?.videoUrl && pattern.test(d.videoUrl)) {
+        return slugOf(d.slugSource || d.name);
+      }
+    }
+  }
+  throw new Error(`the resume has no project with a video matching ${pattern}`);
+};
+
+// One project per player: the YouTube embed and the HTML5 <video> for files.
+for (const [kind, pattern] of [
+  ["YouTube", /youtube\.com|youtu\.be/],
+  ["file", /\.mp4(\?|$)/i],
+] as const) {
+  test(`playing the ${kind} video on a project page keeps the two columns as they were`, async ({
+    page,
+  }) => {
+    await page.goto(`/project/${firstProjectWithVideo(pattern)}/`);
+    await page.waitForLoadState("networkidle");
+    const text = page.locator(".intro--page .left");
+    const panel = page.locator(".intro--page .slider");
+    const before = await text.boundingBox();
+    const panelBefore = await panel.boundingBox();
+    await panel.locator("button").click();
+    const video = page.locator(".intro--page .video-wrapper");
+    await video.waitFor();
+    const after = await text.boundingBox();
+    const videoBox = await video.boundingBox();
+    // The player was sized for the popup (600 to 1200px) and used to stretch
+    // its grid column, leaving the text a few words wide.
+    expect(Math.abs((after?.width ?? 0) - (before?.width ?? 0))).toBeLessThan(
+      2,
+    );
+    expect(videoBox?.width ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(
+      (panelBefore?.width ?? 0) + 1,
+    );
+  });
+}
